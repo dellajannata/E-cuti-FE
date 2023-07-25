@@ -12849,6 +12849,7 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  background-color: #0083b8;
 }
 
 .navbar > .container,
