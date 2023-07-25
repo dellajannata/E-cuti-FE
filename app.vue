@@ -208,14 +208,14 @@
 // import Footer from '../components/Footer.vue';
 import Sidebar from './components/Sidebar.vue';
 import Navbar from './components/Navbar.vue';
-import Content from './components/Content.vue';
+// import Content from './components/Content.vue';
 
 export default {
 components: {
   // Footer,
   Sidebar,
   Navbar,
-  Content
+//   Content
 }
 }
 </script>

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Dashboard from '../pages/dashboard';
-
 Vue.use(VueRouter);
 
 const routes =[
@@ -10,6 +9,14 @@ const routes =[
         children:[
             {
                 path: '/dashboard',
+                component:()=>import('../pages/dashboard.vue')
+            },
+            {
+                path: '/data_pegawai',
+                component:()=>import('../pages/data_pegawai.vue')
+            },
+            {
+                path: '/xx',
                 component:()=>import('../pages/dashboard.vue')
             },
         ]

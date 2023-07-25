@@ -192,13 +192,12 @@
             <!-- partial:partials/_sidebar.html -->
             <Sidebar />
             <!-- partial -->
-            <div class="main-panel">
-                <Content />
+            <Dashboard />
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <!-- <Footer/> -->
                 <!-- partial -->
-            </div>
+
             <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->
@@ -208,14 +207,14 @@
 // import Footer from '../components/Footer.vue';
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import Content from '../components/Content.vue';
+import Dashboard from '../components/Dashboard.vue';
 
 export default {
   components: {
     // Footer,
     Sidebar,
     Navbar,
-    Content
+    Dashboard
   }
 }
 </script>
