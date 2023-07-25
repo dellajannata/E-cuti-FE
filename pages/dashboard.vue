@@ -192,7 +192,7 @@
             <!-- partial:partials/_sidebar.html -->
             <Sidebar />
             <!-- partial -->
-            <Dashboard />
+            <DataPegawai />
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <!-- <Footer/> -->
@@ -207,14 +207,14 @@
 // import Footer from '../components/Footer.vue';
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import Dashboard from '../components/Dashboard.vue';
+import DataPegawai from '../components/Data_Pegawai.vue';
 
 export default {
   components: {
     // Footer,
     Sidebar,
     Navbar,
-    Dashboard
+    DataPegawai
   }
 }
 </script>

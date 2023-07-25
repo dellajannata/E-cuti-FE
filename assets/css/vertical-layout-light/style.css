@@ -15024,9 +15024,9 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #ffffff;
   background-clip: border-box;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #ece0e0;
   border-radius: 20px;
 }
 
@@ -32311,6 +32311,7 @@ div.tagsinput span.tag a {
   display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
+  padding: 1em;
 }
 
 @media (max-width: 991px) {
