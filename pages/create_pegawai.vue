@@ -192,7 +192,7 @@
             <!-- partial:partials/_sidebar.html -->
             <Sidebar />
             <!-- partial -->
-            <DataPegawai />
+            <CreatePegawai />
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <!-- <Footer/> -->
@@ -206,13 +206,13 @@
 <script>
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import DataPegawai from '../components/DataPegawai.vue';
+import CreatePegawai from '../components/CreatePegawai.vue';
 
 export default {
   components: {
     Sidebar,
     Navbar,
-    DataPegawai
+    CreatePegawai
   }
 }
 </script>

@@ -16,8 +16,8 @@ const routes =[
                 component:()=>import('../pages/data_pegawai.vue')
             },
             {
-                path: '/xx',
-                component:()=>import('../pages/dashboard.vue')
+                path: '/create_pegawai',
+                component:()=>import('../pages/create_pegawai.vue')
             },
         ]
     }
