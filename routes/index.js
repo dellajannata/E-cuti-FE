@@ -19,6 +19,14 @@ const routes =[
                 path: '/create_pegawai',
                 component:()=>import('../pages/create_pegawai.vue')
             },
+            {
+                path: '/data_pengajuan_cuti',
+                component:()=>import('../pages/data_pengajuan_cuti.vue')
+            },
+            {
+                path: '/create_pengajuan_cuti',
+                component:()=>import('../pages/create_pengajuan_cuti.vue')
+            },
         ]
     }
 ]

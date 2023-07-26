@@ -2,7 +2,7 @@
     <div class="col-md-9 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Default form</h4>
+                <h4 class="card-title">Data Pegawai</h4>
                 <div v-if="isLoading">
                     <Loading :title="isLoadingTitle" />
                 </div>
