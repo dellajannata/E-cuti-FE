@@ -15034,7 +15034,7 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   border: 1px solid #ece0e0;
   border-radius: 10px;
   padding: 1em;
-  min-width:80%;
+  width:80%;
 }
 
 .card>hr {

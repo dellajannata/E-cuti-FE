@@ -27,6 +27,10 @@ const routes =[
                 path: '/create_pengajuan_cuti',
                 component:()=>import('../pages/create_pengajuan_cuti.vue')
             },
+            {
+                path: '/edit_pegawai/{id}',
+                component:()=>import('../pages/edit_pegawai.vue')
+            },
         ]
     }
 ]

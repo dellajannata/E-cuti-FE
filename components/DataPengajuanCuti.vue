@@ -18,11 +18,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Jacob</td>
-                <td>Photoshop</td>
-                <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                <td><label class="badge badge-danger">Pending</label></td>
+              <tr v-for="(cuti, index) in data_cuti" :key="index">
+                <td>{{ index + 1 }}</td>
+                <td>{{ cuti.jenis_cuti }}</td>
+                <td>{{ cuti.tgl_awal }}</td>
+                <td>{{ cuti.tgl_akhir }}</td>
+                <td>{{ cuti.alasan }}</td>
+                <td>{{ cuti.status }}</td>
               </tr>
             </tbody>
           </table>
@@ -30,3 +32,26 @@
       </div>
     </div>
 </template>
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      data_cuti: []
+    }
+  },
+  mounted() {
+    this.getDataPengajuanCuti();
+  },
+  methods: {
+    getDataPengajuanCuti() {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+        console.log(res.data.data);
+        this.data_cuti =res.data.data;
+      }).catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }
+  }
+}
+</script>
