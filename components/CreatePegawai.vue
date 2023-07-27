@@ -53,6 +53,7 @@ export default {
     data() {
         return {
             data_pegawai: {
+                id: '',
                 nama: '',
                 jabatan: '',
                 nip: '',
@@ -74,6 +75,7 @@ export default {
                 console.log(response.data);
                 alert("Data Berhasil Ditambahkan");
 
+                this.data_pegawai.id = '';
                 this.data_pegawai.nama = '';
                 this.data_pegawai.jabatan = '';
                 this.data_pegawai.nip = '';
