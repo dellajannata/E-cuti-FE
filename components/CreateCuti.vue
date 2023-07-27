@@ -9,6 +9,10 @@
                 <div v-else>
                     <form class="forms-sample" @submit.prevent="save_data">
                         <div class="form-group">
+                            <label for="pegawai_id">Pegawai ID</label>
+                            <input type="text"  v-model="data_pengajuan_cuti.pegawai_id" class="form-control" id="pegawai_id" placeholder="Masukkan Jenis Cuti Anda">
+                        </div>
+                        <div class="form-group">
                             <label for="jenis_cuti">Jenis Cuti</label>
                             <input type="text"  v-model="data_pengajuan_cuti.jenis_cuti" class="form-control" id="jenis_cuti" placeholder="Masukkan Jenis Cuti Anda">
                         </div>
@@ -45,6 +49,7 @@ export default {
     data() {
         return {
             data_pengajuan_cuti: {
+                pegawai_id:'',
                 jenis_cuti: '',
                 tgl_awal: '',
                 tgl_akhir: '',
@@ -64,6 +69,7 @@ export default {
                 console.log(response.data);
                 alert("Data Berhasil Ditambahkan");
 
+                this.data_pengajuan_cuti.pegawai_id = '';
                 this.data_pengajuan_cuti.jenis_cuti = '';
                 this.data_pengajuan_cuti.tgl_awal = '';
                 this.data_pengajuan_cuti.tgl_akhir = '';
