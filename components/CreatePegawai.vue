@@ -53,7 +53,6 @@ export default {
     data() {
         return {
             data_pegawai: {
-                id: '',
                 nama: '',
                 jabatan: '',
                 nip: '',

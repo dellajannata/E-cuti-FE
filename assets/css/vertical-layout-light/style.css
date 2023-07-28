@@ -15023,6 +15023,11 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
 .navbar-dark .navbar-text a:focus {
   color: #fff;
 }
+.card-edit-pegawai{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .card {
   position: relative;

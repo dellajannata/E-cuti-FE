@@ -28,8 +28,12 @@ const routes =[
                 component:()=>import('../pages/create_pengajuan_cuti.vue')
             },
             {
-                path: '/edit_pegawai/{id}',
+                path: '/edit_pegawai/${id}',
                 component:()=>import('../pages/edit_pegawai.vue')
+            },
+            {
+                path: '/data_rekap_cuti',
+                component:()=>import('../pages/data_rekap_cuti.vue')
             },
         ]
     }

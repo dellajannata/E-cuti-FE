@@ -2,12 +2,15 @@
     <div class="col-md-9 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Edit Data Pegawai</h4>
+                <div class="card-edit-pegawai">
+                    <h4 class="card-title">Edit Data Pegawai</h4>
+                    <a class="btn btn-primary" href="/data_pegawai">Kembali</a>
+                </div>
                 <div v-if="isLoading">
                     <Loading :title="isLoadingTitle" />
                 </div>
-                <div v-else>
-                    <form class="forms-sample" @submit.prevent="save_data">
+                <div v-else >
+                    <form class="forms-sample" @submit.prevent="edit_data">
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text"  v-model="data_pegawai.nama" class="form-control" id="nama" placeholder="Masukkan Nama Anda">
@@ -65,22 +68,30 @@ export default {
         }
     },
     mounted(){
-        // this.cutiId = this.$route.params.id
-        // alert(this.cutiId);
-        this.edit_data(id);
+        this.pegawai=data.id
+        this.pegawaiId = this.$route.params.pegawai
+        alert(this.pegawaiId);
     },
     methods: {
-        async edit_data(id) {
+        async edit_data() {
+            this.isLoading = true;
+            this.isLoadingTitle = "Saving";
             const requestData = this.data_pegawai;
             try {
-                const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${id}`, requestData);
-                console.log(res.data.data);
-                this.data_pegawai = res.data.data;
-                alert("Data Berhasil Diedit");
+                const response = await axios.post('http://127.0.0.1:8000/api/pegawai/', requestData);
+                console.log(response.data);
+                alert("Data Berhasil Ditambahkan");
 
+                this.data_pegawai.id = '';
+                this.data_pegawai.nama = '';
+                this.data_pegawai.jabatan = '';
+                this.data_pegawai.nip = '';
+                this.data_pegawai.alamat = '';
+                this.data_pegawai.unit_kerja = '';
+                this.data_pegawai.dinas = '';
 
                 this.isLoading = false;
-                this.isLoadingTitle = "Update";
+                this.isLoadingTitle = "Loading";
 
             }
             catch (error) {
