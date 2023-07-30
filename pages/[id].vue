@@ -288,28 +288,36 @@ export default {
                 this.data_pegawai = res.data.data;
             })
         },
-        edit_data(pegawaiId) {
-            this.isLoading = true;
+        async edit_data(pegawaiId)  {
+            // this.isLoading = true;
             this.isLoadingTitle = "Updating";
 
-            const requestData = this.data_pegawai;
-            console.log(requestData[0]);
+            const data = this.data_pegawai[0];
+            console.log(data);
+            const requestData = {
+                nama: data.nama,
+                jabatan: data.jabatan,
+                nip: data.nip,
+                alamat: data.alamat,
+                unit_kerja: data.unit_kerja,
+                dinas: data.dinas,
+            }
+            console.log(requestData);
+            
 
-            axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData)
-                .then(response => {
-                    
-                    console.log(response.data);
-                    alert(response.data.message);
+            try {
+                const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData);
+                console.log(response.data);
+                alert(response.data.message);
 
-                    this.isLoading = false;
-                    this.isLoadingTitle = "Loading";
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("An error occurred while updating data.");
-                    this.isLoading = false;
-                    this.isLoadingTitle = "Loading";
-                });
+                this.isLoading = false;
+                this.isLoadingTitle = "Loading";
+            } catch (error) {
+                console.error(error);
+                alert("An error occurred while updating data.");
+                this.isLoading = false;
+                this.isLoadingTitle = "Loading";
+            }
         }
     }
 }
