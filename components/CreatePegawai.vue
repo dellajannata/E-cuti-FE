@@ -72,7 +72,7 @@ export default {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData);
                 console.log(response.data);
-                alert("Data Berhasil Ditambahkan");
+                alert(response.data.message);
 
                 this.data_pegawai.id = '';
                 this.data_pegawai.nama = '';

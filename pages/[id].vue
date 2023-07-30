@@ -202,7 +202,7 @@
                         <div v-if="isLoading">
                             <Loading :title="isLoadingTitle" />
                         </div>
-                         <div v-else v-for="(pegawai, index) in data_pegawai" :key="index">
+                        <div v-else v-for="(pegawai, index) in data_pegawai" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(pegawai.id)">
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
@@ -236,7 +236,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                                 <button class="btn btn-light">Cancel</button>
-                            </form> 
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -264,7 +264,14 @@ export default {
     data() {
         return {
             pegawaiId: '',
-            data_pegawai: {},
+            data_pegawai: {
+                nama: '',
+                jabatan: '',
+                nip: '',
+                alamat: '',
+                unit_kerja: '',
+                dinas: '',
+            },
             isLoading: false,
             isLoadingTitle: "Loading"
         }
@@ -284,19 +291,25 @@ export default {
         edit_data(pegawaiId) {
             this.isLoading = true;
             this.isLoadingTitle = "Updating";
+
             const requestData = this.data_pegawai;
-            try {
-                const response = axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData).then(res => {
-                    console.log(response.data.data);
-                    alert(res.data.message);
+            console.log(requestData[0]);
+
+            axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData)
+                .then(response => {
+                    
+                    console.log(response.data);
+                    alert(response.data.message);
 
                     this.isLoading = false;
-                    this.isLoadingTitle = "Loading"
+                    this.isLoadingTitle = "Loading";
                 })
-            }
-            catch (error) {
-                console.error(error)
-            };
+                .catch(error => {
+                    console.error(error);
+                    alert("An error occurred while updating data.");
+                    this.isLoading = false;
+                    this.isLoadingTitle = "Loading";
+                });
         }
     }
 }
