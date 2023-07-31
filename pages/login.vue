@@ -1,0 +1,78 @@
+<template>
+    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" @submit.prevent="login_pengguna">
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+						<!-- <span class="Sign-In">Sign In</span> -->
+						<span class="label-input100">Username</span>
+						<input class="input100" type="text" name="username" placeholder="Enter username">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" name="pass" placeholder="Enter password">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-sb-m w-full p-b-30">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>
+						</div>
+						<div>
+							<a href="#" class="txt1">
+								Forgot Password?
+							</a>
+						</div>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" type="submit">
+								Login
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+import axios from 'axios';
+export default {
+    name: "Login",
+    data() {
+        return {
+            data_pengguna: {
+                username:'',
+                password: '',
+            },
+            isLoading: false,
+            isLoadingTitle: "Loading"
+        }
+    },
+    methods: {
+        async login_pengguna() {
+            const requestData = this.data_pengguna;
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/auth/login', requestData);
+                console.log(response.data);
+                alert("Anda berhasil melakukan login");
+
+                this.data_pengguna.username = '';
+				this.data_pengguna.password = '';
+
+                this.isLoading = false;
+                this.isLoadingTitle = "Loading";
+
+            }
+            catch (error) {
+                console.error(error)
+            };
+        }
+    }
+}
+</script>

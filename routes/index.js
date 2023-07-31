@@ -35,6 +35,10 @@ const routes =[
                 path: '/data_rekap_cuti',
                 component:()=>import('../pages/data_rekap_cuti.vue')
             },
+            {
+                path: '/login',
+                component:()=>import('../pages/login.vue')
+            },
         ]
     }
 ]
