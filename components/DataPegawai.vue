@@ -31,8 +31,7 @@
               <td>
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
               </td>
-              <td><button @click="$event => deletePegawai($event, pegawai.id)"
-                  class="btn btn-danger btn-sm">Hapus</button></td>
+              <td><button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button></td>
             </tr>
           </tbody>
         </table>
@@ -42,6 +41,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
@@ -60,14 +60,30 @@ export default {
         console.error('Error fetching data:', error);
       });
     },
-    deletePegawai(event,pegawaiId) {
-      if(confirm('Apakah Anda yakin ingin menghapus?')){
-        event.target.innerText = "Deleting";
-        axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`).then(res => {
-          event.target.innerText = "Delete";
-          this.getDataPegawai();
-        })
+    async deletePegawai(pegawaiId) {
+      try {
+        const result = await Swal.fire({
+          title: 'Apakah Anda yakin akan menghapus data?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, hapus data ini!'
+        });
 
+        if (result.isConfirmed) {
+          if (!this.rememberMe) {
+            await axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`);
+            Swal.fire(
+              'Berhasil!',
+              'Data Anda berhasil dihapus.',
+              'success',
+              this.getDataPegawai()
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
   }
