@@ -16,6 +16,11 @@
                                 placeholder="Masukkan Jabatan Anda">
                         </div>
                         <div class="form-group">
+                            <label for="pangkat">Pangkat</label>
+                            <input type="text" v-model="data_pegawai.pangkat" class="form-control" id="pangkat"
+                                placeholder="Masukkan Pangkat Anda">
+                        </div>
+                        <div class="form-group">
                             <label for="nip">NIP</label>
                             <input type="text" v-model="data_pegawai.nip" class="form-control" id="nip"
                                 placeholder="Masukkan NIP Anda">
@@ -29,11 +34,6 @@
                             <label for="unit_kerja">Unit Kreja</label>
                             <input type="text" v-model="data_pegawai.unit_kerja" class="form-control" id="unit_kerja"
                                 placeholder="Masukkan Unit Kerja Anda">
-                        </div>
-                        <div class="form-group">
-                            <label for="dinas">Dinas</label>
-                            <input type="text" v-model="data_pegawai.dinas" class="form-control" id="dinas"
-                                placeholder="Masukkan Dinas Anda">
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -53,10 +53,10 @@ export default {
             data_pegawai: {
                 nama: '',
                 jabatan: '',
+                pangkat:'',
                 nip: '',
                 alamat: '',
                 unit_kerja: '',
-                dinas: '',
             },
             isLoading: false,
             isLoadingTitle: "Loading",
@@ -82,10 +82,10 @@ export default {
 
                         this.data_pegawai.nama = '';
                         this.data_pegawai.jabatan = '';
+                        this.data_pegawai.pangkat = '';
                         this.data_pegawai.nip = '';
                         this.data_pegawai.alamat = '';
                         this.data_pegawai.unit_kerja = '';
-                        this.data_pegawai.dinas = '';
                         Swal.fire(
                             'Berhasil!',
                             'Data Anda berhasil tersimpan.',

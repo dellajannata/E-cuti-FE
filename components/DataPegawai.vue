@@ -12,10 +12,10 @@
               <th>No.</th>
               <th>Nama</th>
               <th>Jabatan</th>
+              <th>Pangkat</th>
               <th>NIP</th>
               <th>Alamat</th>
               <th>Unit kerja</th>
-              <th>Dinas</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -24,10 +24,10 @@
               <td>{{ index + 1 }}</td>
               <td>{{ pegawai.nama }}</td>
               <td>{{ pegawai.jabatan }}</td>
+              <td>{{ pegawai.pangkat }}</td>
               <td>{{ pegawai.nip }}</td>
               <td>{{ pegawai.alamat }}</td>
               <td>{{ pegawai.unit_kerja }}</td>
-              <td>{{ pegawai.dinas }}</td>
               <td>
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
               </td>

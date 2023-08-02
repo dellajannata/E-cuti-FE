@@ -177,10 +177,7 @@
                             <h4 class="card-title">Edit Data Pegawai</h4>
                             <a class="btn btn-primary" href="/data_pegawai">Kembali</a>
                         </div>
-                        <div v-if="isLoading">
-                            <Loading :title="isLoadingTitle" />
-                        </div>
-                        <div v-else v-for="(pegawai, index) in data_pegawai" :key="index">
+                        <div v-for="(pegawai, index) in data_pegawai" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(pegawai.id)">
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
@@ -191,6 +188,11 @@
                                     <label for="jabatan">Jabatan</label>
                                     <input type="text" v-model="pegawai.jabatan" class="form-control" id="jabatan"
                                         placeholder="Masukkan Jabatan Anda">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pangkat">Pangkat</label>
+                                    <input type="text" v-model="pegawai.pangkat" class="form-control" id="pangkat"
+                                        placeholder="Masukkan Pangkat Anda">
                                 </div>
                                 <div class="form-group">
                                     <label for="nip">NIP</label>
@@ -207,13 +209,7 @@
                                     <input type="text" v-model="pegawai.unit_kerja" class="form-control" id="unit_kerja"
                                         placeholder="Masukkan Unit Kerja Anda">
                                 </div>
-                                <div class="form-group">
-                                    <label for="dinas">Dinas</label>
-                                    <input type="text" v-model="pegawai.dinas" class="form-control" id="dinas"
-                                        placeholder="Masukkan Dinas Anda">
-                                </div>
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                <button class="btn btn-light">Cancel</button>
                             </form>
                         </div>
                     </div>
@@ -246,6 +242,7 @@ export default {
             data_pegawai: {
                 nama: '',
                 jabatan: '',
+                pangkat:'',
                 nip: '',
                 alamat: '',
                 unit_kerja: '',
@@ -285,6 +282,7 @@ export default {
                         const requestData = {
                             nama: data.nama,
                             jabatan: data.jabatan,
+                            pangkat: data.pangkat,
                             nip: data.nip,
                             alamat: data.alamat,
                             unit_kerja: data.unit_kerja,

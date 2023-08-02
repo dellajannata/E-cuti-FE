@@ -5,14 +5,14 @@
 				<form class="login100-form validate-form" @submit.prevent="login_pengguna">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<!-- <span class="Sign-In">Sign In</span> -->
-						<span class="label-input100">Username</span>
-						<input class="input100" type="text" name="username" placeholder="Enter username">
+						<span class="label-input100">E-mail</span>
+						<input class="input100" v-model="data_pengguna.email" type="email" name="email" placeholder="Enter Email">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pass" placeholder="Enter password">
+						<input class="input100" type="password" v-model="data_pengguna.password" name="password" placeholder="Enter password">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -47,7 +47,7 @@ export default {
     data() {
         return {
             data_pengguna: {
-                username:'',
+                email:'',
                 password: '',
             },
             isLoading: false,
@@ -60,9 +60,9 @@ export default {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/api/auth/login', requestData);
                 console.log(response.data);
-                alert("Anda berhasil melakukan login");
+                this.backDashboard();
 
-                this.data_pengguna.username = '';
+                this.data_pengguna.email = '';
 				this.data_pengguna.password = '';
 
                 this.isLoading = false;
@@ -72,6 +72,9 @@ export default {
             catch (error) {
                 console.error(error)
             };
+        },
+		backDashboard() {
+            this.$router.push('/dashboard');
         }
     }
 }
