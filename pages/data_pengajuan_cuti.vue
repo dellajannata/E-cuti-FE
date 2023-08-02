@@ -187,6 +187,7 @@ import Navbar from '../components/Navbar.vue';
 import DataPengajuanCuti from '../components/CreateCuti.vue';
 
 export default {
+    middleware:'auth',
     components: {
         Sidebar,
         Navbar,

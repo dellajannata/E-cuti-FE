@@ -114,5 +114,22 @@ export default {
         },
       },
     },
-  }
+  },
+  // auth: {
+  //   strategies: {
+  //     laravelSanctum: {
+  //       provider: 'laravel/sanctum',
+  //       url: 'http://localhost:8000',
+  //       endpoints:{
+  //         login:{
+  //           url:'/login'
+  //         }
+  //       }
+  //     },
+  //   }
+  // },
+  // axios:{
+  //   baseURL: 'http://localhost:8000',
+  //   credentials:true,
+  // }
 }

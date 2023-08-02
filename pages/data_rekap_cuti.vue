@@ -171,10 +171,10 @@
             <Sidebar />
             <!-- partial -->
             <DataRekapCuti />
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <!-- <Footer/> -->
-                <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <!-- <Footer/> -->
+            <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
@@ -187,10 +187,11 @@ import Navbar from '../components/Navbar.vue';
 import DataRekapCuti from '../components/DataRekapCuti.vue';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-    DataRekapCuti
-  }
+    middleware: 'auth',
+    components: {
+        Sidebar,
+        Navbar,
+        DataRekapCuti
+    }
 }
 </script>

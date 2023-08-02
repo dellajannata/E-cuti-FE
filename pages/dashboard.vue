@@ -171,10 +171,10 @@
             <Sidebar />
             <!-- partial -->
             <Content />
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <!-- <Footer/> -->
-                <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <!-- <Footer/> -->
+            <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
@@ -187,10 +187,11 @@ import Navbar from '../components/Navbar.vue';
 import Content from '../components/Content.vue';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-    Content
-  }
+    middleware: 'auth',
+    components: {
+        Sidebar,
+        Navbar,
+        Content
+    }
 }
 </script>

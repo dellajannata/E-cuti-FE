@@ -232,6 +232,7 @@ import Navbar from '../components/Navbar.vue';
 
 export default {
     name: "EditPegawai",
+    middleware: 'auth',
     components: {
         Sidebar,
         Navbar,
@@ -242,7 +243,7 @@ export default {
             data_pegawai: {
                 nama: '',
                 jabatan: '',
-                pangkat:'',
+                pangkat: '',
                 nip: '',
                 alamat: '',
                 unit_kerja: '',
@@ -259,7 +260,12 @@ export default {
     },
     methods: {
         getPegawai(pegawaiId) {
-            axios.get(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`).then(res => {
+            const accessToken = localStorage.getItem('access_token');
+            axios.get(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then(res => {
                 console.log(res.data.data);
                 this.data_pegawai = res.data.data;
             })
@@ -292,7 +298,12 @@ export default {
 
 
                         try {
-                            const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData);
+                            const accessToken = localStorage.getItem('access_token');
+                            const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData, {
+                                headers: {
+                                    Authorization: `Bearer ${accessToken}`
+                                }
+                            });
                             console.log(response.data);
                             // alert(response.data.message);
                             this.backDataPegawai();

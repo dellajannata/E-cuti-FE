@@ -53,7 +53,12 @@ export default {
   },
   methods: {
     getDataPegawai() {
-      axios.get('http://127.0.0.1:8000/api/pegawai').then(res => {
+      const accessToken = localStorage.getItem('access_token');
+      axios.get('http://127.0.0.1:8000/api/pegawai', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
       }).catch(error => {
@@ -73,7 +78,12 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            await axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`);
+            const accessToken = localStorage.getItem('access_token');
+            await axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            });
             Swal.fire(
               'Berhasil!',
               'Data Anda berhasil dihapus.',

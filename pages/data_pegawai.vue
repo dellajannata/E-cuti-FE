@@ -171,10 +171,10 @@
             <Sidebar />
             <!-- partial -->
             <DataPegawai />
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <!-- <Footer/> -->
-                <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <!-- <Footer/> -->
+            <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
@@ -188,10 +188,11 @@ import DataPegawai from '../components/DataPegawai.vue';
 
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-    DataPegawai
-  }
+    middleware: 'auth',
+    components: {
+        Sidebar,
+        Navbar,
+        DataPegawai
+    }
 }
 </script>

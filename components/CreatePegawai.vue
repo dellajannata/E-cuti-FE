@@ -48,12 +48,13 @@ import Swal from 'sweetalert2';
 
 export default {
     name: "CreatePegawai",
+    middleware: 'auth',
     data() {
         return {
             data_pegawai: {
                 nama: '',
                 jabatan: '',
-                pangkat:'',
+                pangkat: '',
                 nip: '',
                 alamat: '',
                 unit_kerja: '',
@@ -78,7 +79,12 @@ export default {
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
                         const requestData = this.data_pegawai;
-                        const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData);
+                        const accessToken = localStorage.getItem('access_token');
+                        const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData, {
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`
+                            }
+                        });
 
                         this.data_pegawai.nama = '';
                         this.data_pegawai.jabatan = '';

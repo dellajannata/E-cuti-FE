@@ -171,10 +171,10 @@
             <Sidebar />
             <!-- partial -->
             <CreatePegawai />
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <!-- <Footer/> -->
-                <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <!-- <Footer/> -->
+            <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
@@ -187,10 +187,11 @@ import Navbar from '../components/Navbar.vue';
 import CreatePegawai from '../components/CreatePegawai.vue';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-    CreatePegawai
-  }
+    middleware: 'auth',
+    components: {
+        Sidebar,
+        Navbar,
+        CreatePegawai
+    }
 }
 </script>
