@@ -8,10 +8,11 @@
 import axios from 'axios';
 export default {
     name: "logout",
+    middleware: 'auth',
     data() {
         return {
             data_pengguna: {
-                email:'',
+                email: '',
                 password: '',
             },
             isLoading: false,
@@ -24,12 +25,16 @@ export default {
             this.isLoadingTitle = "Saving";
             const requestData = this.data_pengguna;
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/auth/logout', requestData);
-                console.log(response.data);
+                const accessToken = localStorage.getItem('access_token');
+                const response = await axios.post('http://127.0.0.1:8000/api/logout', requestData, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                console.log("Logout successful.");
+                this.removeTokenFromLocalStorage();
                 this.backLogin();
 
-                // this.data_pengguna.email = '';
-                // this.data_pengguna.password = '';
                 this.isLoading = false;
                 this.isLoadingTitle = "Loading";
 
@@ -40,6 +45,12 @@ export default {
         },
         backLogin() {
             this.$router.push('/login');
+        },
+        removeTokenFromLocalStorage() {
+            localStorage.removeItem('access_token');
+            this.isLoading = false;
+            this.isLoadingTitle = "Loading";
+            this.backLogin();
         }
     }
 }
