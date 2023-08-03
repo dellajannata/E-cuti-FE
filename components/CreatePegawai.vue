@@ -85,6 +85,21 @@ export default {
 
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
+                        this.errorList = {};
+                        const requiredFields = ['nama', 'jabatan', 'pangkat', 'nip', 'alamat', 'unit_kerja'];
+                        let hasError = false;
+                        for (const field of requiredFields) {
+                            if (!this.data_pegawai[field]) {
+                                this.errorList[field] = 'Field is required.';
+                                hasError = true;
+                            } else {
+                                this.errorList[field] = null;
+                            }
+                        }
+                        if (hasError) {
+                            return;
+                        }
+
                         const requestData = this.data_pegawai;
                         const accessToken = localStorage.getItem('access_token');
                         const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData, {
