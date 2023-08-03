@@ -8,7 +8,7 @@
 import axios from 'axios';
 export default {
     name: "logout",
-    middleware: 'auth',
+    middleware: ['auth'] ,
     data() {
         return {
             data_pengguna: {

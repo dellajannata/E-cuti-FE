@@ -1,6 +1,6 @@
 export default {
   router: {
-    base: '/dashboard'
+    middleware: ['auth'], // Apply the 'auth' middleware to protect routes
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -95,8 +95,7 @@ export default {
   buildModules: [
     // ...
     'tailwindcss',
-  ],
-  
+  ],  
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

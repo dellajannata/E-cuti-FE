@@ -8,6 +8,7 @@ const routes =[
         component:Dashboard,
         children:[
             {
+                middleware:'auth',
                 path: '/dashboard',
                 component:()=>import('../pages/dashboard.vue')
             },
@@ -44,7 +45,6 @@ const routes =[
 ]
 const router = new VueRouter(
     {
-        mode: 'history',
         base: process.env.BASE_URL,
         routes
     }

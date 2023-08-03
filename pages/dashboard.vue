@@ -187,7 +187,7 @@ import Navbar from '../components/Navbar.vue';
 import Content from '../components/Content.vue';
 
 export default {
-    middleware: 'auth',
+    middleware: ['auth'],
     components: {
         Sidebar,
         Navbar,

@@ -9,31 +9,37 @@
                             <label for="nama">Nama</label>
                             <input type="text" v-model="data_pegawai.nama" class="form-control" id="nama"
                                 placeholder="Masukkan Nama Anda">
+                            <span class="text-danger">{{ this.errorList.nama }}</span>
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
                             <input type="text" v-model="data_pegawai.jabatan" class="form-control" id="jabatan"
                                 placeholder="Masukkan Jabatan Anda">
+                            <span class="text-danger">{{ this.errorList.jabatan }}</span>
                         </div>
                         <div class="form-group">
                             <label for="pangkat">Pangkat</label>
                             <input type="text" v-model="data_pegawai.pangkat" class="form-control" id="pangkat"
                                 placeholder="Masukkan Pangkat Anda">
+                            <span class="text-danger">{{ this.errorList.pangkat }}</span>
                         </div>
                         <div class="form-group">
                             <label for="nip">NIP</label>
                             <input type="text" v-model="data_pegawai.nip" class="form-control" id="nip"
                                 placeholder="Masukkan NIP Anda">
+                            <span class="text-danger">{{ this.errorList.nip }}</span>
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
                             <input type="text" v-model="data_pegawai.alamat" class="form-control" id="alamat"
                                 placeholder="Masukkan Alamat Anda">
+                            <span class="text-danger">{{ this.errorList.alamat }}</span>
                         </div>
                         <div class="form-group">
                             <label for="unit_kerja">Unit Kreja</label>
                             <input type="text" v-model="data_pegawai.unit_kerja" class="form-control" id="unit_kerja"
                                 placeholder="Masukkan Unit Kerja Anda">
+                            <span class="text-danger">{{ this.errorList.unit_kerja }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -61,7 +67,8 @@ export default {
             },
             isLoading: false,
             isLoadingTitle: "Loading",
-            rememberMe: false, // Add a new data property to store "Remember me" checkbox state
+            rememberMe: false,
+            errorList: {},
         };
     },
     methods: {

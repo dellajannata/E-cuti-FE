@@ -10,7 +10,6 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Jenis Cuti</th>
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
@@ -22,7 +21,6 @@
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ cuti.jenis_cuti }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>

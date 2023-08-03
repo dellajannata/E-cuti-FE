@@ -5,6 +5,8 @@ export default function ({ $axios }) {
   
     if (token) {
       $axios.setToken(token, 'Bearer');
+    }else{
+      alert("Gagal Login");
     }
   
     // Tambahkan axios interceptor untuk menambahkan header Authorization

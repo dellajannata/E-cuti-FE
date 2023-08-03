@@ -13,10 +13,6 @@
                             <input type="text"  v-model="data_pengajuan_cuti.pegawai_id" class="form-control" id="pegawai_id" placeholder="Masukkan Jenis Cuti Anda">
                         </div>
                         <div class="form-group">
-                            <label for="jenis_cuti">Jenis Cuti</label>
-                            <input type="text"  v-model="data_pengajuan_cuti.jenis_cuti" class="form-control" id="jenis_cuti" placeholder="Masukkan Jenis Cuti Anda">
-                        </div>
-                        <div class="form-group">
                             <label for="tgl_awal">Tanggal Awal</label>
                             <input type="date" v-model="data_pengajuan_cuti.tgl_awal" class="form-control" id="tgl_awal" >
                         </div>
@@ -50,7 +46,6 @@ export default {
         return {
             data_pengajuan_cuti: {
                 pegawai_id:'',
-                jenis_cuti: '',
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
@@ -70,7 +65,6 @@ export default {
                 alert("Data Berhasil Ditambahkan");
 
                 this.data_pengajuan_cuti.pegawai_id = '';
-                this.data_pengajuan_cuti.jenis_cuti = '';
                 this.data_pengajuan_cuti.tgl_awal = '';
                 this.data_pengajuan_cuti.tgl_akhir = '';
                 this.data_pengajuan_cuti.alasan = '';
