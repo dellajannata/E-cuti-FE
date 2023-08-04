@@ -44,6 +44,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export default {
 	name: "Login",
 	middleware: 'auth',
@@ -77,7 +78,12 @@ export default {
 
 			}
 			catch (error) {
-				console.error(error)
+				console.error(error);
+				Swal.fire({
+					icon: 'Gagal Login',
+					title: 'Gagal Login',
+					text: 'Harap periksa kembali email dan password.',
+				});
 			};
 		},
 		backDashboard() {
