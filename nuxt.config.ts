@@ -94,13 +94,13 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // ...
+    '@nuxtjs/auth-next',
     'tailwindcss',
   ],  
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // '@nuxtjs/axios',
-    // '@nuxtjs/auth-next'
+     // Add the auth module here
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -114,6 +114,22 @@ export default {
       },
     },
   },
+
+  auth: {
+    strategies: {
+      laravelSanctum: {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost:8000', // Ganti dengan URL server Laravel Anda
+        endpoints: {
+          login: { url: '/login', method: 'post' },
+          logout: { url: '/logout', method: 'post' },
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer '
+      },
+    },
+  },
+
   // auth: {
   //   strategies: {
   //     laravelSanctum: {

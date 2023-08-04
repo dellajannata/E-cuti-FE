@@ -1,12 +1,14 @@
 // plugins/axios.js
-export default function ({ $axios }) {
+
+export default function ({ $axios, redirect }) {
     // Setel token dari local storage untuk setiap permintaan
     const token = localStorage.getItem('access_token');
+    // dd(token);
   
     if (token) {
       $axios.setToken(token, 'Bearer');
-    }else{
-      alert("Gagal Login");
+    }else {
+      return redirect('/login'); // Redirect ke halaman login jika pengguna belum login
     }
   
     // Tambahkan axios interceptor untuk menambahkan header Authorization
@@ -23,7 +25,7 @@ export default function ({ $axios }) {
       if (code === 401) {
         // Redirect ke halaman login jika permintaan tidak diotorisasi
         // atau token kedaluwarsa
-        this.$router.push('/login');
+        return redirect('/login');
       }
     });
   }

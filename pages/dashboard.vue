@@ -185,9 +185,18 @@
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
 import Content from '../components/Content.vue';
+import authMiddleware from '../middleware/auth';
 
 export default {
-    middleware: ['auth'],
+    auth: true,
+    middleware: [authMiddleware],
+    mounted() {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            //MAKA REDIRECT KE HALAMAN LOGIN
+            this.$router.push('/login')
+        }
+    },
     components: {
         Sidebar,
         Navbar,
