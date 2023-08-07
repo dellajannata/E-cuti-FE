@@ -171,10 +171,10 @@
             <Sidebar />
             <!-- partial -->
             <EditPegawai />
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <!-- <Footer/> -->
-                <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <!-- <Footer/> -->
+            <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
@@ -185,12 +185,22 @@
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
 import EditPegawai from '../components/EditPegawai.vue';
+import authMiddleware from '../middleware/auth';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-    EditPegawai
-  }
+    auth: true,
+    middleware: [authMiddleware],
+    components: {
+        Sidebar,
+        Navbar,
+        EditPegawai
+    },
+    mounted() {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            //MAKA REDIRECT KE HALAMAN LOGIN
+            this.$router.push('/login')
+        }
+    },
 }
 </script>

@@ -13,10 +13,12 @@ const routes =[
                 component:()=>import('../pages/dashboard.vue')
             },
             {
+                middleware:'auth',
                 path: '/data_pegawai',
                 component:()=>import('../pages/data_pegawai.vue')
             },
             {
+                middleware:'auth',
                 path: '/create_pegawai',
                 component:()=>import('../pages/create_pegawai.vue')
             },
