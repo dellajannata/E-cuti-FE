@@ -268,11 +268,7 @@ export default {
     methods: {
         getPegawai(pegawaiId) {
             const accessToken = localStorage.getItem('access_token');
-            axios.get(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            }).then(res => {
+            axios.get(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`).then(res => {
                 console.log(res.data.data);
                 this.data_pegawai = res.data.data;
             })
@@ -306,11 +302,7 @@ export default {
 
                         try {
                             const accessToken = localStorage.getItem('access_token');
-                            const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData, {
-                                headers: {
-                                    Authorization: `Bearer ${accessToken}`
-                                }
-                            });
+                            const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`);
                             console.log(response.data);
                             // alert(response.data.message);
                             this.backDataPegawai();

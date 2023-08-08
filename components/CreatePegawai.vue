@@ -104,11 +104,7 @@ export default {
 
                         const requestData = this.data_pegawai;
                         const accessToken = localStorage.getItem('access_token');
-                        const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData, {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`
-                            }
-                        });
+                        const response = await axios.post('http://127.0.0.1:8000/api/pegawai', requestData);
 
                         this.data_pegawai.nama = '';
                         this.data_pegawai.jabatan = '';

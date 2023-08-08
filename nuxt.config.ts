@@ -94,13 +94,17 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // ...
-    '@nuxtjs/auth-next',
     'tailwindcss',
-  ],  
+  ],
+  axios: {
+    baseURL: "http://localhost:8000",
+    credentials: true
+  },
+    
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-     // Add the auth module here
+    '@nuxtjs/auth'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

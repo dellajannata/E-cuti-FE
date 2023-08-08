@@ -26,11 +26,7 @@ export default {
             const requestData = this.data_pengguna;
             try {
                 const accessToken = localStorage.getItem('access_token');
-                const response = await axios.post('http://127.0.0.1:8000/api/logout', requestData, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                });
+                const response = await axios.post('http://127.0.0.1:8000/api/logout', requestData);
                 console.log("Logout successful.");
                 this.removeTokenFromLocalStorage();
                 this.backLogin();

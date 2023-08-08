@@ -66,6 +66,15 @@ export default {
 				console.log(response.data);
 				if (typeof window !== 'undefined') {
 					localStorage.setItem('access_token', response.data.access_token);
+					// const response2 = await axios.get('http://127.0.0.1:8000/api/profile');
+					if (response.data.role) {
+						// Redirect pengguna ke halaman sesuai peran setelah login berhasil
+						if (response.data.role === 'admin_utama') {
+							this.$router.push('/data_pegawai');
+						} else if (response.data.role === 'user') {
+							this.$router.push('/dashboard');
+						}
+					}
 				}
 				console.log(response.data.access_token);
 				this.backDashboard();
@@ -80,7 +89,7 @@ export default {
 			catch (error) {
 				console.error(error);
 				Swal.fire({
-					icon: 'Gagal Login',
+					icon: 'warning',
 					title: 'Gagal Login',
 					text: 'Harap periksa kembali email dan password.',
 				});
