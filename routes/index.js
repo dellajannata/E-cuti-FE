@@ -42,6 +42,10 @@ const routes =[
                 path: '/login',
                 component:()=>import('../pages/login.vue')
             },
+            {
+                path: '/cetak_pdf/${id}',
+                component:()=>import('../pages/cetak_pdf.vue')
+            },
         ]
     }
 ]

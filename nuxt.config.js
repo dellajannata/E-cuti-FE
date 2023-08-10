@@ -95,16 +95,17 @@ export default {
   buildModules: [
     // ...
     'tailwindcss',
+    // '@nuxtjs/auth'
   ],
   axios: {
-    baseURL: "http://localhost:8000",
-    credentials: true
+    baseURL: 'http://localhost:8000',
+    // credentials: true
   },
     
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/auth'
+    'nuxt-sanctum-auth'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -119,20 +120,41 @@ export default {
     },
   },
 
-  auth: {
-    strategies: {
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        url: 'http://localhost:8000', // Ganti dengan URL server Laravel Anda
-        endpoints: {
-          login: { url: '/login', method: 'post' },
-          logout: { url: '/logout', method: 'post' },
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer '
-      },
+  nuxtSanctumAuth: {
+    token: true, // set true to use jwt-token auth instead of cookie. default is false
+    baseUrl: 'http://localhost:3000',
+    endpoints: {
+      csrf: '/sanctum/csrf-cookie',
+      login: '/login',
+      logout: '/logout',
+      user: '/profile'
     },
-  },
+    csrf: {
+      headerKey: 'X-XSRF-TOKEN',
+      cookieKey: 'XSRF-TOKEN',
+      tokenCookieKey: 'nuxt-sanctum-auth-token'
+    },
+    redirects: {
+      home: '/dashboard',
+      login: '/login',
+      logout: '/'
+    }
+  }
+
+  // auth: {
+  //   strategies: {
+  //     laravelSanctum: {
+  //       provider: 'laravel/sanctum',
+  //       url: 'http://localhost:8000', // Ganti dengan URL server Laravel Anda
+  //       endpoints: {
+  //         login: { url: '/login', method: 'post' },
+  //         logout: { url: '/logout', method: 'post' },
+  //       },
+  //       tokenRequired: true,
+  //       tokenType: 'Bearer '
+  //     },
+  //   },
+  // },
 
   // auth: {
   //   strategies: {
