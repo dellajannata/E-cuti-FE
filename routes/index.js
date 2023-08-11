@@ -8,17 +8,17 @@ const routes =[
         component:Dashboard,
         children:[
             {
-                middleware:'auth',
+                // middleware:'auth',
                 path: '/dashboard',
                 component:()=>import('../pages/dashboard.vue')
             },
             {
-                middleware:'auth',
+                // middleware:'auth',
                 path: '/data_pegawai',
                 component:()=>import('../pages/data_pegawai.vue')
             },
             {
-                middleware:'auth',
+                // middleware:'auth',
                 path: '/create_pegawai',
                 component:()=>import('../pages/create_pegawai.vue')
             },

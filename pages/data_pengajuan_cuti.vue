@@ -23,10 +23,10 @@
 <script>
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import DataPengajuanCuti from '../components/CreateCuti.vue';
+import DataPengajuanCuti from '../components/DataPengajuanCuti.vue';
 
 export default {
-    middleware:'auth',
+    // middleware:'auth',
     components: {
         Sidebar,
         Navbar,

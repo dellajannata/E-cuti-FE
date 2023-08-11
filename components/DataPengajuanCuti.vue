@@ -3,32 +3,37 @@
     <div class="card-body">
       <div class="card-pegawai">
         <h4 class="card-title">Data Pegajuan Cuti</h4>
-        <a class="btn btn-success" href="/create_pengajuan_cuti">Tambah</a>
+        <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
               <th>No.</th>
+              <th>Nama</th>
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
               <th>Status</th>
+              <th>Keterangan</th>
               <th>Action</th>
-
             </tr>
           </thead>
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
+              <td>{{ cuti.pegawai_id }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
               <td>{{ cuti.status }}</td>
-              <td>
-                <button @click="$event => editCuti($event, cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
+              <td v-if="cuti.status == 'Selesai'">
+                <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
               </td>
-              <td><button @click="$event => deleteCuti($event, cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
+              <td v-else>Proses ACC</td>
+              <td>
+                <button @click="$event => editCuti($event, cuti.id)" class="btn btn-warning btn-sm">Edit</button>
+                <button @click="$event => deleteCuti($event, cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
             </tr>
           </tbody>
         </table>
@@ -49,7 +54,12 @@ export default {
   },
   methods: {
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+      // const token = localStorage.getItem('access_token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+        // headers: {
+        //   'Authorization': 'Bearer ${token}'
+        // }
+      }).then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
@@ -68,6 +78,21 @@ export default {
     editCuti(event, cutiId) {
       axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
         this.getDataPengajuanCuti();
+      });
+    },
+    cetakPDF(event, cutiId) {
+      axios.get(`http://127.0.0.1:8000/api/cetak-pdf/${cutiId}`, {
+        responseType: 'blob'
+      }).then(response => {
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.click();
+      }).catch(error => {
+        console.error('Error fetching PDF:', error);
       });
     }
   }
