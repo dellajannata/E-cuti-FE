@@ -26,7 +26,7 @@
               <td>{{ cuti.alasan }}</td>
               <td>{{ cuti.status }}</td>
               <td>
-                <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC kabid</button>
+                <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
               </td>
             </tr>
           </tbody>
@@ -48,20 +48,29 @@ export default {
   },
   methods: {
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_kabid').then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
     },
+    deleteCuti(event, cutiId) {
+      if (confirm('Apakah Anda yakin ingin menghapus?')) {
+        event.target.innerText = "Deleting";
+        axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
+          event.target.innerText = "Delete";
+          this.getDataPengajuanCuti();
+        })
+      }
+    },
     validasi(cutiId) {
-      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`).then(res => {
+      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kesbang/${cutiId}`).then(res => {
         this.getDataPengajuanCuti();
       }).catch(error => {
         console.error('Error updating data:', error);
       });
-    }
+    },
   }
 }
 </script>

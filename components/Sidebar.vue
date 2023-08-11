@@ -28,6 +28,36 @@
               <span class="menu-title">Rekap Cuti</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_acc_kabid">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Kabid</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_acc_kesbang_umum">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Kesbang</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_acc_sekretaris">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Sekretaris</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_acc_kadis">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Kadis</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_acc_selesai">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Selesai</span>
+            </a>
+          </li>
           <li class="nav-item nav-category">Data Pengguna</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">

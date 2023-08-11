@@ -45,8 +45,8 @@ import Swal from 'sweetalert2';
 import authMiddleware from '../middleware/auth';
 
 export default {
-  auth: true,
-  middleware: [authMiddleware],
+  // auth: true,
+  // middleware: [authMiddleware],
   data() {
     return {
       data_pegawai: []
