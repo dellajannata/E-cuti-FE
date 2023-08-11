@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="card-pegawai">
-        <h4 class="card-title">Data Pegajuan Cuti ACC Kesbang</h4>
+        <h4 class="card-title">Data Pegajuan Cuti Kadis</h4>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid').then(res => {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kadis').then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
@@ -64,7 +64,7 @@ export default {
       }
     },
     validasi(cutiId) {
-      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`).then(res => {
+      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kadis/${cutiId}`).then(res => {
         this.getDataPengajuanCuti();
       }).catch(error => {
         console.error('Error updating data:', error);
