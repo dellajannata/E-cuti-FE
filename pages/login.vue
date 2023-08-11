@@ -47,7 +47,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 export default {
 	name: "Login",
-	middleware: 'auth',
+	// middleware: 'auth',
 	data() {
 		return {
 			data_pengguna: {
@@ -67,14 +67,14 @@ export default {
 				if (typeof window !== 'undefined') {
 					localStorage.setItem('access_token', response.data.access_token);
 					// const response2 = await axios.get('http://127.0.0.1:8000/api/profile');
-					if (response.data.role) {
-						// Redirect pengguna ke halaman sesuai peran setelah login berhasil
-						if (response.data.role === 'admin_utama') {
-							this.$router.push('/data_pegawai');
-						} else if (response.data.role === 'user') {
-							this.$router.push('/dashboard');
-						}
-					}
+					// if (response.data.role) {
+					// 	// Redirect pengguna ke halaman sesuai peran setelah login berhasil
+					// 	if (response.data.role === 'admin_utama') {
+					// 		this.$router.push('/data_pegawai');
+					// 	} else if (response.data.role === 'user') {
+					// 		this.$router.push('/dashboard');
+					// 	}
+					// }
 				}
 				console.log(response.data.access_token);
 				this.backDashboard();
