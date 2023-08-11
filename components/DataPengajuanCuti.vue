@@ -33,7 +33,7 @@
               <td v-else>Proses ACC</td>
               <td>
                 <button @click="$event => editCuti($event, cuti.id)" class="btn btn-warning btn-sm">Edit</button>
-                <button @click="$event => deleteCuti($event, cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
+                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
             </tr>
           </tbody>
         </table>
@@ -43,6 +43,8 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 export default {
   data() {
     return {
@@ -66,16 +68,34 @@ export default {
         console.error('Error fetching data:', error);
       });
     },
-    deleteCuti(event, cutiId) {
-      if (confirm('Apakah Anda yakin ingin menghapus?')) {
-        event.target.innerText = "Deleting";
-        axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
-          event.target.innerText = "Delete";
-          this.getDataPengajuanCuti();
-        })
+    async deleteCuti(cutiId) {
+      try {
+        const result = await Swal.fire({
+          title: 'Apakah Anda yakin akan menghapus data?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, hapus data ini!'
+        });
+
+        if (result.isConfirmed) {
+          if (!this.rememberMe) {
+            const accessToken = localStorage.getItem('access_token');
+            await axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`);
+            Swal.fire(
+              'Berhasil!',
+              'Data Anda berhasil dihapus.',
+              'success',
+              this.getDataPengajuanCuti()
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
-    editCuti(event, cutiId) {
+    editCuti(cutiId) {
       axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
         this.getDataPengajuanCuti();
       });
