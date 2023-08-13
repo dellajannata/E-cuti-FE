@@ -13,40 +13,30 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-edit-pegawai">
-                            <h4 class="card-title">Edit Data Pegawai</h4>
+                            <h4 class="card-title">Edit Pengajuan Cuti</h4>
                             <a class="btn btn-primary" href="/data_pegawai">Kembali</a>
                         </div>
-                        <div v-for="(pegawai, index) in data_pegawai" :key="index">
-                            <form class="forms-sample" @submit.prevent="edit_data(pegawai.id)">
+                        <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
+                            <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" v-model="pegawai.nama" class="form-control" id="nama"
+                                    <label for="pegawai_id">Nama</label>
+                                    <input type="text" v-model="cuti.pegawai_id" class="form-control" id="pegawai_id"
                                         placeholder="Masukkan Nama Anda">
                                 </div>
                                 <div class="form-group">
-                                    <label for="jabatan">Jabatan</label>
-                                    <input type="text" v-model="pegawai.jabatan" class="form-control" id="jabatan"
-                                        placeholder="Masukkan Jabatan Anda">
+                                    <label for="tgl_awal">Tanggal Awal</label>
+                                    <input type="date" v-model="cuti.tgl_awal" class="form-control" id="tgl_awal"
+                                        placeholder="Masukkan Tanggal Awal Anda">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pangkat">Pangkat</label>
-                                    <input type="text" v-model="pegawai.pangkat" class="form-control" id="pangkat"
-                                        placeholder="Masukkan Pangkat Anda">
+                                    <label for="tgl_akhir">Tanggal Akhir</label>
+                                    <input type="date" v-model="cuti.tgl_akhir" class="form-control" id="tgl_akhir"
+                                        placeholder="Masukkan Tanggal Akhir Anda">
                                 </div>
                                 <div class="form-group">
-                                    <label for="nip">NIP</label>
-                                    <input type="text" v-model="pegawai.nip" class="form-control" id="nip"
-                                        placeholder="Masukkan NIP Anda">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alamat">Alamat</label>
-                                    <input type="text" v-model="pegawai.alamat" class="form-control" id="alamat"
-                                        placeholder="Masukkan Alamat Anda">
-                                </div>
-                                <div class="form-group">
-                                    <label for="unit_kerja">Unit Kreja</label>
-                                    <input type="text" v-model="pegawai.unit_kerja" class="form-control" id="unit_kerja"
-                                        placeholder="Masukkan Unit Kerja Anda">
+                                    <label for="alasan">Alasan</label>
+                                    <input type="text" v-model="cuti.alasan" class="form-control" id="alasan"
+                                        placeholder="Masukkan Alasan Anda">
                                 </div>
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                             </form>
@@ -80,24 +70,21 @@ export default {
     },
     data() {
         return {
-            pegawaiId: '',
-            data_pegawai: {
-                nama: '',
-                jabatan: '',
-                pangkat: '',
-                nip: '',
-                alamat: '',
-                unit_kerja: '',
-                dinas: '',
+            cutiId: '',
+            pengajuan_cuti: {
+                pegawai_id: '',
+                tgl_awal: '',
+                tgl_akhir: '',
+                alasan: '',
             },
             isLoading: false,
             isLoadingTitle: "Loading"
         }
     },
     mounted() {
-        this.pegawaiId = this.$route.params.id
+        this.cutiId = this.$route.params.id
         // alert(this.pegawaiId);
-        this.getPegawai(this.pegawaiId);
+        this.getPengajuanCuti(this.cutiId);
         // const token = localStorage.getItem('access_token');
         // if (!token) {
         //     //MAKA REDIRECT KE HALAMAN LOGIN
@@ -105,17 +92,17 @@ export default {
         // }
     },
     methods: {
-        getPegawai(pegawaiId) {
+        getPengajuanCuti(cutiId) {
             const accessToken = localStorage.getItem('access_token');
-            axios.get(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`).then(res => {
+            axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
                 console.log(res.data.data);
-                this.data_pegawai = res.data.data;
+                this.pengajuan_cuti = res.data.data;
             })
         },
-        async edit_data(pegawaiId) {
+        async edit_data(cutiId) {
             try {
                 const result = await Swal.fire({
-                    title: 'Apakah Anda yakin akan mengubah data?',
+                    title: 'Apakah Anda yakin akan mengubah data pengajuan cuti?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -125,26 +112,23 @@ export default {
 
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
-                        const data = this.data_pegawai[0];
+                        const data = this.pengajuan_cuti[0];
                         console.log(data);
                         const requestData = {
-                            nama: data.nama,
-                            jabatan: data.jabatan,
-                            pangkat: data.pangkat,
-                            nip: data.nip,
-                            alamat: data.alamat,
-                            unit_kerja: data.unit_kerja,
-                            dinas: data.dinas,
+                            pegawai_id: data.pegawai_id,
+                            tgl_awal: data.tgl_awal,
+                            tgl_akhir: data.tgl_akhir,
+                            alasan: data.alasan,
                         }
                         console.log(requestData);
 
 
                         try {
                             const accessToken = localStorage.getItem('access_token');
-                            const response = await axios.put(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, requestData);
+                            const response = await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, requestData);
                             console.log(response.data);
                             // alert(response.data.message);
-                            this.backDataPegawai();
+                            this.backDataPengajuanCuti();
 
                         } catch (error) {
                             console.error(error);
@@ -157,15 +141,15 @@ export default {
                             'Data Anda berhasil diubah.',
                             'success'
                         );
-                        this.backDataPegawai();
+                        this.backDataPengajuanCuti();
                     }
                 }
             } catch (error) {
                 console.error(error);
             }
         },
-        backDataPegawai() {
-            this.$router.push('/data_pegawai');
+        backDataPengajuanCuti() {
+            this.$router.push('/data_pengajuan_cuti');
         }
     }
 }

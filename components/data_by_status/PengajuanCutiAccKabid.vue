@@ -37,6 +37,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
@@ -55,12 +56,32 @@ export default {
         console.error('Error fetching data:', error);
       });
     },
-    validasi(cutiId) {
-      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`).then(res => {
-        this.getDataPengajuanCuti();
-      }).catch(error => {
-        console.error('Error updating data:', error);
-      });
+    async validasi(cutiId) {
+      try {
+        const result = await Swal.fire({
+          title: 'Apakah Anda yakin akan menyetujui pengajuan cuti?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, setuju!'
+        });
+
+        if (result.isConfirmed) {
+          if (!this.rememberMe) {
+            const accessToken = localStorage.getItem('access_token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`);
+            Swal.fire(
+              'Berhasil!',
+              'Pengajuan cuti berhasil disetujui.',
+              'success',
+              this.getDataPengajuanCuti()
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   }
 }

@@ -32,7 +32,7 @@
               </td>
               <td v-else>Proses ACC</td>
               <td>
-                <button @click="$event => editCuti($event, cuti.id)" class="btn btn-warning btn-sm">Edit</button>
+                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
             </tr>
           </tbody>
