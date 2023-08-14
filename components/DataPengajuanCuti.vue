@@ -22,7 +22,7 @@
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ cuti.pegawai_id }}</td>
+              <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -48,11 +48,13 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      data_cuti: []
+      data_cuti: [],
+      data_pegawai: [],
     }
   },
   mounted() {
     this.getDataPengajuanCuti();
+    this.getDataPegawai();
   },
   methods: {
     getDataPengajuanCuti() {
@@ -67,6 +69,19 @@ export default {
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
+    },
+    getDataPegawai(cuti) {
+      axios.get('http://127.0.0.1:8000/api/pegawai', {
+      }).then(res => {
+        console.log(res.data.data);
+        this.data_pegawai = res.data.data;
+      }).catch(error => {
+        console.error('Error fetching pegawai data:', error);
+      });
+    },
+    getNamaPegawai(pegawaiId) {
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+      return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
     },
     async deleteCuti(cutiId) {
       try {
