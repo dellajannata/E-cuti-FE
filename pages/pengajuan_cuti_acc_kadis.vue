@@ -9,7 +9,7 @@
             <!-- partial:partials/_sidebar.html -->
             <Sidebar />
             <!-- partial -->
-            <DataPegawai />
+            <CutiAccKadis />
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <!-- <Footer/> -->
@@ -23,23 +23,14 @@
 <script>
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import DataPegawai from '../components/DataPegawai.vue';
-import authMiddleware from '../middleware/auth';
+import CutiAccKadis from '../components/data_by_status/PengajuanCutiAccKadis.vue';
 
 export default {
-    // auth: true,
-    // middleware: [authMiddleware],
+    // middleware:'auth',
     components: {
         Sidebar,
         Navbar,
-        DataPegawai
-    },
-    // mounted() {
-    //     const token = localStorage.getItem('access_token');
-    //     if (!token) {
-    //         //MAKA REDIRECT KE HALAMAN LOGIN
-    //         this.$router.push('/login')
-    //     }
-    // },
+        CutiAccKadis
+    }
 }
 </script>

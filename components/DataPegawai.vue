@@ -30,8 +30,8 @@
               <td>{{ pegawai.unit_kerja }}</td>
               <td>
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
+                <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>
-              <td><button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button></td>
             </tr>
           </tbody>
         </table>
@@ -45,8 +45,8 @@ import Swal from 'sweetalert2';
 import authMiddleware from '../middleware/auth';
 
 export default {
-  auth: true,
-  middleware: [authMiddleware],
+  // auth: true,
+  // middleware: [authMiddleware],
   data() {
     return {
       data_pegawai: []

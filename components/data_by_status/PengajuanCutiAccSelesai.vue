@@ -2,8 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="card-pegawai">
-        <h4 class="card-title">Data Pegajuan Cuti</h4>
-        <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
+        <h4 class="card-title">Data Pegajuan Cuti ACC Selesai</h4>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -14,9 +13,8 @@
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
-              <th>Status</th>
-              <th>Keterangan</th>
               <th>Action</th>
+
             </tr>
           </thead>
           <tbody>
@@ -26,14 +24,9 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td>{{ cuti.status }}</td>
-              <td v-if="cuti.status == 'Selesai'">
-                <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
-              </td>
-              <td v-else>Proses ACC</td>
               <td>
-                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
-                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
+                <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -44,7 +37,6 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
 export default {
   data() {
     return {
@@ -56,36 +48,31 @@ export default {
   },
   methods: {
     getDataPengajuanCuti() {
-      // const token = localStorage.getItem('access_token');
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
-        // headers: {
-        //   'Authorization': 'Bearer ${token}'
-        // }
-      }).then(res => {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_selesai').then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
     },
-    async deleteCuti(cutiId) {
+    async validasi(cutiId) {
       try {
         const result = await Swal.fire({
-          title: 'Apakah Anda yakin akan menghapus data?',
+          title: 'Apakah Anda yakin akan menyetujui pengajuan cuti?',
           icon: 'question',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya, hapus data ini!'
+          confirmButtonText: 'Ya, setuju!'
         });
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('access_token');
-            await axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`);
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_selesai/${cutiId}`);
             Swal.fire(
               'Berhasil!',
-              'Data Anda berhasil dihapus.',
+              'Pengajuan cuti berhasil disetujui.',
               'success',
               this.getDataPengajuanCuti()
             );
@@ -95,26 +82,6 @@ export default {
         console.error(error);
       }
     },
-    editCuti(cutiId) {
-      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
-        this.getDataPengajuanCuti();
-      });
-    },
-    cetakPDF(event, cutiId) {
-      axios.get(`http://127.0.0.1:8000/api/cetak-pdf/${cutiId}`, {
-        responseType: 'blob'
-      }).then(response => {
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.click();
-      }).catch(error => {
-        console.error('Error fetching PDF:', error);
-      });
-    }
   }
 }
 </script>

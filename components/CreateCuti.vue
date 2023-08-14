@@ -25,13 +25,8 @@
                             <input type="text" v-model="data_pengajuan_cuti.alasan" class="form-control" id="alasan" placeholder="Masukkan Alasan Anda">
                         </div>
                         <div class="form-check form-check-flat form-check-primary">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                                Remember me
-                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                        <button class="btn btn-light">Cancel</button>
                     </form>
                 </div>
             </div>
