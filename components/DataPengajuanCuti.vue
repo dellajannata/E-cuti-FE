@@ -1,8 +1,11 @@
 <template>
   <div class="card">
+    <h4 class="card-title">Data Pegajuan Cuti</h4>
     <div class="card-body">
       <div class="card-pegawai">
-        <h4 class="card-title">Data Pegajuan Cuti</h4>
+        <div class="search">
+          <input class="search__input" type="text" placeholder="Search" v-model="searchQuery" @input="search">
+        </div>
         <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
       </div>
       <div class="table-responsive">
@@ -33,7 +36,8 @@
               <td v-else>Proses ACC</td>
               <td>
                 <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
-                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button></td>
+                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -50,6 +54,7 @@ export default {
     return {
       data_cuti: [],
       data_pegawai: [],
+      searchQuery: ""
     }
   },
   mounted() {
@@ -57,6 +62,20 @@ export default {
     this.getDataPegawai();
   },
   methods: {
+    search() {
+      if (this.searchQuery !== "") {
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+          .then(res => {
+            console.log(res.data.data);
+            this.data_cuti = res.data.data;
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      } else {
+        this.getDataPengajuanCuti();
+      }
+    },
     getDataPengajuanCuti() {
       // const token = localStorage.getItem('access_token');
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
@@ -70,7 +89,7 @@ export default {
         console.error('Error fetching data:', error);
       });
     },
-    getDataPegawai(cuti) {
+    getDataPegawai() {
       axios.get('http://127.0.0.1:8000/api/pegawai', {
       }).then(res => {
         console.log(res.data.data);

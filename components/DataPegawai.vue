@@ -1,8 +1,11 @@
 <template>
   <div class="card">
     <div class="card-body">
+      <h4 class="card-title">Data Pegawai</h4>
       <div class="card-pegawai">
-        <h4 class="card-title">Data Pegawai</h4>
+        <div class="search">
+          <input class="search__input" type="text" placeholder="Search" v-model="searchQuery" @input="search">
+        </div>
         <a class="btn btn-success" href="/create_pegawai">Tambah</a>
       </div>
       <div class="table-responsive">
@@ -49,9 +52,24 @@ export default {
   // middleware: [authMiddleware],
   data() {
     return {
-      data_pegawai: []
+      data_pegawai: [],
+      searchQuery: ""
     }
   },
+  // computed: {
+  //   filteredPegawai() {
+  //     if (this.searchQuery === "") {
+  //       return this.data_pegawai;
+  //     } else {
+  //       const lowercaseQuery = this.searchQuery.toLowerCase();
+  //       return this.data_pegawai.filter(pegawai =>
+  //         pegawai.nama.toLowerCase().includes(lowercaseQuery) ||
+  //         pegawai.jabatan.toLowerCase().includes(lowercaseQuery) ||
+  //         pegawai.pangkat.toLowerCase().includes(lowercaseQuery)
+  //       );
+  //     }
+  //   }
+  // },
   mounted() {
     this.getDataPegawai();
   },
@@ -64,6 +82,20 @@ export default {
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
+    },
+    search() {
+      if (this.searchQuery !== "") {
+        axios.get(`http://127.0.0.1:8000/api/pegawai/search/${this.searchQuery}`)
+          .then(res => {
+            console.log(res.data.data);
+            this.data_pegawai = res.data.data;
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      } else {
+        this.getDataPegawai();
+      }
     },
     async deletePegawai(pegawaiId) {
       try {
