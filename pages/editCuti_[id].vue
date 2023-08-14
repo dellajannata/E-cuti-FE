@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="card-edit-pegawai">
                             <h4 class="card-title">Edit Pengajuan Cuti</h4>
-                            <a class="btn btn-primary" href="/data_pegawai">Kembali</a>
+                            <a class="btn btn-primary" href="/data_pengajuan_cuti">Kembali</a>
                         </div>
                         <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">

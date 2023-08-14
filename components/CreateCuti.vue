@@ -10,11 +10,12 @@
                     <form class="forms-sample" @submit.prevent="save_data">
                         <div class="form-group">
                             <label for="pegawai_id">Pegawai ID</label>
-                            <input type="text"  v-model="data_pengajuan_cuti.pegawai_id" class="form-control" id="pegawai_id" placeholder="Masukkan Jenis Cuti Anda">
+                            <input type="text" v-model="data_pengajuan_cuti.pegawai_id" class="form-control" id="pegawai_id"
+                                placeholder="Masukkan Jenis Cuti Anda">
                         </div>
                         <div class="form-group">
                             <label for="tgl_awal">Tanggal Awal</label>
-                            <input type="date" v-model="data_pengajuan_cuti.tgl_awal" class="form-control" id="tgl_awal" >
+                            <input type="date" v-model="data_pengajuan_cuti.tgl_awal" class="form-control" id="tgl_awal">
                         </div>
                         <div class="form-group">
                             <label for="tgl_akhir">Tanggal Akhir</label>
@@ -22,7 +23,8 @@
                         </div>
                         <div class="form-group">
                             <label for="alasan">Alasan</label>
-                            <input type="text" v-model="data_pengajuan_cuti.alasan" class="form-control" id="alasan" placeholder="Masukkan Alasan Anda">
+                            <input type="text" v-model="data_pengajuan_cuti.alasan" class="form-control" id="alasan"
+                                placeholder="Masukkan Alasan Anda">
                         </div>
                         <div class="form-check form-check-flat form-check-primary">
                         </div>
@@ -35,12 +37,13 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export default {
     name: "CreatePengajuanCuti",
     data() {
         return {
             data_pengajuan_cuti: {
-                pegawai_id:'',
+                pegawai_id: '',
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
@@ -51,26 +54,56 @@ export default {
     },
     methods: {
         async save_data() {
-            this.isLoading = true;
-            this.isLoadingTitle = "Saving";
-            const requestData = this.data_pengajuan_cuti;
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/pengajuan_cuti', requestData);
-                console.log(response.data);
-                alert("Data Berhasil Ditambahkan");
+                const result = await Swal.fire({
+                    title: 'Apakah Anda yakin akan menyimpan data?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                });
 
-                this.data_pengajuan_cuti.pegawai_id = '';
-                this.data_pengajuan_cuti.tgl_awal = '';
-                this.data_pengajuan_cuti.tgl_akhir = '';
-                this.data_pengajuan_cuti.alasan = '';
+                if (result.isConfirmed) {
+                    if (!this.rememberMe) {
+                        this.errorList = {};
+                        const requiredFields = ['pegawai_id', 'tgl_awal', 'tgl_akhir', 'alasan'];
+                        let hasError = false;
+                        for (const field of requiredFields) {
+                            if (!this.data_pengajuan_cuti[field]) {
+                                this.errorList[field] = 'Field is required.';
+                                hasError = true;
+                            } else {
+                                this.errorList[field] = null;
+                            }
+                        }
+                        if (hasError) {
+                            return;
+                        }
 
-                this.isLoading = false;
-                this.isLoadingTitle = "Loading";
+                        const requestData = this.data_pengajuan_cuti;
+                        const accessToken = localStorage.getItem('access_token');
+                        const response = await axios.post('http://127.0.0.1:8000/api/pengajuan_cuti', requestData);
 
+                        this.data_pengajuan_cuti.pegawai_id = '';
+                        this.data_pengajuan_cuti.tgl_awal = '';
+                        this.data_pengajuan_cuti.tgl_akhir = '';
+                        this.data_pengajuan_cuti.alasan = '';
+                        Swal.fire(
+                            'Berhasil!',
+                            'Data Anda berhasil tersimpan.',
+                            'success'
+                        );
+                        this.backDataPengajuanCuti();
+                    }
+                }
+            } catch (error) {
+                console.error(error);
             }
-            catch (error) {
-                console.error(error)
-            };
+        },
+
+        backDataPengajuanCuti() {
+            this.$router.push('/data_pengajuan_cuti');
         }
     }
 }

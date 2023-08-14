@@ -14,7 +14,6 @@
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
               <th>Action</th>
-
             </tr>
           </thead>
           <tbody>
@@ -45,6 +44,11 @@ export default {
   },
   mounted() {
     this.getDataPengajuanCuti();
+  },
+  computed: {
+    filteredCutiList() {
+      return this.data_cuti.filter(cuti => cuti.pegawai_id === 11);
+    },
   },
   methods: {
     getDataPengajuanCuti() {

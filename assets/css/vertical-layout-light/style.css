@@ -32404,7 +32404,7 @@ div.tagsinput span.tag a {
   font-family: "Manrope", sans-serif;
   font-weight: 500;
   padding: 0;
-  width: 198px;
+  width: 200px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
@@ -32415,7 +32415,7 @@ div.tagsinput span.tag a {
 }
 
 .sidebar .nav {
-  overflow: hidden;
+  overflow:auto;
   flex-wrap: nowrap;
   flex-direction: column;
   margin-bottom: 60px;
@@ -32813,7 +32813,7 @@ div.tagsinput span.tag a {
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
-  width: 198px;
+  width: 215px;
   height: 75px;
   padding: 20px 35px;
   border-right: 1px solid grey;
@@ -32945,7 +32945,7 @@ div.tagsinput span.tag a {
   padding-right: 2.187rem;
   padding-top: 20px;
   padding-bottom: 25px;
-  width: calc(100% - 198px);
+  width: calc(100% - 215px);
   height: 75px;
   float: none;
   /* border-bottom: 1px solid #F6F4F1; */
@@ -35720,4 +35720,5 @@ div.tagsinput span.tag a {
     display: none;
   }
 }
+
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
