@@ -28,15 +28,15 @@ import Content from '../components/Content.vue';
 import authMiddleware from '../middleware/auth';
 
 export default {
-    auth: true,
-    middleware: [authMiddleware],
-    beforeMount(){
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            //MAKA REDIRECT KE HALAMAN LOGIN
-            this.$router.push('/login')
-        }
-    },
+    // auth: true,
+    // middleware: [authMiddleware],
+    // beforeMount(){
+    //     const token = localStorage.getItem('access_token');
+    //     if (!token) {
+    //         //MAKA REDIRECT KE HALAMAN LOGIN
+    //         this.$router.push('/login')
+    //     }
+    // },
     components: {
         Sidebar,
         Navbar,
