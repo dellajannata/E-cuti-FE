@@ -56,20 +56,6 @@ export default {
       searchQuery: ""
     }
   },
-  // computed: {
-  //   filteredPegawai() {
-  //     if (this.searchQuery === "") {
-  //       return this.data_pegawai;
-  //     } else {
-  //       const lowercaseQuery = this.searchQuery.toLowerCase();
-  //       return this.data_pegawai.filter(pegawai =>
-  //         pegawai.nama.toLowerCase().includes(lowercaseQuery) ||
-  //         pegawai.jabatan.toLowerCase().includes(lowercaseQuery) ||
-  //         pegawai.pangkat.toLowerCase().includes(lowercaseQuery)
-  //       );
-  //     }
-  //   }
-  // },
   mounted() {
     this.getDataPegawai();
   },

@@ -5,10 +5,10 @@
             <div class="card-body"> 
                 <h3 class="card-title">Total Pegawai</h3>
                 <div class="d-inline-block">
-                    <h2>4565</h2>
+                    <h2>{{ data_pegawai.length }}</h2>
                     <p>Uhuuyy</p>
                 </div>
-                <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                <span class="float-right display-5 opacity-5"><i class="mdi mdi-account"></i></span>
             </div>
         </div>
     </div>       
@@ -19,10 +19,10 @@
             <div class="card-body"> 
                 <h3 class="card-title">Pengajuan Cuti</h3>
                 <div class="d-inline-block">
-                    <h2>12</h2>
+                    <h2>{{ data_cuti.length }}</h2>
                     <p class="text-white">Ayeee ayee</p>
                 </div>
-                <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
             </div>
         </div>
     </div>                                                                                                                                                                                                
@@ -30,47 +30,33 @@
 <script>
 import axios from 'axios';
 export default {
-    name: "logout",
-    middleware: ['auth'] ,
     data() {
-        return {
-            data_pengguna: {
-                email: '',
-                password: '',
-            },
-            isLoading: false,
-            isLoadingTitle: "Loading"
-        }
-    },
-    methods: {
-        async logout() {
-            this.isLoading = true;
-            this.isLoadingTitle = "Saving";
-            const requestData = this.data_pengguna;
-            try {
-                const accessToken = localStorage.getItem('access_token');
-                const response = await axios.post('http://127.0.0.1:8000/api/logout', requestData);
-                console.log("Logout successful.");
-                this.removeTokenFromLocalStorage();
-                this.backLogin();
-
-                this.isLoading = false;
-                this.isLoadingTitle = "Loading";
-
-            }
-            catch (error) {
-                console.error(error)
-            };
-        },
-        backLogin() {
-            this.$router.push('/login');
-        },
-        removeTokenFromLocalStorage() {
-            localStorage.removeItem('access_token');
-            this.isLoading = false;
-            this.isLoadingTitle = "Loading";
-            this.backLogin();
-        }
+    return {
+      data_pegawai: [],
+      data_cuti: []
     }
+  },
+  mounted() {
+    this.getDataPegawai();
+    this.getDataPengajuanCuti();
+  },
+  methods: {
+    getDataPegawai() {
+      axios.get('http://127.0.0.1:8000/api/pegawai').then(res => {
+        console.log(res.data.data);
+        this.data_pegawai = res.data.data;
+      }).catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    },
+    getDataPengajuanCuti() {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+        console.log(res.data.data);
+        this.data_cuti = res.data.data;
+      }).catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    },
 }
+};
 </script>
