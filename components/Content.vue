@@ -3,7 +3,7 @@
     <div class="col-lg-3 col-sm-6">
         <div class="card1"> 
             <div class="card-body"> 
-                <h3 class="card-title">Total Pegawai</h3>
+                <h4 class="card-title">Total Pegawai</h4>
                 <div class="d-inline-block">
                     <h2>{{ data_pegawai.length }}</h2>
                     <p>Uhuuyy</p>
@@ -17,7 +17,7 @@
     <div class="col-lg-3 col-sm-6">
         <div class="card1"> 
             <div class="card-body"> 
-                <h3 class="card-title">Pengajuan Cuti</h3>
+                <h4 class="card-title">Pengajuan Cuti</h4>
                 <div class="d-inline-block">
                     <h2>{{ data_cuti.length }}</h2>
                     <p class="text-white">Ayeee ayee</p>

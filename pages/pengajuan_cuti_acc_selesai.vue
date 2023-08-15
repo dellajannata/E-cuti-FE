@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarSelesai />
             <!-- partial -->
             <CutiAccSelesai />
             <!-- content-wrapper ends -->
@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarSelesai from '../components/SidebarSelesai.vue';
 import Navbar from '../components/Navbar.vue';
 import CutiAccSelesai from '../components/data_by_status/PengajuanCutiAccSelesai.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        Sidebar,
+        SidebarSelesai,
         Navbar,
         CutiAccSelesai
     }

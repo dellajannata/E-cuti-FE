@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarSekretaris />
             <!-- partial -->
             <CutiAccSekretaris />
             <!-- content-wrapper ends -->
@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarSekretaris from '../components/SidebarSekretaris.vue';
 import Navbar from '../components/Navbar.vue';
 import CutiAccSekretaris from '../components/data_by_status/PengajuanCutiAccSekretaris.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        Sidebar,
+        SidebarSekretaris,
         Navbar,
         CutiAccSekretaris
     }

@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarAccKabid />
             <!-- partial -->
             <CutiAccKabid />
             <!-- content-wrapper ends -->
@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarAccKabid from '../components/SidebarAccKabid.vue';
 import Navbar from '../components/Navbar.vue';
 import CutiAccKabid from '../components/data_by_status/PengajuanCutiAccKabid.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        Sidebar,
+        SidebarAccKabid,
         Navbar,
         CutiAccKabid
     }

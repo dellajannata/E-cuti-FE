@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarAccKesbang />
             <!-- partial -->
             <CutiAccKesbang />
             <!-- content-wrapper ends -->
@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarAccKesbang from '../components/SidebarAccKesbang.vue';
 import Navbar from '../components/Navbar.vue';
 import CutiAccKesbang from '../components/data_by_status/PengajuanCutiAccKesbang.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        Sidebar,
+        SidebarAccKesbang,
         Navbar,
         CutiAccKesbang
     }

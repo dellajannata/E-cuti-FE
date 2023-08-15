@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarPegawai />
             <!-- partial -->
             <DataPegawai />
             <!-- content-wrapper ends -->
@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 import DataPegawai from '../components/DataPegawai.vue';
 import authMiddleware from '../middleware/auth';
@@ -30,7 +30,7 @@ export default {
     // auth: true,
     // middleware: [authMiddleware],
     components: {
-        Sidebar,
+        SidebarPegawai,
         Navbar,
         DataPegawai
     },
