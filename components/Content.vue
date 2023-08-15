@@ -6,7 +6,7 @@
                 <h4 class="card-title">Total Pegawai</h4>
                 <div class="d-inline-block">
                     <h2>{{ data_pegawai.length }}</h2>
-                    <p>Uhuuyy</p>
+                    <p class="text-white">Uhuuyy</p>
                 </div>
                 <span class="float-right display-5 opacity-5"><i class="mdi mdi-account"></i></span>
             </div>
@@ -25,7 +25,21 @@
                 <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
             </div>
         </div>
-    </div>                                                                                                                                                                                                
+    </div>     
+    
+    <!-- Rekap Cuti -->
+    <div class="col-lg-3 col-sm-6">
+        <div class="card1"> 
+            <div class="card-body"> 
+                <h4 class="card-title">Rekap Cuti</h4>
+                <div class="d-inline-block">
+                    <h2>{{ data_cuti.length }}</h2>
+                    <p class="text-white">Uhuyeeyee</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import axios from 'axios';

@@ -35804,16 +35804,16 @@ div.tagsinput span.tag a {
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 170px;
+  height: 160px;
   margin-top: 30px;
   margin-left: 30px;
   word-wrap: break-word;
   /* background-color: #fff; */
   background-clip: border-box;
-  background: rgb(236,29,29);
-  background: linear-gradient(0deg, rgba(236,29,29,1) 0%, rgba(253,187,45,1) 100%);
+  background: rgb(253,177,45);
+  background: linear-gradient(315deg, rgba(253,177,45,1) 0%, rgba(253,45,45,1) 100%);
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem; }
+  border-radius: 0.80rem; }
   .card > hr {
     margin-right: 0;
     margin-left: 0; }
