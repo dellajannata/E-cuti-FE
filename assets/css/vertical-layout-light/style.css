@@ -32449,6 +32449,7 @@ div.tagsinput span.tag a {
   transition-property: color;
   -webkit-transition-property: color;
   font-weight: 400;
+  
 }
 
 @media (max-width: 991px) {
