@@ -1,7 +1,7 @@
 <template>
     <!-- Pegawai -->
     <div class="col-lg-3 col-sm-6">
-        <div class="card"> 
+        <div class="card1"> 
             <div class="card-body"> 
                 <h3 class="card-title">Total Pegawai</h3>
                 <div class="d-inline-block">
@@ -15,7 +15,7 @@
     
     <!-- Pengajuan Cuti -->
     <div class="col-lg-3 col-sm-6">
-        <div class="card"> 
+        <div class="card1"> 
             <div class="card-body"> 
                 <h3 class="card-title">Pengajuan Cuti</h3>
                 <div class="d-inline-block">
