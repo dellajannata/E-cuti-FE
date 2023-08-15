@@ -32440,7 +32440,7 @@ div.tagsinput span.tag a {
   -webkit-align-items: center;
   align-items: center;
   white-space: nowrap;
-  padding: 10px 35px 10px 35px;
+  padding: 10px 35px 10px 5px;
   color: #484848;
   border-radius: 0px 20px 20px 0px;
   -webkit-transition-duration: 0.45s;
@@ -32575,7 +32575,7 @@ div.tagsinput span.tag a {
 .sidebar .nav .nav-item.nav-category {
   color: #404040;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-  margin: 0 30px;
+  margin: 0 0px;
   font-size: 11px;
   font-weight: 700;
   padding: 20px 0px 5px 0px;
@@ -32601,6 +32601,7 @@ div.tagsinput span.tag a {
 .sidebar .nav:not(.sub-menu)>.nav-item:hover[aria-expanded="true"] {
   background: #B1141D;
   color: #fff;
+  
 }
 
 .sidebar .nav:not(.sub-menu)>.nav-item>.nav-link {
