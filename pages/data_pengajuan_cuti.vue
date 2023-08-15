@@ -7,7 +7,7 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarPegawai />
             <!-- partial -->
             <DataPengajuanCuti />
             <!-- content-wrapper ends -->
@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 import DataPengajuanCuti from '../components/DataPengajuanCuti.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        Sidebar,
+        SidebarPegawai,
         Navbar,
         DataPengajuanCuti
     }
