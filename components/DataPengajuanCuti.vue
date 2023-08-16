@@ -4,7 +4,7 @@
     <div class="card-body">
       <div class="card-pegawai">
         <div class="search">
-          <input class="search__input" type="text" placeholder="Search" v-model="searchQuery" @input="search">
+          <input class="search__input" type="text" placeholder="Nama / unit kerja" v-model="searchQuery" @input="search">
         </div>
         <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
       </div>
