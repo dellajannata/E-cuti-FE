@@ -31,7 +31,7 @@
               <td>{{ pegawai.nip }}</td>
               <td>{{ pegawai.alamat }}</td>
               <td>{{ pegawai.unit_kerja }}</td>
-              <td>
+              <td class="btn-action">
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>

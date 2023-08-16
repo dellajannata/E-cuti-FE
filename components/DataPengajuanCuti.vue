@@ -36,7 +36,7 @@
                 <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
               </td>
               <td v-else>Proses ACC</td>
-              <td>
+              <td class="btn-action">
                 <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>
