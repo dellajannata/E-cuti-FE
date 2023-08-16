@@ -35736,13 +35736,13 @@ div.tagsinput span.tag a {
   border: none;
   border-radius: 10px;
   background-color: #f2f2f2;
-  color: #333;
+  color: #766f6f;
   transition: background-color 0.3s, box-shadow 0.3s;
   position: relative;
 }
 
 .search__input:focus {
-  background-color: #fff;
+  background-color: #484848 75%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -35911,4 +35911,29 @@ div.tagsinput span.tag a {
   display: flex;
   flex-direction: row;
   gap:1em;
+}
+
+@media screen and (max-width: 820px) {
+  .card-dashboard {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (max-width: 576px) {
+  .card-dashboard {
+    display: grid;
+    grid-template-columns: auto;
+  }
+}
+@media screen and (min-width: 820px) {
+  .card-dashboard {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (min-width: 1120px) {
+  .card-dashboard {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
 }
