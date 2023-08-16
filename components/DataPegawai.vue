@@ -4,7 +4,7 @@
       <h4 class="card-title">Data Pegawai</h4>
       <div class="card-pegawai">
         <div class="search">
-          <input class="search__input" type="text" placeholder="Search" v-model="searchQuery" @input="search">
+          <input class="search__input" type="text" placeholder="Nama / unit kerja" v-model="searchQuery" @input="search">
         </div>
         <a class="btn btn-success" href="/create_pegawai">Tambah</a>
       </div>
@@ -37,8 +37,9 @@
                 </template>
                 <template v-else>
                   {{ pegawai.unit_kerja }}
-                </template></td>
-              <td>
+                </template>
+              </td>
+              <td class="btn-action">
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>

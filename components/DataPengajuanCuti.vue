@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <h4 class="card-title">Data Pegajuan Cuti</h4>
     <div class="card-body">
+      <h4 class="card-title">Data Pegajuan Cuti</h4>
       <div class="card-pegawai">
         <div class="search">
-          <input class="search__input" type="text" placeholder="Search" v-model="searchQuery" @input="search">
+          <input class="search__input" type="text" placeholder="Nama / unit kerja" v-model="searchQuery" @input="search">
         </div>
         <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
       </div>
@@ -42,7 +42,7 @@
                 <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
               </td>
               <td v-else>Proses ACC</td>
-              <td>
+              <td class="btn-action">
                 <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>

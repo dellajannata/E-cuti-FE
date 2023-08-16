@@ -35862,3 +35862,9 @@ div.tagsinput span.tag a {
 
 [data-container="boxed"] .content-body .container-fluid {
   padding: 0.9375rem 0 0; }
+
+.btn-action{
+  display: flex;
+  flex-direction: row;
+  gap:1em;
+}
