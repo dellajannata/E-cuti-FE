@@ -30,7 +30,14 @@
               <td>{{ pegawai.pangkat }}</td>
               <td>{{ pegawai.nip }}</td>
               <td>{{ pegawai.alamat }}</td>
-              <td>{{ pegawai.unit_kerja }}</td>
+              <td><template v-if="pegawai.unit_kerja.length > 3">
+                  {{ pegawai.unit_kerja.split(' ').slice(0, 3).join('  ') }}
+                  <br><br>
+                  {{ pegawai.unit_kerja.split(' ').slice(3).join('  ') }}
+                </template>
+                <template v-else>
+                  {{ pegawai.unit_kerja }}
+                </template></td>
               <td>
                 <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm">Hapus</button>
