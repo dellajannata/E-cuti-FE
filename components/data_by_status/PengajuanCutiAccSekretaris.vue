@@ -28,8 +28,9 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td>
+              <td class="btn-action">
                 <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
+                <button @click="validasiTolak(cuti.id)" class="btn btn-danger btn-sm">Tolak</button>
               </td>
             </tr>
           </tbody>
@@ -107,6 +108,33 @@ export default {
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil disetujui.',
+              'success',
+              this.getDataPengajuanCuti()
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async validasiTolak(cutiId) {
+      try {
+        const result = await Swal.fire({
+          title: 'Apakah Anda yakin akan menolak pengajuan cuti?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, tolak!'
+        });
+
+        if (result.isConfirmed) {
+          if (!this.rememberMe) {
+            const accessToken = localStorage.getItem('access_token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak/${cutiId}`);
+            Swal.fire(
+              'Berhasil!',
+              'Pengajuan cuti berhasil ditolak.',
               'success',
               this.getDataPengajuanCuti()
             );
