@@ -1,12 +1,12 @@
 <template>
   <div class="card">
     <div class="card-body">
-    <h4 class="card-title">Data Pegajuan Cuti</h4>
+    <h4 class="card-title">Rekapan Cuti Pegawai</h4>
       <div class="card-pegawai">
-        <div class="search">
-          <input class="search__input" type="text" placeholder="Nama / unit kerja" v-model="searchQuery" @input="search">
+        <div class="search__container">
+          <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+          <i class="fa fa-search search__icon"></i>
         </div>
-        <a class="btn btn-primary" href="/create_pengajuan_cuti">Tambah</a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -19,27 +19,23 @@
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
               <th>Status</th>
-              <th>Keterangan</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
-              <td>{{ getUnitKerja(cuti.pegawai_id) }}</td>
+              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+                </template>
+                <template v-else>
+                  {{ getUnitKerja(cuti.pegawai_id) }}
+                </template></td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
               <td>{{ cuti.status }}</td>
-              <td v-if="cuti.status == 'Selesai'">
-                <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
-              </td>
-              <td v-else>Proses ACC</td>
-              <td class="btn-action">
-                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
-                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -69,7 +65,7 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data;
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai");
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -108,53 +104,6 @@ export default {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
-    async deleteCuti(cutiId) {
-      try {
-        const result = await Swal.fire({
-          title: 'Apakah Anda yakin akan menghapus data?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya, hapus data ini!'
-        });
-
-        if (result.isConfirmed) {
-          if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`);
-            Swal.fire(
-              'Berhasil!',
-              'Data Anda berhasil dihapus.',
-              'success',
-              this.getDataPengajuanCuti()
-            );
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    editCuti(cutiId) {
-      axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
-        this.getDataPengajuanCuti();
-      });
-    },
-    cetakPDF(event, cutiId) {
-      axios.get(`http://127.0.0.1:8000/api/cetak-pdf/${cutiId}`, {
-        responseType: 'blob'
-      }).then(response => {
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.click();
-      }).catch(error => {
-        console.error('Error fetching PDF:', error);
-      });
-    }
   }
 }
 </script>

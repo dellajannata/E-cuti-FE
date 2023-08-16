@@ -35724,9 +35724,14 @@ div.tagsinput span.tag a {
 
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
 /* Styling untuk input pencarian */
+.search__container {
+  position: relative;
+}
+
 .search__input {
   width: 100%;
   padding: 8px 85px 10px 20px;
+  padding-left: 40px;
   font-size: 15px;
   border: none;
   border-radius: 10px;
@@ -35762,6 +35767,13 @@ div.tagsinput span.tag a {
   font-size: 18px;
 }
 
+.search__icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  padding-right: 10px;
+  transform: translateY(-50%);
+}
 
 /* Dashboard */
 #main-wrapper {
@@ -35836,6 +35848,38 @@ div.tagsinput span.tag a {
 
 .float-right {
   float: right !important; }
+
+.small-box {
+  border-radius: 0.25rem;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.small-box-footer {
+  color: white;
+}
+
+.small-box > .inner {
+  padding: 10px;
+}
+
+.small-box > .small-box-footer {
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  color: black !important;
+  display: block;
+  padding: 3px 0;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.small-box > .small-box-footer:hover {
+  /* background-color: rgba(0, 0, 0, 0.15); */
+  color: black !important;
+}
 
 @media (max-width: 767px) {
   .content-body .container-fluid {
