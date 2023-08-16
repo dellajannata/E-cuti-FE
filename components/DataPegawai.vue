@@ -3,8 +3,9 @@
     <div class="card-body">
       <h4 class="card-title">Data Pegawai</h4>
       <div class="card-pegawai">
-        <div class="search">
+        <div class="search__container">
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+          <i class="fa fa-search search__icon"></i>
         </div>
         <a class="btn btn-success" href="/create_pegawai">Tambah</a>
       </div>
