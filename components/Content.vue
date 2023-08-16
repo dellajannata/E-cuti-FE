@@ -1,4 +1,5 @@
 <template>
+  <div class="card-dashboard">
     <!-- Pegawai -->
     <div class="col-lg-3 col-sm-6">
         <div class="card1"> 
@@ -40,6 +41,7 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 <script>
 import axios from 'axios';
