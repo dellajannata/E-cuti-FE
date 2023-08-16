@@ -4,7 +4,7 @@
       <h4 class="card-title">Data Pegawai</h4>
       <div class="card-pegawai">
         <div class="search">
-          <input class="search__input" type="text" placeholder="Nama / unit kerja" v-model="searchQuery" @input="search">
+          <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
         </div>
         <a class="btn btn-success" href="/create_pegawai">Tambah</a>
       </div>
@@ -116,6 +116,12 @@ export default {
         }
       } catch (error) {
         console.error(error);
+        Swal.fire(
+              'Gagal!',
+              'Data Anda gagal dihapus karena telah melakukan pengajuan cuti.',
+              'warning',
+              this.getDataPegawai()
+            );
       }
     },
   }
