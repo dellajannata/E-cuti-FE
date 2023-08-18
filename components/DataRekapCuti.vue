@@ -15,10 +15,7 @@
               <th>No.</th>
               <th>Nama</th>
               <th>Unit Kerja</th>
-              <th>Tanggal Awal</th>
-              <th>Tanggal Akhir</th>
-              <th>Alasan</th>
-              <th>Status</th>
+              <th>Total Pegajuan Cuti</th>
             </tr>
           </thead>
           <tbody>
@@ -32,10 +29,7 @@
                 <template v-else>
                   {{ getUnitKerja(cuti.pegawai_id) }}
                 </template></td>
-              <td>{{ cuti.tgl_awal }}</td>
-              <td>{{ cuti.tgl_akhir }}</td>
-              <td>{{ cuti.alasan }}</td>
-              <td>{{ cuti.status }}</td>
+              <td>{{ getTotalCuti(cuti.pegawai_id) }}</td>
             </tr>
           </tbody>
         </table>
@@ -104,6 +98,13 @@ export default {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
+    getTotalCuti(pegawaiId) {
+      const totalCutiSelesai = this.data_cuti
+        .filter(cuti => cuti.pegawai_id === pegawaiId && cuti.status === "Selesai")
+        .length;
+
+      return totalCutiSelesai;
+    }
   }
 }
 </script>
