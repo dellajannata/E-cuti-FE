@@ -19,6 +19,7 @@
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
+              <th>Tanggal Pengajuan</th>
               <th>Status</th>
               <th>Keterangan</th>
               <th>Action</th>
@@ -38,6 +39,7 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
+              <td>{{ cuti.created_at.slice(0, 10) }}</td>
               <td>{{ cuti.status }}</td>
               <td v-if="cuti.status == 'Selesai'">
                 <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
