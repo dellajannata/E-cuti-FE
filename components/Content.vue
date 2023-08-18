@@ -72,7 +72,7 @@ export default {
     getDataPengajuanCuti() {
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
         console.log(res.data.data);
-        this.data_cuti = res.data.data;
+        this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status !== "Selesai");
         this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
       }).catch(error => {
         console.error('Error fetching data:', error);
