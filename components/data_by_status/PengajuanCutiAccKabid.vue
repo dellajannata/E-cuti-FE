@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-    <h4 class="card-title">Data Pegajuan Cuti Kabid</h4>
+      <h4 class="card-title">Data Pegajuan Cuti Kabid</h4>
       <div class="card-pegawai">
         <div class="search">
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
@@ -16,18 +16,32 @@
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
-              <th>Action</th>
-
+              <th>Keterangan</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai(cuti.pegawai_id)}}</td>
+              <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td class="btn-action">
+              <td v-if="cuti.status == 'ACC Kabid'">
+                Sudah disetujui
+              </td>
+              <td v-else-if="cuti.status == 'ACC Kesbang Umum'">
+                Sudah disetujui
+              </td>
+              <td v-else-if="cuti.status == 'ACC Sekretaris'">
+                Sudah disetujui
+              </td>
+              <td v-else-if="cuti.status == 'ACC Kadis'">
+                Sudah disetujui
+              </td>
+              <td v-else-if="cuti.status == 'Selesai'">
+                Sudah disetujui
+              </td>
+              <td v-else class="btn-action">
                 <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
                 <button @click="validasiTolak(cuti.id)" class="btn btn-danger btn-sm">Tolak</button>
               </td>
