@@ -7,9 +7,9 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarAccKesbang />
+            <SidebarAccKasubag />
             <!-- partial -->
-            <CutiAccKesbang />
+            <CutiAccKasubagUmum />
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <!-- <Footer/> -->
@@ -21,16 +21,16 @@
     </div>
 </template>
 <script>
-import SidebarAccKesbang from '../components/SidebarAccKesbang.vue';
+import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
 import Navbar from '../components/Navbar.vue';
-import CutiAccKesbang from '../components/data_by_status/PengajuanCutiAccKesbang.vue';
+import CutiAccKasubagUmum from '../components/data_by_status/PengajuanCutiAccKasubagUmum.vue';
 
 export default {
     // middleware:'auth',
     components: {
-        SidebarAccKesbang,
+        SidebarAccKasubag,
         Navbar,
-        CutiAccKesbang
+        CutiAccKasubagUmum
     }
 }
 </script>
