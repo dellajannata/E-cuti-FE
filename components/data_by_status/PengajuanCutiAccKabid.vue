@@ -14,6 +14,7 @@
             <tr>
               <th>No.</th>
               <th>Nama</th>
+              <th>Unit Kerja</th>
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
@@ -24,6 +25,13 @@
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
+              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+                </template>
+                <template v-else>
+                  {{ getUnitKerja(cuti.pegawai_id) }}
+                </template></td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -115,6 +123,10 @@ export default {
     getNamaPegawai(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    },
+    getUnitKerja(pegawaiId) {
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
     async validasi(cutiId) {
       try {
