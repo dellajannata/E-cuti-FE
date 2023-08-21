@@ -37,7 +37,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/pengajuan_cuti_acc_kasubag_umum">
               <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Pengajuan Cuti Kasubag Umum</span>
+              <span class="menu-title">Pengajuan Cuti Kasubag U</span>
             </a>
           </li>
           <li class="nav-item">

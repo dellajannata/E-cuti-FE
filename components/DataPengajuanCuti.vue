@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Data Pegajuan Cuti</h4>
+      <h4 class="card-title">Data Pegajuan Cuti Pegawai</h4>
       <div class="card-pegawai">
         <div class="search__container">
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">

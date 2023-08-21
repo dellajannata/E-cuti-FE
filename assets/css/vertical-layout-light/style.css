@@ -32399,11 +32399,14 @@ div.tagsinput span.tag a {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 97px);
+  display: block;
+  display: -webkit-flex;
   /* background-color: #F9F6EE; */
   background-color: #F6F4F1;
   font-family: "Manrope", sans-serif;
   font-weight: 500;
   padding: 0;
+  position:static;
   width: 200px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
@@ -32416,7 +32419,7 @@ div.tagsinput span.tag a {
 .sidebar .nav {
   overflow: auto;
   flex-wrap: nowrap;
-  flex-direction: column;
+  flex-direction:column;
   margin-bottom: 60px;
 }
 
@@ -32439,7 +32442,7 @@ div.tagsinput span.tag a {
   -webkit-align-items: center;
   align-items: center;
   white-space: nowrap;
-  padding: 10px 35px 10px 5px;
+  padding: 10px 35px 10px 0px;
   color: #484848;
   border-radius: 0px 20px 20px 0px;
   -webkit-transition-duration: 0.45s;
@@ -35267,7 +35270,8 @@ div.tagsinput span.tag a {
   .sidebar-fixed .sidebar .nav {
     max-height: calc(100vh - 97px);
     overflow: auto;
-    position: relative;
+    /* position: relative; */
+    position:fixed;
   }
 
   .sidebar-fixed .sidebar .nav.sub-menu {
