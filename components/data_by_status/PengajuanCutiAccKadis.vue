@@ -41,9 +41,6 @@
               <td v-else-if="cuti.status == 'Ditolak Kadis'">
                 Ditolak
               </td>
-              <!-- <td v-else-if="cuti.status == 'Ditolak'">
-                Ditolak
-              </td> -->
               <td v-else>
                 Sudah disetujui
               </td>
@@ -75,7 +72,8 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Sekretaris");
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Sekretaris" ||
+            cuti.status === "ACC Kadis" || cuti.status === "Selesai" || cuti.status === "Ditolak Kadis");
           })
           .catch(error => {
             console.error('Error fetching data:', error);

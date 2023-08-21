@@ -86,7 +86,7 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Belum");
+            this.data_cuti = res.data.data;
           })
           .catch(error => {
             console.error('Error fetching data:', error);
