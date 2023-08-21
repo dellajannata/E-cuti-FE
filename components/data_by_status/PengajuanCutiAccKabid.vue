@@ -30,7 +30,7 @@
               <td v-if="cuti.status == 'ACC Kabid'">
                 Sudah disetujui
               </td>
-              <td v-else-if="cuti.status == 'ACC Kesbang Umum'">
+              <td v-else-if="cuti.status == 'ACC Kasubag Umum'">
                 Sudah disetujui
               </td>
               <td v-else-if="cuti.status == 'ACC Sekretaris'">
@@ -41,6 +41,18 @@
               </td>
               <td v-else-if="cuti.status == 'Selesai'">
                 Sudah disetujui
+              </td>
+              <td v-else-if="cuti.status == 'Ditolak Kabid'">
+                Ditolak
+              </td>
+              <td v-else-if="cuti.status == 'Ditolak Kasubag Umum'">
+                Ditolak
+              </td>
+              <td v-else-if="cuti.status == 'Ditolak Sekretaris'">
+                Ditolak
+              </td>
+              <td v-else-if="cuti.status == 'Ditolak Kadis'">
+                Ditolak
               </td>
               <td v-else class="btn-action">
                 <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
@@ -145,7 +157,7 @@ export default {
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak/${cutiId}`);
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kabid/${cutiId}`);
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil ditolak.',
