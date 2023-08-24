@@ -29,6 +29,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/pengajuan_cuti_keseluruhan">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Pengajuan Cuti Keseluruhan</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/pengajuan_cuti_acc_kabid">
               <i class="menu-icon mdi mdi-file-document"></i>
               <span class="menu-title">Pengajuan Cuti Kabid</span>
