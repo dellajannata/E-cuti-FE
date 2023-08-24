@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-    <h4 class="card-title">Data Pegajuan Cuti Kadis</h4>
+      <h4 class="card-title">Data Pegajuan Cuti Kadis</h4>
 
       <div class="card-pegawai">
         <div class="search__container">
@@ -15,6 +15,7 @@
             <tr>
               <th>No.</th>
               <th>Nama</th>
+              <th>Unit Kerja</th>
               <th>Tanggal Awal</th>
               <th>Tanggal Akhir</th>
               <th>Alasan</th>
@@ -25,6 +26,14 @@
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
+              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+                </template>
+                <template v-else>
+                  {{ getUnitKerja(cuti.pegawai_id) }}
+                </template>
+              </td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -38,9 +47,9 @@
               <td v-else-if="cuti.status == 'Selesai'">
                 Sudah disetujui
               </td>
-              <!-- <td v-else-if="cuti.status == 'Ditolak'">
+              <td v-else-if="cuti.status == 'Ditolak Kadis'">
                 Ditolak
-              </td> -->
+              </td>
               <td v-else>
                 Sudah disetujui
               </td>
@@ -72,7 +81,8 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Sekretaris");
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Sekretaris" ||
+              cuti.status === "ACC Kadis" || cuti.status === "Selesai" || cuti.status === "Ditolak Kadis");
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -101,6 +111,10 @@ export default {
     getNamaPegawai(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    },
+    getUnitKerja(pegawaiId) {
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
     async validasi(cutiId) {
       try {
@@ -143,7 +157,7 @@ export default {
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak/${cutiId}`);
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kadis/${cutiId}`);
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil ditolak.',

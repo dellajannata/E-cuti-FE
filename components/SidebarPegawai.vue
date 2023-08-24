@@ -11,7 +11,7 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="/data_pengajuan_cuti" aria-expanded="false" aria-controls="form-elements">
               <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Pengajuan Cuti</span>
+              <span class="menu-title">Data Pengajuan Cuti Peg</span>
               <!-- <i class="menu-arrow"></i> -->
             </a>
           </li>
