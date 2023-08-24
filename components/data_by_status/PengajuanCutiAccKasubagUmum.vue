@@ -28,7 +28,7 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td v-if="cuti.status == 'ACC Kesbang Umum'">
+              <td v-if="cuti.status == 'ACC Kasubag Umum'">
                 Sudah disetujui
               </td>
               <td v-else-if="cuti.status == 'ACC Sekretaris'">
@@ -87,7 +87,7 @@ export default {
       }
     },
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kesbang').then(res => {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kasubag').then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
@@ -121,7 +121,7 @@ export default {
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kesbang/${cutiId}`);
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kasubag/${cutiId}`);
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil disetujui.',

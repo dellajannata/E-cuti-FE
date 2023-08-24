@@ -4,9 +4,9 @@
       <h4 class="card-title">Data Pegajuan Cuti Kabid</h4>
       <div class="card-pegawai">
           <div class="search__container">
-          <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
-          <i class="fa fa-search search__icon"></i>
-        </div>
+            <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+            <i class="fa fa-search search__icon"></i>
+          </div>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -30,7 +30,7 @@
               <td v-if="cuti.status == 'ACC Kabid'">
                 Sudah disetujui
               </td>
-              <td v-else-if="cuti.status == 'ACC Kesbang Umum'">
+              <td v-else-if="cuti.status == 'ACC Kasubag Umum'">
                 Sudah disetujui
               </td>
               <td v-else-if="cuti.status == 'ACC Sekretaris'">

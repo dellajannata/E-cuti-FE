@@ -28,7 +28,7 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td v-if="cuti.status == 'ACC Kesbang Umum'" class="btn-action">
+              <td v-if="cuti.status == 'ACC Kasubag Umum'" class="btn-action">
                 <button @click="validasi(cuti.id)" class="btn btn-warning btn-sm">ACC</button>
                 <button @click="validasiTolak(cuti.id)" class="btn btn-danger btn-sm">Tolak</button>
               </td>
@@ -75,7 +75,7 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Kesbang Umum");
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Kasubag Umum");
           })
           .catch(error => {
             console.error('Error fetching data:', error);
