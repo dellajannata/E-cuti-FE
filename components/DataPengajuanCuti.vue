@@ -33,7 +33,7 @@
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
-              <td>{{ formatTimestamp24Hour(cuti.created_at) }}</td>
+              <td>{{ waktu_pengajuan(cuti.created_at) }}</td>
               <td>{{ cuti.status }}</td>
               <td>
                 <template v-if="cuti.status == 'Selesai'">
@@ -119,7 +119,7 @@ export default {
       }
       return unitKerja;
     },
-    formatTimestamp24Hour(timestamp) {
+    waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
       const created_at = new Date(timestamp);
       const jakartaTime = new Date(created_at.toLocaleString("en-US", { timeZone: jakartaTimeZone }));
@@ -134,11 +134,8 @@ export default {
         second: "2-digit",
         hour12: false // Menggunakan format 24 jam
       };
-
-      // Membuat tampilan waktu tanpa zona waktu
       const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
-
-      return formattedTime;
+      return formattedTime.replace(/\//g, '-');
     },
     async deleteCuti(cutiId) {
       try {
