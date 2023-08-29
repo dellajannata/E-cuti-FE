@@ -27,7 +27,14 @@
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
-              <td>{{ formatUnitKerja(getUnitKerja(cuti.pegawai_id)) }}</td>
+              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+                </template>
+                <template v-else>
+                  {{ getUnitKerja(cuti.pegawai_id) }}
+                </template>
+              </td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -100,12 +107,9 @@ export default {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
-    formatUnitKerja(unitKerja) {
-      if (unitKerja.split(' ').length > 3) {
-        const parts = unitKerja.split(' ');
-        return `${parts.slice(0, 3).join(' ')}<br><br>${parts.slice(3).join(' ')}`;
-      }
-      return unitKerja;
+    getUnitKerja(pegawaiId) {
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
@@ -124,7 +128,7 @@ export default {
       };
       const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
       return formattedTime.replace(/\//g, '-');
-    },
+    }
   }
 }
 </script>
