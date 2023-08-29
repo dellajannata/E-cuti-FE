@@ -1,6 +1,6 @@
 export default {
   router: {
-    // middleware: ['auth'], // Apply the 'auth' middleware to protect routes
+    middleware: ['auth'], // Apply the 'auth' middleware to protect routes
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -74,15 +74,15 @@ export default {
     '~/assets/login/css/util.css',
     '~/assets/login/css/main.css',
   ],
-  js:[
-    '~/assets/js/off-canvas.js',
-    '~/assets/js/hoverable-collapse.js',
-    '~/assets/js/settings.js',
-    '~/assets/js/todolist.js',
-    '~/assets/js/jquery.cookie.js',
-    '~/assets/js/dashboard.js',
-    '~/assets/js/Chart.roundedBarCharts.js',
-  ],
+  // js:[
+  //   '~/assets/js/off-canvas.js',
+  //   '~/assets/js/hoverable-collapse.js',
+  //   '~/assets/js/settings.js',
+  //   '~/assets/js/todolist.js',
+  //   '~/assets/js/jquery.cookie.js',
+  //   '~/assets/js/dashboard.js',
+  //   '~/assets/js/Chart.roundedBarCharts.js',
+  // ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -93,19 +93,16 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // ...
-    'tailwindcss',
-    // '@nuxtjs/auth'
   ],
   axios: {
     baseURL: 'http://localhost:8000',
     // credentials: true
   },
     
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // 'nuxt-sanctum-auth'
+    // '@nuxtjs/axios',
+    // '@nuxtjs/auth-next'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -120,57 +117,17 @@ export default {
     },
   },
 
-  // nuxtSanctumAuth: {
-  //   token: true, // set true to use jwt-token auth instead of cookie. default is false
-  //   baseUrl: 'http://localhost:3000',
-  //   endpoints: {
-  //     csrf: '/sanctum/csrf-cookie',
-  //     login: '/login',
-  //     logout: '/logout',
-  //     user: '/profile'
-  //   },
-  //   csrf: {
-  //     headerKey: 'X-XSRF-TOKEN',
-  //     cookieKey: 'XSRF-TOKEN',
-  //     tokenCookieKey: 'nuxt-sanctum-auth-token'
-  //   },
-  //   redirects: {
-  //     home: '/dashboard',
-  //     login: '/login',
-  //     logout: '/'
-  //   }
-  // }
-
   auth: {
     strategies: {
       laravelSanctum: {
         provider: 'laravel/sanctum',
-        url: 'http://localhost:8000', // Ganti dengan URL server Laravel Anda
+        url: 'http://localhost:8000',
         endpoints: {
-          login: { url: '/login', method: 'post' },
-          logout: { url: '/logout', method: 'post' },
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer '
+          login: {
+            url: '/login'
+          }
+        }
       },
-    },
+    }
   },
-
-  // auth: {
-  //   strategies: {
-  //     laravelSanctum: {
-  //       provider: 'laravel/sanctum',
-  //       url: 'http://localhost:8000',
-  //       endpoints:{
-  //         login:{
-  //           url:'/login'
-  //         }
-  //       }
-  //     },
-  //   }
-  // },
-  // axios:{
-  //   baseURL: 'http://localhost:8000',
-  //   credentials:true,
-  // }
 }

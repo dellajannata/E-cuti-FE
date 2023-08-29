@@ -44,6 +44,9 @@
             </div>
         </div>
     </div>
+    
+    <!-- User -->
+    Halo, {{ userLoggedin?.name }}
   </div>
 </template>
 <script>
@@ -53,12 +56,14 @@ export default {
     return {
       data_pegawai: [],
       data_cuti: [],
-      rekap_cuti: []
+      rekap_cuti: [],
+      userLoggedin : {},
     }
   },
   mounted() {
     this.getDataPegawai();
     this.getDataPengajuanCuti();
+    this.setUserLoggedin();
   },
   methods: {
     getDataPegawai() {
@@ -77,6 +82,10 @@ export default {
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
+    },
+    setUserLoggedin() {
+      this.userLoggedin = JSON.parse(localStorage.getItem('user'));
+      console.log(this.userLoggedin);
     },
 }
 };

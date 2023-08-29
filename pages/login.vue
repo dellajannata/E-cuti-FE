@@ -6,8 +6,7 @@
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<!-- <span class="Sign-In">Sign In</span> -->
 						<span class="label-input100">E-mail</span>
-						<input class="input100" v-model="data_pengguna.email" type="email" name="email"
-							placeholder="Enter Email">
+						<input class="input100" v-model="data_pengguna.email" type="email" name="email" placeholder="Enter Email">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -18,7 +17,7 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="flex-sb-m w-full p-b-30">
+					<div class="w-full flex-sb-m p-b-30">
 						<div class="contact100-form-checkbox">
 							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 							<label class="label-checkbox100" for="ckb1">
@@ -43,61 +42,55 @@
 	</div>
 </template>
 <script>
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+
 export default {
-	name: "Login",
-	// middleware: 'auth',
-	data() {
-		return {
-			data_pengguna: {
-				email: '',
-				password: '',
-			},
-			isLoading: false,
-			isLoadingTitle: "Loading"
-		}
-	},
-	methods: {
-		async login_pengguna() {
-			const requestData = this.data_pengguna;
-			try {
-				const response = await axios.post('http://127.0.0.1:8000/api/login', requestData);
-				console.log(response.data);
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('access_token', response.data.access_token);
-					// const response2 = await axios.get('http://127.0.0.1:8000/api/profile');
-					// if (response.data.role) {
-					// 	// Redirect pengguna ke halaman sesuai peran setelah login berhasil
-					// 	if (response.data.role === 'admin_utama') {
-					// 		this.$router.push('/data_pegawai');
-					// 	} else if (response.data.role === 'user') {
-					// 		this.$router.push('/dashboard');
-					// 	}
-					// }
-				}
-				console.log(response.data.access_token);
-				this.backDashboard();
-
-				this.data_pengguna.email = '';
-				this.data_pengguna.password = '';
-
-				this.isLoading = false;
-				this.isLoadingTitle = "Loading";
-
-			}
-			catch (error) {
-				console.error(error);
-				Swal.fire({
-					icon: 'warning',
-					title: 'Gagal Login',
-					text: 'Harap periksa kembali email dan password.',
-				});
-			};
-		},
-		backDashboard() {
-			this.$router.push('/dashboard');
-		}
-	}
+  name: "Login",
+  auth: "guest",
+  data() {
+    return {
+      data_pengguna: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  methods: {
+    async login_pengguna() {
+      try {
+        console.log(this.data_pengguna.email);
+        await axios.post('http://localhost:8000/api/login', this.data_pengguna)
+          .then(response => {
+            console.log(response.data);
+            localStorage.setItem('token', response.data.token);
+            // Simpan informasi pengguna di localStorage
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            // Pemeriksaan peran pengguna
+            const userRole = response.data.user.role;
+            if (userRole === 'admin_utama') {
+              this.$router.push('/dashboard');
+            } else if (userRole === 'user') {
+              this.$router.push('/data_pengajuan_cuti');
+            } else {
+              this.$router.push('/dashboard');
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: 'warning',
+          title: 'Gagal Login',
+          text: 'Harap periksa kembali email dan password.',
+        });
+      };
+    },
+    backDashboard() {
+      this.$router.push('/dashboard');
+    }
+  }
 }
 </script>
