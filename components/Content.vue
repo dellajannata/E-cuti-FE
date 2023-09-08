@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-
+    <h1>Token: {{ token }}</h1>
     <!-- User -->
     <!-- Halo, {{ userLoggedin?.name }} -->
   </div>

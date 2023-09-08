@@ -1,9 +1,10 @@
-export default {
-  router: {
-    middleware: ['auth'], // Apply the 'auth' middleware to protect routes
-  },
+export default defineNuxtConfig({
+  // router: {
+  //   middleware: ['auth'], // Apply the 'auth' middleware to protect routes
+  // },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -47,8 +48,36 @@ export default {
         type: 'text/javascript'
       },
       {
-        src: 'assets/js/template.js',
-        type: 'text/javascript'
+        src: '~/assets/js/template.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/off-canvas.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/hoverable-collapse.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/settings.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/todolist.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/jquery.cookie.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/Chart.roundedBarCharts.js',
+        defer: true
+      },
+      {
+        src: '~/assets/js/dashboard.js',
+        defer: true
       },
     ]
   },
@@ -74,15 +103,6 @@ export default {
     '~/assets/login/css/util.css',
     '~/assets/login/css/main.css',
   ],
-  // js:[
-  //   '~/assets/js/off-canvas.js',
-  //   '~/assets/js/hoverable-collapse.js',
-  //   '~/assets/js/settings.js',
-  //   '~/assets/js/todolist.js',
-  //   '~/assets/js/jquery.cookie.js',
-  //   '~/assets/js/dashboard.js',
-  //   '~/assets/js/Chart.roundedBarCharts.js',
-  // ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -101,8 +121,7 @@ export default {
     
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // '@nuxtjs/axios',
-    // '@nuxtjs/auth-next'
+    'nuxt-sanctum-auth',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -117,17 +136,32 @@ export default {
     },
   },
 
-  auth: {
-    strategies: {
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        url: 'http://localhost:8000',
-        endpoints: {
-          login: {
-            url: '/login'
-          }
-        }
-      },
+  //TIME FORMATER
+  dayjs:{
+    locales: ['id'],
+    plugins: ['relativeTime', 'utc', 'timezone', 'customParseFormat'],
+    defaultLocale: 'id',
+  },
+
+  // AUTH SETTING
+  nuxtSanctumAuth: {
+    token: true,
+    baseUrl: 'http://localhost:8000',
+    endpoints: {
+      csrf: '/sanctum/csrf-cookie',
+      login: '/api/login',
+      logout: '/api/logout',
+      user: '/api/user'
+    },
+    csrf: {
+      headerKey: 'X-XSRF-TOKEN',
+      cookieKey: 'XSRF-TOKEN',
+      tokenCookieKey: 'nuxt-sanctum-auth-token'
+    },
+    redirects: {
+      home: '/dashboard',
+      login: '/login',
+      logout: '/'
     }
   },
-}
+})
