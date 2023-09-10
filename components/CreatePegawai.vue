@@ -51,12 +51,9 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import authMiddleware from '../middleware/auth';
 
 export default {
     name: "CreatePegawai",
-    auth: true,
-    middleware: [authMiddleware],
     data() {
         return {
             data_pegawai: {

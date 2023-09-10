@@ -26,7 +26,6 @@ import Navbar from '../components/Navbar.vue';
 import DataRekapCuti from '../components/DataRekapCuti.vue';
 
 export default {
-    middleware: 'auth',
     components: {
         Sidebar,
         Navbar,

@@ -24,22 +24,13 @@
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
 import CreatePegawai from '../components/CreatePegawai.vue';
-import authMiddleware from '../middleware/auth';
+// import authMiddleware from '../middleware/auth';
 
 export default {
-    // auth: true,
-    // middleware: [authMiddleware],
     components: {
         Sidebar,
         Navbar,
         CreatePegawai
     },
-    // mounted() {
-    //     const token = localStorage.getItem('access_token');
-    //     if (!token) {
-    //         //MAKA REDIRECT KE HALAMAN LOGIN
-    //         this.$router.push('/login')
-    //     }
-    // },
 }
 </script>

@@ -1,36 +1,31 @@
 <template>
     <div class="container-scroller">
-        <!-- partial:partials/_navbar.html -->
-        <Navbar />
+      <!-- partial:partials/_navbar.html -->
+      <Navbar />
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
         <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_settings-panel.html -->
-            <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
-            <SidebarAccKabid />
-            <!-- partial -->
-            <CutiAccKabid />
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <!-- <Footer/> -->
-            <!-- partial -->
-
-            <!-- main-panel ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
+        <!-- partial:partials/_sidebar.html -->
+        <SidebarAccKabid />
+        <!-- partial -->
+        <CutiAccKabid />
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <!-- <Footer/> -->
+        <!-- partial -->
+  
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
     </div>
-</template>
-<script>
-import SidebarAccKabid from '../components/SidebarAccKabid.vue';
-import Navbar from '../components/Navbar.vue';
-import CutiAccKabid from '../components/data_by_status/PengajuanCutiAccKabid.vue';
-
-export default {
-    // middleware:'auth',
-    components: {
-        SidebarAccKabid,
-        Navbar,
-        CutiAccKabid
-    }
-}
-</script>
+  </template>
+  <script setup>
+  import SidebarAccKabid from '../components/SidebarAccKabid.vue';
+  import Navbar from '../components/Navbar.vue';
+  import CutiAccKabid from '../components/data_by_status/PengajuanCutiAccKabid.vue';
+  
+  definePageMeta({
+    middleware: ['redirect-login', 'protect-route']
+  })
+  </script>

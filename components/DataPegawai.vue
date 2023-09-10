@@ -54,11 +54,9 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import authMiddleware from '../middleware/auth';
 
 export default {
   // auth: true,
-  // middleware: [authMiddleware],
   data() {
     return {
       data_pegawai: [],
@@ -118,11 +116,11 @@ export default {
       } catch (error) {
         console.error(error);
         Swal.fire(
-              'Gagal!',
-              'Data Anda gagal dihapus karena telah melakukan pengajuan cuti.',
-              'warning',
-              this.getDataPegawai()
-            );
+          'Gagal!',
+          'Data Anda gagal dihapus karena telah melakukan pengajuan cuti.',
+          'warning',
+          this.getDataPegawai()
+        );
       }
     },
   }

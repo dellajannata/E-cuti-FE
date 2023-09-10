@@ -26,7 +26,6 @@ import Navbar from '../components/Navbar.vue';
 import PengajuanCutiKeseluruhan from '../components/PengajuanCutiKeseluruhan.vue';
 
 export default {
-    // middleware:'auth',
     components: {
         SidebarPegawai,
         Navbar,

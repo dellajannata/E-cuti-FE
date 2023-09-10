@@ -68,7 +68,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Sidebar from '../components/Sidebar.vue';
 import Navbar from '../components/Navbar.vue';
-import authMiddleware from '../middleware/auth';
+// import authMiddleware from '../middleware/auth';
 
 export default {
     name: "EditPegawai",
@@ -98,11 +98,6 @@ export default {
         this.pegawaiId = this.$route.params.id
         // alert(this.pegawaiId);
         this.getPegawai(this.pegawaiId);
-        // const token = localStorage.getItem('access_token');
-        // if (!token) {
-        //     //MAKA REDIRECT KE HALAMAN LOGIN
-        //     this.$router.push('/login')
-        // }
     },
     methods: {
         getPegawai(pegawaiId) {
