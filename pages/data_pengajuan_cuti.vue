@@ -7,7 +7,7 @@
         <!-- partial:partials/_settings-panel.html -->
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-        <SidebarPegawai />
+        <Sidebar />
         <!-- partial -->
         <DataPengajuanCuti />
         <!-- content-wrapper ends -->
@@ -22,11 +22,11 @@
   </template>
   
   <script setup>
-  import SidebarPegawai from '../components/SidebarPegawai.vue';
+  import Sidebar from '../components/Sidebar.vue';
   import Navbar from '../components/Navbar.vue';
   import DataPengajuanCuti from '../components/DataPengajuanCuti.vue';
   
   definePageMeta({
-    middleware: ['redirect-login', 'protect-route']
+    middleware: ['redirect-login']
   })
   </script>

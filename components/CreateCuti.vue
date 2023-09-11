@@ -82,8 +82,12 @@ export default {
                         }
 
                         const requestData = this.data_pengajuan_cuti;
-                        const accessToken = localStorage.getItem('access_token');
-                        const response = await axios.post('http://127.0.0.1:8000/api/pengajuan_cuti', requestData);
+                        const accessToken = localStorage.getItem('token'); 
+                        const response = await axios.post('http://127.0.0.1:8000/api/pengajuan_cuti', requestData, {
+                            headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                            }
+                        });
 
                         this.data_pengajuan_cuti.pegawai_id = '';
                         this.data_pengajuan_cuti.tgl_awal = '';

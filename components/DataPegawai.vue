@@ -68,8 +68,12 @@ export default {
   },
   methods: {
     getDataPegawai() {
-      const accessToken = localStorage.getItem('access_token');
-      axios.get('http://127.0.0.1:8000/api/pegawai').then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pegawai', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+      }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
       }).catch(error => {
@@ -78,18 +82,24 @@ export default {
     },
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pegawai/search/${this.searchQuery}`)
-          .then(res => {
-            console.log(res.data.data);
-            this.data_pegawai = res.data.data;
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
+        const accessToken = localStorage.getItem('token'); 
+        axios.get(`http://127.0.0.1:8000/api/pegawai/search/${this.searchQuery}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
+        .then(res => {
+          console.log(res.data.data);
+          this.data_pegawai = res.data.data;
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
       } else {
         this.getDataPegawai();
       }
     },
+
     async deletePegawai(pegawaiId) {
       try {
         const result = await Swal.fire({
@@ -103,14 +113,20 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`);
-            Swal.fire(
-              'Berhasil!',
-              'Data Anda berhasil dihapus.',
-              'success',
-              this.getDataPegawai()
-            );
+            const accessToken = localStorage.getItem('token');
+            await axios.delete(`http://127.0.0.1:8000/api/pegawai/${pegawaiId}`, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            })
+            .then(() => {
+              Swal.fire(
+                'Berhasil!',
+                'Data Anda berhasil dihapus.',
+                'success'
+              );
+              this.getDataPegawai();
+            })
           }
         }
       } catch (error) {

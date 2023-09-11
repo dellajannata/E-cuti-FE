@@ -48,6 +48,15 @@ const form = ref({
 	password: ''
 })
 
+const REDIRECT_ROUTES = {
+	ADMIN: '/dashboard',
+	KABID: '/pengajuan_cuti_acc_kabid',
+	KASUBAG: '/pengajuan_cuti_acc_kasubag',
+	KADIS: '/pengajuan_cuti_acc_kadis',
+	SEKRETARIS: '/pengajuan_cuti_acc_sekretaris',
+	PEGAWAI: '/data_pengajuan_cuti'
+}
+
 const onLogin = async () => {
 	try {
 		// Menggunakan metode login dari $sanctumAuth
@@ -62,8 +71,24 @@ const onLogin = async () => {
 			localStorage.setItem('token', token)
 			localStorage.setItem('user', user)
 
-			// Redirect ke halaman dashboard
-			router.push('/dashboard')
+			// check role untuk redirect setelah login
+			console.log(resp.user.role)
+			switch (resp.user.role) {
+				case 'admin':
+					return router.push(REDIRECT_ROUTES.ADMIN)
+				case 'kabid':
+					return router.push(REDIRECT_ROUTES.KABID)
+				case 'kasubag umum':
+					return router.push(REDIRECT_ROUTES.KASUBAG)
+				case 'kadis':
+					return router.push(REDIRECT_ROUTES.KADIS)
+				case 'sekretaris':
+					return router.push(REDIRECT_ROUTES.SEKRETARIS)
+				case 'pegawai':
+					return router.push(REDIRECT_ROUTES.PEGAWAI)
+				default:
+					return router.push('/dashboard')
+			}
 		})
 	} catch (error) {
 		console.error(error);

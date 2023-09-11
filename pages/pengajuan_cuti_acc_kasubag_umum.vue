@@ -26,6 +26,6 @@
   import CutiAccKadis from '../components/data_by_status/PengajuanCutiAccKadis.vue';
   
   definePageMeta({
-    middleware: ['redirect-login', 'protect-route']
+    middleware: ['redirect-login']
   })
   </script>

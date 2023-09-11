@@ -7,25 +7,30 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarPegawai />
             <!-- partial -->
-            <DataPegawai />
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <!-- <Footer/> -->
-            <!-- partial -->
+            <CreateCuti />
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <!-- <Footer/> -->
+                <!-- partial -->
 
             <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->
     </div>
 </template>
-<script setup>
-import Sidebar from '../components/Sidebar.vue';
+<script>
+import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
-import DataPegawai from '../components/DataPegawai.vue';
+import CreateCuti from '../components/CreateCuti.vue';
 
-definePageMeta({
-    middleware: ['redirect-login']
-})
+export default {
+  middleware:'auth',
+  components: {
+    SidebarPegawai,
+    Navbar,
+    CreateCuti
+  }
+}
 </script>

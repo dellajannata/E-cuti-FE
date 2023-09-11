@@ -56,17 +56,20 @@ export default {
       data_pegawai: [],
       data_cuti: [],
       rekap_cuti: [],
-      userLoggedin: {},
     }
   },
   mounted() {
     this.getDataPegawai();
     this.getDataPengajuanCuti();
-    this.setUserLoggedin();
   },
   methods: {
     getDataPegawai() {
-      axios.get('http://127.0.0.1:8000/api/pegawai').then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pegawai', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+      }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
       }).catch(error => {
@@ -74,17 +77,18 @@ export default {
       });
     },
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+      }).then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status !== "Selesai" & data_cuti.status !== "Ditolak");
         this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
-    },
-    setUserLoggedin() {
-      this.userLoggedin = JSON.parse(localStorage.getItem('user'));
-      console.log(this.userLoggedin);
     },
   }
 };

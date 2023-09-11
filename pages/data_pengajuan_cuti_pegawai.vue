@@ -7,9 +7,9 @@
         <!-- partial:partials/_settings-panel.html -->
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-        <SidebarAccKabid />
+        <SidebarPegawai />
         <!-- partial -->
-        <CutiAccKabid />
+        <DataPengajuanCuti />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <!-- <Footer/> -->
@@ -20,10 +20,11 @@
       <!-- page-body-wrapper ends -->
     </div>
   </template>
+  
   <script setup>
-  import SidebarAccKabid from '../components/SidebarAccKabid.vue';
+  import SidebarPegawai from '../components/SidebarPegawai.vue';
   import Navbar from '../components/Navbar.vue';
-  import CutiAccKabid from '../components/data_by_status/PengajuanCutiAccKabid.vue';
+  import DataPengajuanCuti from '../components/DataPengajuanCuti.vue';
   
   definePageMeta({
     middleware: ['redirect-login']

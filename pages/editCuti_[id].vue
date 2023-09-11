@@ -88,8 +88,12 @@ export default {
     },
     methods: {
         getPengajuanCuti(cutiId) {
-            const accessToken = localStorage.getItem('access_token');
-            axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`).then(res => {
+            const accessToken = localStorage.getItem('token');
+            axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            }).then(res => {
                 console.log(res.data.data);
                 this.pengajuan_cuti = res.data.data;
             })
@@ -119,8 +123,12 @@ export default {
 
 
                         try {
-                            const accessToken = localStorage.getItem('access_token');
-                            const response = await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, requestData);
+                            const accessToken = localStorage.getItem('token');
+                            const response = await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, requestData, {
+                                headers: {
+                                'Authorization': `Bearer ${accessToken}`
+                                }
+                            });
                             console.log(response.data);
                             // alert(response.data.message);
                             this.backDataPengajuanCuti();

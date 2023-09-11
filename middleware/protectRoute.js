@@ -2,7 +2,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // based on roles
   const FALLBACK_ROUTES = {
     ADMIN: '/dashboard',
-    ADMIN: '/data_pengajuan_cuti',
     KABID: '/pengajuan_cuti_acc_kabid',
     KASUBAG: '/pengajuan_cuti_acc_kasubag',
     KADIS: '/pengajuan_cuti_acc_kadis',

@@ -24,6 +24,6 @@
   
   <script setup>
   definePageMeta({
-    middleware: ['redirect-login', 'protect-route']
+    middleware: ['redirect-login']
   })
   </script>

@@ -56,7 +56,12 @@ export default {
   methods: {
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+        const accessToken = localStorage.getItem('token');
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
           .then(res => {
             console.log(res.data.data);
             this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai");
@@ -69,11 +74,11 @@ export default {
       }
     },
     getDataPengajuanCuti() {
-      // const token = localStorage.getItem('access_token');
+      const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
-        // headers: {
-        //   'Authorization': 'Bearer ${token}'
-        // }
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
       }).then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai");
@@ -82,7 +87,11 @@ export default {
       });
     },
     getDataPegawai() {
+      const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pegawai', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
       }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;

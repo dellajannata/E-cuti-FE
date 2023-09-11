@@ -29,7 +29,6 @@
           </div>
         </div>
       </div>
-      <h1>Token: {{ token }}</h1>
       <!-- User -->
       <!-- Halo, {{ userLoggedin?.name }} -->
     </div>
@@ -41,26 +40,25 @@
       return {
         data_cuti: [],
         rekap_cuti: [],
-        userLoggedin: {},
       }
     },
     mounted() {
       this.getDataPengajuanCuti();
-      this.setUserLoggedin();
     },
     methods: {
       getDataPengajuanCuti() {
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti').then(res => {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status !== "Selesai" & data_cuti.status !== "Ditolak");
           this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
-      },
-      setUserLoggedin() {
-        this.userLoggedin = JSON.parse(localStorage.getItem('user'));
-        console.log(this.userLoggedin);
       },
     }
   };

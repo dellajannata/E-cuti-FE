@@ -7,7 +7,7 @@
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <router-link class="btn btn-primary" :to="'/create_pengajuan_cuti'">Tambah</router-link>
+        <router-link class="btn btn-primary" :to="'/create_pengajuan_cuti_pegawai'">Tambah</router-link>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -79,7 +79,12 @@ export default {
   methods: {
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+        const accessToken = localStorage.getItem('token');
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
           .then(res => {
             console.log(res.data.data);
             this.data_cuti = res.data.data;
@@ -92,7 +97,12 @@ export default {
       }
     },
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti')
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
         .then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data;
@@ -102,8 +112,12 @@ export default {
         });
     },
     getDataPegawai() {
-      axios.get('http://127.0.0.1:8000/api/pegawai')
-        .then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pegawai', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
           console.log(res.data.data);
           this.data_pegawai = res.data.data;
         })
@@ -114,10 +128,6 @@ export default {
     getNamaPegawai(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
       return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
-    },
-    getUnitKerja(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
     },
     getUnitKerja(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
@@ -153,7 +163,7 @@ export default {
         });
 
         if (result.isConfirmed) {
-          const accessToken = localStorage.getItem('access_token');
+          const accessToken = localStorage.getItem('token');
           await axios.delete(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, {
             headers: {
               'Authorization': `Bearer ${accessToken}`
