@@ -7,14 +7,14 @@
             <!-- partial:partials/_settings-panel.html -->
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarPegawai />
             <!-- partial -->
             <div class="col-md-9 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-edit-pegawai">
                             <h4 class="card-title">Edit Pengajuan Cuti</h4>
-                            <a class="btn btn-primary" href="/data_pengajuan_cuti">Kembali</a>
+                            <a class="btn btn-primary" href="/data_pengajuan_cuti_pegawai">Kembali</a>
                         </div>
                         <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">
@@ -56,7 +56,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import Sidebar from '../components/Sidebar.vue';
+import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 // import authMiddleware from '../middleware/auth';
 
@@ -65,7 +65,7 @@ export default {
     // auth: true,
     // middleware: [authMiddleware],
     components: {
-        Sidebar,
+        SidebarPegawai,
         Navbar,
     },
     data() {
@@ -152,7 +152,7 @@ export default {
             }
         },
         backDataPengajuanCuti() {
-            this.$router.push('/data_pengajuan_cuti');
+            this.$router.push('/data_pengajuan_cuti_pegawai');
         }
     }
 }

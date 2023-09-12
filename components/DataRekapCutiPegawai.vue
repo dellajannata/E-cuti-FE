@@ -19,17 +19,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(cuti, index) in filteredCuti" :key="index">
-                <td>{{ index + 1 }}</td>
-                <td>{{ getNamaPegawai(cuti.user_id) }}</td>
-                <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
-                    {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                    {{ getUnitKerja(cuti.user_id).split(' ').slice(3).join(' ') }}
+              <tr v-if="filteredCuti.length > 0">
+                <td>1</td>
+                <td>{{ getNamaPegawai(filteredCuti[0].user_id) }}</td>
+                <td>
+                  <template v-if="getUnitKerja(filteredCuti[0].user_id).split(' ').length > 3">
+                    {{ getUnitKerja(filteredCuti[0].user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                    {{ getUnitKerja(filteredCuti[0].user_id).split(' ').slice(3).join(' ') }}
                   </template>
                   <template v-else>
-                    {{ getUnitKerja(cuti.user_id) }}
-                  </template></td>
-                <td>{{ getTotalCuti(cuti.user_id) }}</td>
+                    {{ getUnitKerja(filteredCuti[0].user_id) }}
+                  </template>
+                </td>
+                <td>{{ getTotalCuti(filteredCuti[0].user_id) }}</td>
+              </tr>
+              <tr v-else>
+                <td colspan="4">Belum mengajukan cuti / Pengajuan cuti masih dalam proses ACC</td>
               </tr>
             </tbody>
           </table>
@@ -54,7 +59,7 @@
         const idUser = this.getIdUserYangLogin(); // Mengambil nama pengguna dari localStorage 1
 
         // Filter data cuti berdasarkan nama pengguna yang login
-        return this.data_cuti.filter(cuti => cuti.user_id === idUser & cuti.status !== "Selesai");
+        return this.data_cuti.filter(cuti => cuti.user_id === idUser & cuti.status === "Selesai");
       },
     },
     mounted() {
@@ -129,9 +134,7 @@
         return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
       },
       getTotalCuti(pegawaiId) {
-        const totalCutiSelesai = this.filteredCuti()
-          .length;
-  
+        const totalCutiSelesai = this.filteredCuti.length;
         return totalCutiSelesai;
       }
     }
