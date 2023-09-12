@@ -54,11 +54,7 @@
         const idUser = this.getIdUserYangLogin(); // Mengambil nama pengguna dari localStorage 1
 
         // Filter data cuti berdasarkan nama pengguna yang login
-        return this.data_cuti.filter(cuti => {
-          const idPegawai = this.getIdPegawai(cuti.id);
-          return idPegawai === idUser & 
-          cuti.status === "Selesai";
-        });
+        return this.data_cuti.filter(cuti => cuti.user_id === idUser & cuti.status !== "Selesai");
       },
     },
     mounted() {
@@ -87,7 +83,7 @@
       },
       getIdUserYangLogin() {
         const userData = JSON.parse(localStorage.getItem('user'));
-        return userData ? userData.pegawai_id : ''; // Mengambil id pengguna dari objek pengguna
+        return userData ? userData.id : ''; // Mengambil id pengguna dari objek pengguna
       },
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');

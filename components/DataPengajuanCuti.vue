@@ -28,13 +28,13 @@
           <tbody>
             <tr v-for="(cuti, index) in filteredCuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai(cuti.user_id) }}</td>
-              <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
-                  {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja(cuti.user_id).split(' ').slice(3).join(' ') }}
+              <td>{{ getNamaPegawai() }}</td>
+              <td><template v-if="getUnitKerja().split(' ').length > 3">
+                  {{ getUnitKerja().split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja().split(' ').slice(3).join(' ') }}
                 </template>
                 <template v-else>
-                  {{ getUnitKerja(cuti.user_id) }}
+                  {{ getUnitKerja() }}
                 </template>
               </td>
               <td>{{ cuti.tgl_awal }}</td>
@@ -145,14 +145,15 @@ export default {
       const userData = JSON.parse(localStorage.getItem('user'));
       return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna 
     },
-    getNamaPegawai(userId) { //2
+    getNamaPegawai() {
       const user = this.getPegawaiId(); 
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
       return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
     },
-    getUnitKerja(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
+    getUnitKerja() {
+      const user = this.getPegawaiId(); 
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
+      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
     },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
