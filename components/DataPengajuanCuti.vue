@@ -49,7 +49,7 @@
                 <template v-else>Proses ACC</template>
               </td>
               <td class="btn-action">
-                <router-link :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</router-link>
+                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm">Edit</NuxtLink>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm">Hapus</button>
               </td>
             </tr>
@@ -209,7 +209,12 @@ export default {
     },
 
     cetakPDF(event, cutiId) {
+      const accessToken = localStorage.getItem('token');
       axios.get(`http://127.0.0.1:8000/api/cetak-pdf/${cutiId}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }, {
         responseType: 'blob'
       }).then(response => {
         const blob = new Blob([response.data], { type: 'application/pdf' });

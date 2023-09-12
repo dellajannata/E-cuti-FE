@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarKadis/>
+            <SidebarKadis />
             <!-- partial -->
             <ContentKadis />
             <!-- content-wrapper ends -->
@@ -22,6 +22,9 @@
     </div>
 </template>
 <script>
+definePageMeta({
+    middleware: ['redirect-login']
+})
 import SidebarKadis from '../components/SidebarKadis.vue';
 import Navbar from '../components/Navbar.vue';
 import ContentKadis from '../components/ContentKadis.vue';

@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarPegawai/>
+            <SidebarPegawai />
             <!-- partial -->
             <ContentPegawai />
             <!-- content-wrapper ends -->
@@ -22,6 +22,9 @@
     </div>
 </template>
 <script>
+definePageMeta({
+    middleware: ['redirect-login']
+})
 import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 import ContentPegawai from '../components/ContentPegawai.vue';

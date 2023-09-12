@@ -9,7 +9,7 @@
         <!-- partial:partials/_sidebar.html -->
         <SidebarAccKasubag />
         <!-- partial -->
-        <CutiAccSekretaris />
+        <CutiAccKasubag />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <!-- <Footer/> -->
@@ -23,7 +23,7 @@
   <script setup>
   import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
   import Navbar from '../components/Navbar.vue';
-  import CutiAccSekretaris from '../components/data_by_status/PengajuanCutiAccSekretaris.vue';
+  import CutiAccKasubag from '../components/data_by_status/PengajuanCutiAccKasubagUmum.vue';
   
   definePageMeta({
     middleware: ['redirect-login']

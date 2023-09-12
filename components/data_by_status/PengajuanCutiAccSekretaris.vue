@@ -100,7 +100,12 @@ export default {
       }
     },
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris').then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }).then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
@@ -108,7 +113,12 @@ export default {
       });
     },
     getDataPegawai() {
-      axios.get('http://127.0.0.1:8000/api/pegawai', {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pegawai' , {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }, {
       }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
@@ -137,8 +147,12 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris/${cutiId}`);
+            const accessToken = localStorage.getItem('token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris/${cutiId}`, null, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            });
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil disetujui.',
@@ -164,8 +178,12 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_sekretaris/${cutiId}`);
+            const accessToken = localStorage.getItem('token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_sekretaris/${cutiId}`, null, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            });
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil ditolak.',

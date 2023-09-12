@@ -187,7 +187,7 @@ export default {
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kabid/${cutiId}`, {
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kabid/${cutiId}`, null, {
               headers: {
                 'Authorization': `Bearer ${accessToken}`
               }
