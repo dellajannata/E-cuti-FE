@@ -15075,7 +15075,7 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   border-radius: 0px;
   padding: 1em;
   min-width: 80%;
-  width: 1980px;
+  width: 1160px;
   height: 750px;
 }
 
@@ -32407,7 +32407,7 @@ div.tagsinput span.tag a {
   font-weight: 500;
   padding: 0;
   position:static;
-  width: 348px;
+  width: 200px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;

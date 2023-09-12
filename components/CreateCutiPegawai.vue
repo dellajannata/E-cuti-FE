@@ -9,11 +9,6 @@
                 <div v-else>
                     <form class="forms-sample" @submit.prevent="save_data">
                         <div class="form-group">
-                            <label for="pegawai_id">Pegawai ID</label>
-                            <input type="text" v-model="data_pengajuan_cuti.pegawai_id" class="form-control" id="pegawai_id"
-                                placeholder="Masukkan Jenis Cuti Anda">
-                        </div>
-                        <div class="form-group">
                             <label for="tgl_awal">Tanggal Awal</label>
                             <input type="date" v-model="data_pengajuan_cuti.tgl_awal" class="form-control" id="tgl_awal">
                         </div>
@@ -43,10 +38,11 @@ export default {
     data() {
         return {
             data_pengajuan_cuti: {
-                pegawai_id: '',
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
+                // Isi user_id dengan id pengguna yang login dari localStorage
+                user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
             isLoadingTitle: "Loading"
@@ -67,7 +63,7 @@ export default {
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
                         this.errorList = {};
-                        const requiredFields = ['pegawai_id', 'tgl_awal', 'tgl_akhir', 'alasan'];
+                        const requiredFields = ['tgl_awal', 'tgl_akhir', 'alasan'];
                         let hasError = false;
                         for (const field of requiredFields) {
                             if (!this.data_pengajuan_cuti[field]) {
@@ -89,7 +85,6 @@ export default {
                             }
                         });
 
-                        this.data_pengajuan_cuti.pegawai_id = '';
                         this.data_pengajuan_cuti.tgl_awal = '';
                         this.data_pengajuan_cuti.tgl_akhir = '';
                         this.data_pengajuan_cuti.alasan = '';

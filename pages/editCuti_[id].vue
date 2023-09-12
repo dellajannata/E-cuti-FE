@@ -18,11 +18,6 @@
                         <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">
                                 <div class="form-group">
-                                    <label for="pegawai_id">Nama</label>
-                                    <input type="text" v-model="cuti.pegawai_id" class="form-control" id="pegawai_id"
-                                        placeholder="Masukkan Nama Anda">
-                                </div>
-                                <div class="form-group">
                                     <label for="tgl_awal">Tanggal Awal</label>
                                     <input type="date" v-model="cuti.tgl_awal" class="form-control" id="tgl_awal"
                                         placeholder="Masukkan Tanggal Awal Anda">
@@ -68,10 +63,10 @@ export default {
         return {
             cutiId: '',
             pengajuan_cuti: {
-                pegawai_id: '',
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
+                user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
             isLoadingTitle: "Loading"
@@ -110,7 +105,7 @@ export default {
                         const data = this.pengajuan_cuti[0];
                         console.log(data);
                         const requestData = {
-                            pegawai_id: data.pegawai_id,
+                            user_id: data.user_id,
                             tgl_awal: data.tgl_awal,
                             tgl_akhir: data.tgl_akhir,
                             alasan: data.alasan,
