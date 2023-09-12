@@ -45,7 +45,7 @@
       </div>
     </div>
     <!-- User -->
-    Halo, {{ userLoggedin?.name }}
+    <!-- Halo, {{ userLoggedin?.name }} -->
   </div>
 </template>
 <script>
