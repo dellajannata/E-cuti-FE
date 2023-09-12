@@ -19,17 +19,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(cuti, index) in data_cuti" :key="index">
+            <tr v-for="(cutiGroup, index) in sortedCutiGroups" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
-              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+              <td>{{ getNamaPegawai(cutiGroup[0].user_id) }}</td>
+              <td><template v-if="getUnitKerja(cutiGroup[0].user_id).split(' ').length > 3">
+                  {{ getUnitKerja(cutiGroup[0].user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cutiGroup[0].user_id).split(' ').slice(3).join(' ') }}
                 </template>
                 <template v-else>
-                  {{ getUnitKerja(cuti.pegawai_id) }}
+                  {{ getUnitKerja(cutiGroup[0].user_id) }}
                 </template></td>
-              <td>{{ getTotalCuti(cuti.pegawai_id) }}</td>
+              <td>{{ getTotalCuti(cutiGroup[0].user_id) }}</td>
             </tr>
           </tbody>
         </table>
@@ -44,14 +44,21 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      data_cuti: [],
+      data_cuti: {},
       data_pegawai: [],
+      data_pengguna: [],
       searchQuery: ""
     }
   },
   mounted() {
     this.getDataPengajuanCuti();
     this.getDataPegawai();
+    this.getDataPengguna();
+  },
+  computed: {
+    sortedCutiGroups() {
+      return Object.values(this.data_cuti).sort((a, b) => b.length - a.length);
+    },
   },
   methods: {
     search() {
@@ -64,7 +71,21 @@ export default {
           })
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai");
+            if (res.data.data) {
+              const cutiByUserId = {};
+              res.data.data.forEach(cuti => {
+                if (cuti.status !== "Selesai") {
+                  const userId = cuti.user_id || 'Unknown'; // Mengatasi cuti yang tidak memiliki user_id
+                  if (!cutiByUserId[userId]) {
+                    cutiByUserId[userId] = [];
+                  }
+                  cutiByUserId[userId].push(cuti);
+                }
+              });
+              this.data_cuti = cutiByUserId;
+            } else {
+              this.data_cuti = {};
+            }
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -73,6 +94,8 @@ export default {
         this.getDataPengajuanCuti();
       }
     },
+
+
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
@@ -81,7 +104,19 @@ export default {
         }
       }).then(res => {
         console.log(res.data.data);
-        this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai");
+        
+        // Menggunakan objek untuk mengelompokkan data berdasarkan user_id
+        const cutiByUserId = {};
+        res.data.data.forEach(cuti => {
+          if (cuti.status !== "Selesai") {
+            if (!cutiByUserId[cuti.user_id]) {
+              cutiByUserId[cuti.user_id] = [];
+            }
+            cutiByUserId[cuti.user_id].push(cuti);
+          }
+        });
+
+        this.data_cuti = cutiByUserId;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
@@ -99,20 +134,42 @@ export default {
         console.error('Error fetching pegawai data:', error);
       });
     },
-    getNamaPegawai(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    getDataPengguna() {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/users', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+        .then(res => {
+          console.log(res.data.data);
+          this.data_pengguna = res.data.data;
+        })
+        .catch(error => {
+          console.error('Error fetching pegawai data:', error);
+        });
     },
-    getUnitKerja(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
+    getIdPegawai(userId) {
+      const user = this.data_pengguna.find(pengguna => pengguna.id === userId);
+      return user ? user.pegawai_id : 'Id Pegawai Tidak Tersedia';
     },
-    getTotalCuti(pegawaiId) {
-      const totalCutiSelesai = this.data_cuti
-        .filter(cuti => cuti.pegawai_id === pegawaiId && cuti.status === "Selesai")
-        .length;
-
-      return totalCutiSelesai;
+    getNamaPegawai(userId) {
+      const idPengguna = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPengguna);
+      return namaPegawai ? namaPegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    },
+    getUnitKerja(userId) {
+      const idPegawai = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPegawai);
+      return namaPegawai ? namaPegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
+    },
+    getTotalCuti(userId) {
+      if (this.data_cuti[userId] && this.data_cuti[userId].length > 0) {
+        const totalCutiSelesai = this.data_cuti[userId].filter(cuti => cuti.status === "Selesai").length;
+        return totalCutiSelesai;
+      } else {
+        return 0;
+      }
     }
   }
 }

@@ -57,12 +57,14 @@ export default {
     return {
       data_cuti: [],
       data_pegawai: [],
+      data_pengguna: [],
       searchQuery: ""
     }
   },
   mounted() {
     this.getDataPengajuanCuti();
     this.getDataPegawai();
+    this.getDataPengguna();
   },
   methods: {
     search() {
@@ -109,17 +111,34 @@ export default {
           console.error('Error fetching pegawai data:', error);
         });
     },
-    getNamaPegawai(user_id) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user_id);
-      return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    getDataPengguna() {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/users', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+        .then(res => {
+          console.log(res.data.data);
+          this.data_pengguna = res.data.data;
+        })
+        .catch(error => {
+          console.error('Error fetching pegawai data:', error);
+        });
     },
-    getUnitKerja(user_id) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user_id);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
+    getIdPegawai(userId) {
+      const user = this.data_pengguna.find(pengguna => pengguna.id === userId);
+      return user ? user.pegawai_id : 'Id Pegawai Tidak Tersedia';
     },
-    getUnitKerja(user_id) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user_id);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
+    getNamaPegawai(userId) {
+      const idPengguna = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPengguna);
+      return namaPegawai ? namaPegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    },
+    getUnitKerja(userId) {
+      const idPegawai = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPegawai);
+      return namaPegawai ? namaPegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
     },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
