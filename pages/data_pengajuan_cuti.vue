@@ -9,7 +9,7 @@
         <!-- partial:partials/_sidebar.html -->
         <Sidebar />
         <!-- partial -->
-        <DataPengajuanCuti />
+        <DataPengajuanCutiAdmin />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <!-- <Footer/> -->
@@ -24,7 +24,7 @@
   <script setup>
   import Sidebar from '../components/Sidebar.vue';
   import Navbar from '../components/Navbar.vue';
-  import DataPengajuanCuti from '../components/DataPengajuanCuti.vue';
+  import DataPengajuanCutiAdmin from '../components/DataPengajuanCutiAdmin.vue';
   
   definePageMeta({
     middleware: ['redirect-login']
