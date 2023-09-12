@@ -7,9 +7,9 @@
         <!-- partial:partials/_settings-panel.html -->
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-        <SidebarKadis />
+        <SidebarAccKasubag />
         <!-- partial -->
-        <CutiAccKadis />
+        <CutiAccSekretaris />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <!-- <Footer/> -->
@@ -21,9 +21,9 @@
     </div>
   </template>
   <script setup>
-  import SidebarKadis from '../components/SidebarKadis.vue';
+  import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
   import Navbar from '../components/Navbar.vue';
-  import CutiAccKadis from '../components/data_by_status/PengajuanCutiAccKadis.vue';
+  import CutiAccSekretaris from '../components/data_by_status/PengajuanCutiAccSekretaris.vue';
   
   definePageMeta({
     middleware: ['redirect-login']

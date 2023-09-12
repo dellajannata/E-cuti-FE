@@ -2,11 +2,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // based on roles
   const FALLBACK_ROUTES = {
     ADMIN: '/dashboard',
-    KABID: '/pengajuan_cuti_acc_kabid',
-    KASUBAG: '/pengajuan_cuti_acc_kasubag',
-    KADIS: '/pengajuan_cuti_acc_kadis',
-    SEKRETARIS: '/pengajuan_cuti_acc_sekretaris',
-    PEGAWAI: '/data_pengajuan_cuti'
+    KABID: '/dashboard_kabid',
+    KASUBAG: '/dashboard_kasubag',
+    KADIS: '/dashboard_kadis',
+    SEKRETARIS: '/dashboard_sekretaris',
+    PEGAWAI: '/dashboard_pegawai'
   }
 
   const getUserRole = JSON.parse(localStorage.getItem('user'))

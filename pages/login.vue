@@ -50,11 +50,11 @@ const form = ref({
 
 const REDIRECT_ROUTES = {
 	ADMIN: '/dashboard',
-	KABID: '/pengajuan_cuti_acc_kabid',
-	KASUBAG: '/pengajuan_cuti_acc_kasubag',
-	KADIS: '/pengajuan_cuti_acc_kadis',
-	SEKRETARIS: '/pengajuan_cuti_acc_sekretaris',
-	PEGAWAI: '/data_pengajuan_cuti_pegawai'
+    KABID: '/dashboard_kabid',
+    KASUBAG: '/dashboard_kasubag',
+    KADIS: '/dashboard_kadis',
+    SEKRETARIS: '/dashboard_sekretaris',
+    PEGAWAI: '/dashboard_pegawai'
 }
 
 const onLogin = async () => {
