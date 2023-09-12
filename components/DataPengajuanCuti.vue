@@ -26,15 +26,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(cuti, index) in data_cuti" :key="index">
+            <tr v-for="(cuti, index) in filteredCuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
-              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+              <td>{{ getNamaPegawai(cuti.user_id) }}</td>
+              <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.user_id).split(' ').slice(3).join(' ') }}
                 </template>
                 <template v-else>
-                  {{ getUnitKerja(cuti.pegawai_id) }}
+                  {{ getUnitKerja(cuti.user_id) }}
                 </template>
               </td>
               <td>{{ cuti.tgl_awal }}</td>
@@ -72,6 +72,17 @@ export default {
       searchQuery: ""
     }
   },
+  computed: {
+    filteredCuti() {
+      const idUser = this.getIdUserYangLogin(); // Mengambil nama pengguna dari localStorage 1
+
+      // Filter data cuti berdasarkan nama pengguna yang login
+      return this.data_cuti.filter(cuti => {
+        const idPegawai = this.getIdPegawai(cuti.id);
+        return idPegawai === idUser;
+      });
+    },
+  },
   mounted() {
     this.getDataPengajuanCuti();
     this.getDataPegawai();
@@ -95,6 +106,10 @@ export default {
       } else {
         this.getDataPengajuanCuti();
       }
+    },
+    getIdUserYangLogin() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData ? userData.pegawai_id : ''; // Mengambil nama pengguna dari objek pengguna 
     },
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
@@ -125,8 +140,17 @@ export default {
           console.error('Error fetching pegawai data:', error);
         });
     },
-    getNamaPegawai(pegawaiId) {
+    getIdPegawai(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+      return pegawai ? pegawai.id : 'Id Pegawai Tidak Tersedia';
+    },
+    getPegawaiId() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna 
+    },
+    getNamaPegawai(userId) { //2
+      const user = this.getPegawaiId(); 
+      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
       return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
     },
     getUnitKerja(pegawaiId) {

@@ -91,7 +91,12 @@ export default {
   methods: {
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+        const accessToken = localStorage.getItem('token');
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
           .then(res => {
             console.log(res.data.data);
             this.data_cuti = res.data.data;
@@ -104,7 +109,12 @@ export default {
       }
     },
     getDataPengajuanCuti() {
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid').then(res => {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }).then(res => {
         console.log(res.data.data);
         this.data_cuti = res.data.data;
       }).catch(error => {
@@ -112,7 +122,11 @@ export default {
       });
     },
     getDataPegawai() {
+      const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pegawai', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
       }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
@@ -141,8 +155,12 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`);
+            const accessToken = localStorage.getItem('token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_acc_kabid/${cutiId}`, null, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            });
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil disetujui.',
@@ -168,8 +186,12 @@ export default {
 
         if (result.isConfirmed) {
           if (!this.rememberMe) {
-            const accessToken = localStorage.getItem('access_token');
-            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kabid/${cutiId}`);
+            const accessToken = localStorage.getItem('token');
+            await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti_tolak_kabid/${cutiId}`, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            });
             Swal.fire(
               'Berhasil!',
               'Pengajuan cuti berhasil ditolak.',

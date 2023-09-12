@@ -8,7 +8,7 @@
             <div class="d-inline-block">
               <h2>{{ data_cuti.length }}</h2>
               <p class="text-white">Ayeee ayee</p>
-              <a href="/data_pengajuan_cuti" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+              <a href="/data_pengajuan_cuti_pegawai" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
             <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
@@ -23,7 +23,7 @@
             <div class="d-inline-block">
               <h2>{{ rekap_cuti.length }}</h2>
               <p class="text-white">Uhuyeeyee</p>
-              <a href="/data_rekap_cuti" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+              <a href="/data_rekap_cuti_pegawai" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
             <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
@@ -39,13 +39,40 @@
     data() {
       return {
         data_cuti: [],
+        data_pegawai: [],
         rekap_cuti: [],
+        userLoggedin: JSON.parse(localStorage.getItem('user')),
       }
     },
     mounted() {
       this.getDataPengajuanCuti();
+      this.getDataPegawai();
     },
     methods: {
+      getIdUserYangLogin() {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        return userData ? userData.pegawai_id : ''; // Mengambil nama pengguna dari objek pengguna 
+      },
+      getIdPegawai(pegawaiId) {
+        const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
+        return pegawai ? pegawai.id : 'Id Pegawai Tidak Tersedia';
+      },
+      getDataPegawai() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pegawai', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.data_pegawai = res.data.data;
+
+          // Setelah data pegawai tersedia, dapat memanggil getDataPengajuanCuti
+          this.getDataPengajuanCuti();
+        }).catch(error => {
+          console.error('Error fetching pegawai data:', error);
+        });
+      },
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');
         axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
@@ -54,8 +81,21 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status !== "Selesai" & data_cuti.status !== "Ditolak");
-          this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
+          const idUser = this.getIdUserYangLogin();
+          // Filter data cuti sesuai dengan nama pengguna yang login
+          this.data_cuti = res.data.data.filter(data_cuti => {
+              const idPegawai = this.getIdPegawai(data_cuti.id);
+              return idPegawai === idUser &
+              data_cuti.status !== "Selesai" &
+              data_cuti.status !== "Ditolak";
+          });
+
+          // Filter data rekap cuti sesuai dengan nama pengguna yang login
+          this.rekap_cuti = res.data.data.filter(data_cuti => {
+              const idPegawai = this.getIdPegawai(data_cuti.id);
+              return idPegawai === idUser &
+              data_cuti.status === "Selesai";
+          });
         }).catch(error => {
           console.error('Error fetching data:', error);
         });

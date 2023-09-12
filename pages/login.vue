@@ -54,7 +54,7 @@ const REDIRECT_ROUTES = {
 	KASUBAG: '/pengajuan_cuti_acc_kasubag',
 	KADIS: '/pengajuan_cuti_acc_kadis',
 	SEKRETARIS: '/pengajuan_cuti_acc_sekretaris',
-	PEGAWAI: '/data_pengajuan_cuti'
+	PEGAWAI: '/data_pengajuan_cuti_pegawai'
 }
 
 const onLogin = async () => {
