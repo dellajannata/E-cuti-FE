@@ -51,7 +51,7 @@
     methods: {
       getIdUserYangLogin() {
         const userData = JSON.parse(localStorage.getItem('user'));
-        return userData ? userData.pegawai_id : ''; // Mengambil nama pengguna dari objek pengguna 
+        return userData ? userData.id : ''; // Mengambil id pengguna dari objek pengguna 
       },
       getIdPegawai(pegawaiId) {
         const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
@@ -84,16 +84,14 @@
           const idUser = this.getIdUserYangLogin();
           // Filter data cuti sesuai dengan nama pengguna yang login
           this.data_cuti = res.data.data.filter(data_cuti => {
-              const idPegawai = this.getIdPegawai(data_cuti.id);
-              return idPegawai === idUser &
+              return data_cuti.user_id === idUser &
               data_cuti.status !== "Selesai" &
               data_cuti.status !== "Ditolak";
           });
 
           // Filter data rekap cuti sesuai dengan nama pengguna yang login
           this.rekap_cuti = res.data.data.filter(data_cuti => {
-              const idPegawai = this.getIdPegawai(data_cuti.id);
-              return idPegawai === idUser &
+              return data_cuti.user_id === idUser &
               data_cuti.status === "Selesai";
           });
         }).catch(error => {
