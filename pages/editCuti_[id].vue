@@ -14,7 +14,6 @@
                     <div class="card-body">
                         <div class="card-edit-pegawai">
                             <h4 class="card-title">Edit Pengajuan Cuti</h4>
-                            <a class="btn btn-primary" href="/data_pengajuan_cuti_pegawai">Kembali</a>
                         </div>
                         <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
                             <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">
@@ -53,12 +52,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
-// import authMiddleware from '../middleware/auth';
 
 export default {
     name: "EditPegawai",
-    // auth: true,
-    // middleware: [authMiddleware],
     components: {
         SidebarPegawai,
         Navbar,

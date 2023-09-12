@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarSekretaris/>
+            <SidebarSekretaris />
             <!-- partial -->
             <ContentSekretaris />
             <!-- content-wrapper ends -->
@@ -22,6 +22,9 @@
     </div>
 </template>
 <script>
+definePageMeta({
+    middleware: ['redirect-login']
+})
 import SidebarSekretaris from '../components/SidebarSekretaris.vue';
 import Navbar from '../components/Navbar.vue';
 import ContentSekretaris from '../components/ContentSekretaris.vue';

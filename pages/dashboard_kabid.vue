@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarAccKabid/>
+            <SidebarAccKabid />
             <!-- partial -->
             <ContentKabid />
             <!-- content-wrapper ends -->
@@ -22,15 +22,20 @@
     </div>
 </template>
 <script>
+definePageMeta({
+    middleware: ['redirect-login']
+})
 import SidebarAccKabid from '../components/SidebarAccKabid.vue';
 import Navbar from '../components/Navbar.vue';
 import ContentKabid from '../components/ContentKabid.vue';
 
 export default {
+
     components: {
         SidebarAccKabid,
         Navbar,
         ContentKabid
     }
 }
+
 </script>

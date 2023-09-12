@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <SidebarAccKasubag/>
+            <SidebarAccKasubag />
             <!-- partial -->
             <ContentKasubag />
             <!-- content-wrapper ends -->
@@ -22,6 +22,9 @@
     </div>
 </template>
 <script>
+definePageMeta({
+    middleware: ['redirect-login']
+})
 import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
 import Navbar from '../components/Navbar.vue';
 import ContentKasubag from '../components/ContentKasubag.vue';
