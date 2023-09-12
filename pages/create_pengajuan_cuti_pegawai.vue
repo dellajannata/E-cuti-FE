@@ -9,7 +9,7 @@
             <!-- partial:partials/_sidebar.html -->
             <SidebarPegawai />
             <!-- partial -->
-            <CreateCuti />
+            <CreateCutiPegawai />
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <!-- <Footer/> -->
@@ -23,14 +23,14 @@
 <script>
 import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
-import CreateCuti from '../components/CreateCuti.vue';
+import CreateCutiPegawai from '../components/CreateCutiPegawai.vue';
 
 export default {
   middleware:'auth',
   components: {
     SidebarPegawai,
     Navbar,
-    CreateCuti
+    CreateCutiPegawai
   }
 }
 </script>
