@@ -7,7 +7,7 @@
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <router-link class="btn btn-primary" :to="'/create_pengajuan_cuti'">Tambah</router-link>
+        <a class="btn btn-primary" href="/create_pegawai"><i class="fa fa-plus"></i></a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
