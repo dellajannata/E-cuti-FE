@@ -74,7 +74,7 @@ export default {
             if (res.data.data) {
               const cutiByUserId = {};
               res.data.data.forEach(cuti => {
-                if (cuti.status !== "Selesai") {
+                if (cuti.status === "Selesai") {
                   const userId = cuti.user_id || 'Unknown'; // Mengatasi cuti yang tidak memiliki user_id
                   if (!cutiByUserId[userId]) {
                     cutiByUserId[userId] = [];
@@ -108,7 +108,7 @@ export default {
         // Menggunakan objek untuk mengelompokkan data berdasarkan user_id
         const cutiByUserId = {};
         res.data.data.forEach(cuti => {
-          if (cuti.status !== "Selesai") {
+          if (cuti.status === "Selesai") {
             if (!cutiByUserId[cuti.user_id]) {
               cutiByUserId[cuti.user_id] = [];
             }
