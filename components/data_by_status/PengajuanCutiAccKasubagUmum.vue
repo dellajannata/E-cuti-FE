@@ -25,13 +25,13 @@
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai(cuti.pegawai_id) }}</td>
-              <td><template v-if="getUnitKerja(cuti.pegawai_id).split(' ').length > 3">
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja(cuti.pegawai_id).split(' ').slice(3).join(' ') }}
+              <td>{{ getNamaPegawai(cuti.user_id) }}</td>
+              <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
+                  {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
+                  {{ getUnitKerja(cuti.user_id).split(' ').slice(3).join(' ') }}
                 </template>
                 <template v-else>
-                  {{ getUnitKerja(cuti.pegawai_id) }}
+                  {{ getUnitKerja(cuti.user_id) }}
                 </template></td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
@@ -76,26 +76,27 @@ export default {
     return {
       data_cuti: [],
       data_pegawai: [],
+      data_pengguna: [],
       searchQuery: ""
     }
   },
   mounted() {
     this.getDataPengajuanCuti();
     this.getDataPegawai();
-  },
-  computed: {
-    filteredCutiList() {
-      return this.data_cuti.filter(cuti => cuti.pegawai_id === 11);
-    },
+    this.getDataPengguna();
   },
   methods: {
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+        const accessToken = localStorage.getItem('token');
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status !== "Belum" && cuti.status !== "ACC Kabid"
-            && cuti.status !== "Ditolak Kabid");
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "ACC Kabid" || cuti.status === "ACC Kasubag Umum" || cuti.status === "Ditolak Kasubag Umum");
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -131,13 +132,34 @@ export default {
         console.error('Error fetching pegawai data:', error);
       });
     },
-    getNamaPegawai(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    getDataPengguna() {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/users', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+        .then(res => {
+          console.log(res.data.data);
+          this.data_pengguna = res.data.data;
+        })
+        .catch(error => {
+          console.error('Error fetching pegawai data:', error);
+        });
     },
-    getUnitKerja(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
+    getIdPegawai(userId) {
+      const user = this.data_pengguna.find(pengguna => pengguna.id === userId);
+      return user ? user.pegawai_id : 'Id Pegawai Tidak Tersedia';
+    },
+    getNamaPegawai(userId) {
+      const idPengguna = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPengguna);
+      return namaPegawai ? namaPegawai.nama : 'Nama Pegawai Tidak Tersedia';
+    },
+    getUnitKerja(userId) {
+      const idPegawai = this.getIdPegawai(userId);
+      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPegawai);
+      return namaPegawai ? namaPegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
     },
     async validasi(cutiId) {
       try {

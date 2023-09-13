@@ -14,6 +14,12 @@
               <span class="menu-title">Pengajuan Cuti Sekretaris</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/rekap_cuti_acc_sekretaris">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Rekap Cuti</span>
+            </a>
+          </li>
           <li class="nav-item nav-category">Data Pengguna</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="/pengguna" aria-expanded="false" aria-controls="auth">
