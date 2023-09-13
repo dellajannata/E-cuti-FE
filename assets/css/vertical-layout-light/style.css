@@ -24283,7 +24283,7 @@ code {
 .ajax-upload-dragdrop .btn-sm.ajax-file-upload,
 .swal2-modal .swal2-buttonswrapper .btn-sm.swal2-styled {
   font-size: 0.812rem;
-  border-radius: 15px;
+  /* border-radius: 15px; */
 }
 
 .btn.btn-lg,
@@ -35941,9 +35941,4 @@ div.tagsinput span.tag a {
     display: grid;
     grid-template-columns: auto auto auto;
   }
-}
-.tittle-profile{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
