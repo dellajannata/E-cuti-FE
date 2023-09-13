@@ -2,9 +2,9 @@
     <div class="card">
         <div class="card-body">
             <div class="tittle-profile">
-                <h4 class="card-title">Data Pegawai</h4>
+                <h4 class="card-title">Data Pengguna</h4>
                 <div class="card-pegawai">
-                    <a class="btn btn-primary" href="/create_pegawai">Edit</a>
+                    <NuxtLink :to="`../editPengguna_${data_profile.id}`" class="btn btn-primary btn-sm">Edit</NuxtLink>
                 </div>
             </div>
             <div class="table-responsive">
@@ -28,7 +28,8 @@
                             <th>Password</th>
                             <td>{{ data_profile.password }}</td>
                         </tr>
-                    </tbody>
+                    </tbody> <br>
+                    <h4 class="card-title">Data Pegawai</h4>
                     <tbody>
                         <tr>
                             <th>Nama Pegawai</th>
@@ -70,7 +71,7 @@ export default {
     data() {
         return {
             data_profile: [],
-            data_pegawai:[]
+            data_pegawai: []
         }
     },
     mounted() {
