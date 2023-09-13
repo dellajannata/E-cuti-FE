@@ -7,6 +7,7 @@
                     <NuxtLink :to="`../editPengguna_${data_profile.id}`" class="btn btn-primary btn-sm">Edit</NuxtLink>
                 </div>
             </div>
+            <br>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tbody>
