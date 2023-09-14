@@ -49,7 +49,9 @@
                 <template v-else>Proses ACC</template>
               </td>
               <td class="btn-action">
-                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
+                <template v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak'">
+                  <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
+                </template>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
@@ -211,22 +213,25 @@ export default {
     cetakPDF(event, cutiId) {
       const accessToken = localStorage.getItem('token');
       axios.get(`http://127.0.0.1:8000/api/cetak-pdf/${cutiId}`, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
         responseType: 'blob'
       }).then(response => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
+        const url = window.URL.createObjectURL(blob);
 
         const link = document.createElement('a');
         link.href = url;
         link.target = '_blank';
+        link.download = 'surat-permohonan-cuti.pdf'; 
         link.click();
+
+        window.URL.revokeObjectURL(url);
       }).catch(error => {
         console.error('Error fetching PDF:', error);
       });
+
     }
   }
 }
