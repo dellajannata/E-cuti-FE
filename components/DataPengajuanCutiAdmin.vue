@@ -69,7 +69,12 @@ export default {
   methods: {
     search() {
       if (this.searchQuery !== "") {
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`)
+        const accessToken = localStorage.getItem('token');
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
           .then(res => {
             console.log(res.data.data);
             this.data_cuti = res.data.data;
