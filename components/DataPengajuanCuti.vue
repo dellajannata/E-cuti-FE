@@ -7,7 +7,7 @@
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <a class="btn btn-primary" href="/create_pegawai"><i class="fa fa-plus"></i></a>
+        <a class="btn btn-primary" href="/create_pengajuan_cuti_pegawai"><i class="fa fa-plus"></i></a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -49,8 +49,8 @@
                 <template v-else>Proses ACC</template>
               </td>
               <td class="btn-action">
-                <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
-                <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
+                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

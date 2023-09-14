@@ -12,7 +12,7 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                            <th>Nama</th>
+                            <th>Username</th>
                             <td>{{ data_profile.name }}</td>
 
 
@@ -33,7 +33,7 @@
                     <h4 class="card-title">Data Pegawai</h4>
                     <tbody>
                         <tr>
-                            <th>Nama Pegawai</th>
+                            <th>Nama</th>
                             <td>{{ getNamaPegawai() }}</td>
                         </tr>
                     </tbody>

@@ -8,7 +8,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
+            <SidebarPegawai />
             <!-- partial -->
             <Pengguna />
             <!-- content-wrapper ends -->
@@ -23,7 +23,7 @@
 </template>
   
 <script setup>
-import Sidebar from '../components/Sidebar.vue';
+import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 import Pengguna from '../components/Pengguna.vue';
 
