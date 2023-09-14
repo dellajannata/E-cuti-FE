@@ -165,7 +165,7 @@
       },
       getTotalCuti(userId) {
         if (this.data_cuti[userId] && this.data_cuti[userId].length > 0) {
-          const totalCutiSelesai = this.data_cuti[userId].filter(cuti => cuti.status === "ACC Kabid").length;
+          const totalCutiSelesai = this.data_cuti[userId].filter(cuti => cuti.status === "Selesai").length;
           return totalCutiSelesai;
         } else {
           return 0;
