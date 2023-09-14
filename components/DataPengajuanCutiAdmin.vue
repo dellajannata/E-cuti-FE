@@ -7,7 +7,6 @@
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <a class="btn btn-primary" href="/create_pegawai"><i class="fa fa-plus"></i></a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
