@@ -6,6 +6,6 @@
 import DataRekapCuti from '../components/DataRekapCuti.vue';
 
 definePageMeta({
-  middleware: ['redirect-login', 'protect-route']
+  middleware: ['redirect-login']
 })
 </script>

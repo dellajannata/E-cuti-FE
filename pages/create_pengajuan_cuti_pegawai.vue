@@ -6,7 +6,7 @@
 import CreateCutiPegawai from '../components/CreateCutiPegawai.vue';
 
 definePageMeta({
-  middleware: ['redirect-login', 'protect-route'],
+  middleware: ['redirect-login'],
   layout: 'sidebar-role'
 })
 </script>

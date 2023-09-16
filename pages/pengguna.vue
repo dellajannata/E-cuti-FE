@@ -6,7 +6,7 @@
 import Pengguna from '../components/PenggunaAdmin.vue';
 
 definePageMeta({
-    middleware: ['redirect-login', 'protect-route'],
+    middleware: ['redirect-login'],
     layout: ['default']
 })
 </script>

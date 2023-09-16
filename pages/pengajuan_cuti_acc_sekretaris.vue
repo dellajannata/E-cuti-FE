@@ -6,7 +6,7 @@
   import CutiAccSekretaris from '../components/data_by_status/PengajuanCutiAccSekretaris.vue';
   
   definePageMeta({
-    middleware: ['redirect-login', 'protect-route'],
+    middleware: ['redirect-login'],
     layout: 'sidebar-role'
   })
   </script>
