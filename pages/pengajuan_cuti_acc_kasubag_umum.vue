@@ -6,7 +6,7 @@
   import CutiAccKasubagUmum from '../components/data_by_status/PengajuanCutiAccKasubagUmum.vue';
   
   definePageMeta({
-    middleware: ['redirect-login'],
+    middleware: ['redirect-login', 'protect-route'],
     layout: 'sidebar-role'
   })
   </script>

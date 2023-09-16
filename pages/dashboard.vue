@@ -6,6 +6,6 @@
 import Content from '../components/Content.vue';
 
 definePageMeta({
-  middleware: ['redirect-login']
+  middleware: ['redirect-login', 'protect-route']
 })
 </script>

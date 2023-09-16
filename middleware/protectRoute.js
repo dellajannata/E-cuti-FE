@@ -11,11 +11,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const getUserRole = JSON.parse(localStorage.getItem('user'))
   const userRole = getUserRole ? getUserRole.role : null;
-  console.log(`user role = ${userRole}`)
+  // console.log(`user role = ${userRole}`)
 
   const checkRole = redirectRoute => {
     if (to.path !== redirectRoute && from.path !== redirectRoute) {
-      console.log(redirectRoute)
+      // console.log(redirectRoute)
       return navigateTo(redirectRoute)
     }
   }
@@ -24,7 +24,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     console.log(`user role = ${userRole}`)
     switch (userRole) {
       case 'admin':
-        return checkRole(FALLBACK_ROUTES.ADMIN)
+        // return checkRole(FALLBACK_ROUTES.ADMIN)
+        return
       case 'kabid':
         return checkRole(FALLBACK_ROUTES.KABID)
       case 'kasubag umum':

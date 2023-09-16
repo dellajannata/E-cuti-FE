@@ -6,7 +6,7 @@
 import CreatePegawai from '../components/CreatePegawai.vue'
 
 definePageMeta({
-  middleware: ['redirect-login'],
+  middleware: ['redirect-login', 'protect-route'],
   layout: 'default'
 })
 </script>
