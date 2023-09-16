@@ -80,13 +80,13 @@ export default {
     },
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       }).then(res => {
         console.log(res.data.data);
-        this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status !== "Selesai" & data_cuti.status !== "Ditolak");
+        this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Belum" | data_cuti.status.includes('ACC'));
         this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
       }).catch(error => {
         console.error('Error fetching data:', error);

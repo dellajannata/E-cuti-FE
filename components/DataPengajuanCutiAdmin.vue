@@ -24,7 +24,7 @@
           </thead>
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
-              <td>{{ index + 1 }}</td>
+              <td>{{ calculateRowNumber(index) }}</td>
               <td>{{ getNamaPegawai(cuti.user_id) }}</td>
               <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
                   {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
@@ -43,6 +43,17 @@
           </tbody>
         </table>
       </div>
+      <div class="pagination justify-content-end mb-2">
+        <div class="btn-wrapper d-flex">
+          <div @click="prevPage" class="btn" :disabled="currentPage === 1"><i class="mdi mdi-chevron-double-left"></i>
+          </div>
+          <div v-for="i in totalPages" :key="i" class="btn" @click="goToPage(i)" :class="{ active: currentPage === i }">
+            {{ i }}
+          </div>
+          <div @click="nextPage" class="btn" :disabled="currentPage === totalPages"><i
+              class="mdi mdi-chevron-double-right"></i></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -57,13 +68,30 @@ export default {
       data_cuti: [],
       data_pegawai: [],
       data_pengguna: [],
-      searchQuery: ""
+      searchQuery: "",
+      currentPage: 1,
+      totalPages: 1,
+      itemsPerPage: 2,
     }
   },
-  mounted() {
+  created() {
+    // Get the page query parameter from the route
+    const page = parseInt(this.$route.query.page) || 1;
+    this.currentPage = page;
+    // fetching data
     this.getDataPengajuanCuti();
     this.getDataPegawai();
     this.getDataPengguna();
+  },
+  watch: {
+    $route(to) {
+      // Update the current page when the route changes
+      const page = parseInt(to.query.page) || 1;
+      this.currentPage = page;
+      this.getDataPengajuanCuti();
+      this.getDataPegawai();
+      this.getDataPengguna();
+    }
   },
   methods: {
     search() {
@@ -88,13 +116,17 @@ export default {
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
-                            headers: {
-                            'Authorization': `Bearer ${accessToken}`
-                            }
-                        })
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+        params: {
+          page: this.currentPage
+        }
+      })
         .then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data;
+          this.totalPages = res.data.pagination.last_page;
         })
         .catch(error => {
           console.error('Error fetching data:', error);
@@ -102,7 +134,7 @@ export default {
     },
     getDataPegawai() {
       const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pegawai', {
+      axios.get('http://127.0.0.1:8000/api/pegawai_all', {
                             headers: {
                             'Authorization': `Bearer ${accessToken}`
                             }
@@ -161,6 +193,25 @@ export default {
       };
       const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
       return formattedTime.replace(/\//g, '-');
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: this.currentPage + 1 } })
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: this.currentPage - 1 } })
+      }
+    },
+    goToPage(num) {
+      if (this.currentPage !== num) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: num } })
+      }
+    },
+    calculateRowNumber(index) {
+      // Calculate the row number based on the current page and index
+      return (this.currentPage - 1) * this.itemsPerPage + index + 1;
     }
   }
 }

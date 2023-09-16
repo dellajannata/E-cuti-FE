@@ -66,7 +66,6 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-// const API_BASE = 'http://127.0.0.1:8000/api';
 
 export default {
   data() {
@@ -75,7 +74,7 @@ export default {
       searchQuery: "",
       currentPage: 1,
       totalPages: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 5,
     }
   },
   created() {
