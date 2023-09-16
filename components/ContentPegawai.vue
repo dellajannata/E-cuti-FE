@@ -75,7 +75,7 @@
       },
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }

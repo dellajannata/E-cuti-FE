@@ -46,7 +46,7 @@
                 <template v-if="cuti.status == 'Selesai'">
                   <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
                 </template>
-                <template v-else-if="cuti.status.includes('ACC')">
+                <template v-else-if="cuti.status == 'Belum' | cuti.status.includes('ACC')">
                   Proses ACC
                 </template>
                 <template v-else>

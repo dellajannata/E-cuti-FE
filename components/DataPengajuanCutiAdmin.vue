@@ -104,7 +104,7 @@ export default {
         })
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data;
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Belum" | cuti.status.includes('ACC'));
           })
           .catch(error => {
             console.error('Error fetching data:', error);
