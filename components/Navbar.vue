@@ -1,9 +1,8 @@
 <template>
-  <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+  <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top align-items-top flex-row">
+    <div v-if="isSidebarOpen" class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
       <div class="me-3">
-        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize"
-          @click="toggleSidebar">
+        <button class="navbar-toggler navbar-toggler align-self-center" @click="toggleSidebar">
           <span class="icon-menu"></span>
         </button>
       </div>
@@ -16,7 +15,12 @@
         </a> -->
       </div>
     </div>
-    <div class="navbar-menu-wrapper d-flex align-items-top">
+    <div class="navbar-menu-wrapper d-flex align-items-top" :class="{ 'no-sidebar': !isSidebarOpen }">
+      <div v-if="!isSidebarOpen" class="me-3">
+        <button class="navbar-toggler navbar-toggler align-self-center pt-1" @click="toggleSidebar">
+          <span class="icon-menu text-white"></span>
+        </button>
+      </div>
       <h2 class="ecuti-navbar">
         Sistem Permohonan Cuti
       </h2>
@@ -58,7 +62,8 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      isMobileExpand: false
+      isMobileExpand: false,
+      isSidebarOpen: true
     }
   },
   methods: {
@@ -93,6 +98,7 @@ export default {
       this.$router.push('/login');
     },
     toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen
       this.$emit('toggleSidebar')
     },
     toggleMobile() {
@@ -104,10 +110,17 @@ export default {
 </script>
 
 <style scoped>
+.navbar {
+  flex-wrap: nowrap;
+}
 .navbar-menu-wrapper {
   padding-top: 12px;
   padding-bottom: 12px;
   align-items: center;
+  transition: width 0.3s;
+}
+.navbar-menu-wrapper.no-sidebar {
+  width: 100%;
 }
 @media (max-width: 991px) {
   .navbar-menu-wrapper {
