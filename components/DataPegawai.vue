@@ -116,11 +116,15 @@ export default {
         axios.get(`http://127.0.0.1:8000/api/pegawai/search/${this.searchQuery}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
+          },
+          params: {
+            page: this.currentPage
           }
         })
         .then(res => {
           console.log(res.data.data);
           this.data_pegawai = res.data.data;
+          this.totalPages = res.data.pagination.last_page;
         })
         .catch(error => {
           console.error('Error fetching data:', error);
