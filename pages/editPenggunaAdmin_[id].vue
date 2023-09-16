@@ -125,7 +125,7 @@ export default {
             }
         },
         backDataPengguna() {
-            this.$router.push('/pengguna_pegawai');
+            this.$router.push('/pengguna');
         }
     }
 }

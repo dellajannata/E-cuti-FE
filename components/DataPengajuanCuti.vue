@@ -46,10 +46,15 @@
                 <template v-if="cuti.status == 'Selesai'">
                   <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
                 </template>
-                <template v-else>Proses ACC</template>
+                <template v-else-if="cuti.status.includes('ACC')">
+                  Proses ACC
+                </template>
+                <template v-else>
+                  Ditolak
+                </template>
               </td>
               <td class="btn-action">
-                <template v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak'">
+                <template v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak Kabid' && cuti.status != 'Ditolak Kasubag Umum' && cuti.status != 'Ditolak Sekretaris' && cuti.status != 'Ditolak Kadis'">
                   <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
                 </template>
                 <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

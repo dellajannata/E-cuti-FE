@@ -1,13 +1,12 @@
 <template>
-    <ContentSekretaris />
+    <Pengguna />
 </template>
-
+  
 <script setup>
-import ContentSekretaris from '../components/ContentSekretaris.vue';
+import Pengguna from '../components/PenggunaKadis.vue';
 
 definePageMeta({
     middleware: ['redirect-login'],
     layout: ['sidebar-role']
 })
-
 </script>

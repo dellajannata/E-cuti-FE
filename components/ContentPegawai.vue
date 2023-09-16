@@ -86,7 +86,10 @@
           this.data_cuti = res.data.data.filter(data_cuti => {
               return data_cuti.user_id === idUser &
               data_cuti.status !== "Selesai" &
-              data_cuti.status !== "Ditolak";
+              data_cuti.status !== "Ditolak Kabid" &
+              data_cuti.status !== "Ditolak Kasubag Umum" &
+              data_cuti.status !== "Ditolak Sekretaris" &
+              data_cuti.status !== "Ditolak Kadis";
           });
 
           // Filter data rekap cuti sesuai dengan nama pengguna yang login

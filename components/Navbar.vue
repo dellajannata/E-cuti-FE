@@ -2,14 +2,15 @@
   <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
       <div class="me-3">
-        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize"
+          @click="toggleSidebar">
           <span class="icon-menu"></span>
         </button>
       </div>
       <div>
-        <a class="navbar-brand brand-logo" href="/dashboard">
+        <NuxtLink class="navbar-brand brand-logo" to="/dashboard">
           <img src="../assets/css/vertical-layout-light/logo1.png" alt="" />
-        </a>
+        </NuxtLink>
         <!-- <a class="navbar-brand brand-logo-mini" href="index.html">
           <img src="../assets/css/vertical-layout-light/logo1.png" alt="" />
         </a> -->
@@ -42,12 +43,12 @@
           </div>
         </li>
       </ul>
-      <li class="nav-item">
+      <li class="nav-item logout">
         <button class="btn btn-danger logout-button" @click="logout()">Logout</button>
       </li>
       <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-        data-bs-toggle="offcanvas">
-        <span class="mdi mdi-menu"></span>
+      data-bs-toggle="offcanvas" @click="toggleMobile">
+        <span class="mdi text-white" :class="isMobileExpand ? 'mdi-close' : 'mdi-menu'"></span>
       </button>
     </div>
   </nav>
@@ -55,6 +56,11 @@
 <script>
 import Swal from 'sweetalert2';
 export default {
+  data() {
+    return {
+      isMobileExpand: false
+    }
+  },
   methods: {
     async logout() {
       try {
@@ -71,7 +77,7 @@ export default {
           if (!this.rememberMe) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-              this.backLogin()
+            this.backLogin()
           }
         }
       } catch (error) {
@@ -85,7 +91,37 @@ export default {
     },
     backLogin() {
       this.$router.push('/login');
+    },
+    toggleSidebar() {
+      this.$emit('toggleSidebar')
+    },
+    toggleMobile() {
+      this.isMobileExpand = !this.isMobileExpand
+      this.$emit('toggleMobile')
     }
   }
 }
 </script>
+
+<style scoped>
+.navbar-menu-wrapper {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  align-items: center;
+}
+@media (max-width: 991px) {
+  .navbar-menu-wrapper {
+    width: 100%;
+    height: 60px;
+  }
+  .navbar-brand-wrapper {
+    display: none !important;
+  }
+  .nav-item.logout {
+    display: none;
+  }
+  .ecuti-navbar {
+    font-size: 20px;
+  }
+}
+</style>

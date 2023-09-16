@@ -40,13 +40,11 @@ definePageMeta({
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import SidebarPegawai from '../components/SidebarPegawai.vue';
 import Navbar from '../components/Navbar.vue';
 
 export default {
     name: "EditPegawai",
     components: {
-        SidebarPegawai,
         Navbar,
     },
     data() {
@@ -125,7 +123,7 @@ export default {
             }
         },
         backDataPengguna() {
-            this.$router.push('/pengguna_pegawai');
+            this.$router.push('/pengguna_sekretaris');
         }
     }
 }

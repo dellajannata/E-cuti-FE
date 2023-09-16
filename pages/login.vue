@@ -37,6 +37,10 @@
 <script setup>
 import Swal from 'sweetalert2';
 
+definePageMeta({
+	layout: 'blank'
+})
+
 const { $sanctumAuth, $apiFetch } = useNuxtApp()
 const router = useRouter()
 const appConfig = useAppConfig()
@@ -44,8 +48,8 @@ const appConfig = useAppConfig()
 const error = ref('') // Changed to a single error message
 
 const form = ref({
-	email: '',
-	password: ''
+	email: 'agustina.yuliana@example.com',
+	password: 'pass123:)'
 })
 
 const REDIRECT_ROUTES = {

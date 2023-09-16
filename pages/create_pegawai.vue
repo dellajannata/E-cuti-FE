@@ -1,36 +1,12 @@
 <template>
-    <div class="container-scroller">
-        <!-- partial:partials/_navbar.html -->
-        <Navbar />
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_settings-panel.html -->
-            <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
-            <Sidebar />
-            <!-- partial -->
-            <CreatePegawai />
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <!-- <Footer/> -->
-            <!-- partial -->
-
-            <!-- main-panel ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
-    </div>
+    <CreatePegawai />
 </template>
-<script>
-import Sidebar from '../components/Sidebar.vue';
-import Navbar from '../components/Navbar.vue';
-import CreatePegawai from '../components/CreatePegawai.vue';
-// import authMiddleware from '../middleware/auth';
 
-export default {
-    components: {
-        Sidebar,
-        Navbar,
-        CreatePegawai
-    },
-}
+<script setup>
+import CreatePegawai from '../components/CreatePegawai.vue'
+
+definePageMeta({
+  middleware: ['redirect-login'],
+  layout: 'default'
+})
 </script>
