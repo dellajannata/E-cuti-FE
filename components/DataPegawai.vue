@@ -25,7 +25,7 @@
           </thead>
           <tbody>
             <tr v-for="(pegawai, index) in data_pegawai" :key="index">
-              <td>{{ index + 1 }}</td>
+              <td>{{ calculateRowNumber(index) }}</td>
               <td>{{ pegawai.nama }}</td>
               <td>{{ pegawai.jabatan }}</td>
               <td>{{ pegawai.pangkat }}</td>
@@ -48,23 +48,50 @@
           </tbody>
         </table>
       </div>
+      <div class="pagination justify-content-end mb-2">
+        <div class="btn-wrapper d-flex">
+          <div @click="prevPage" class="btn" :disabled="currentPage === 1"><i class="mdi mdi-chevron-double-left"></i>
+          </div>
+          <div v-for="i in totalPages" :key="i" class="btn" @click="goToPage(i)" :class="{ active: currentPage === i }">
+            {{ i }}
+          </div>
+          <div @click="nextPage" class="btn" :disabled="currentPage === totalPages"><i
+              class="mdi mdi-chevron-double-right"></i></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+// const API_BASE = 'http://127.0.0.1:8000/api';
 
 export default {
-  // auth: true,
   data() {
     return {
       data_pegawai: [],
-      searchQuery: ""
+      searchQuery: "",
+      currentPage: 1,
+      totalPages: 1,
+      itemsPerPage: 10,
     }
   },
-  mounted() {
+  created() {
+    // Get the page query parameter from the route
+    const page = parseInt(this.$route.query.page) || 1;
+    this.currentPage = page;
+    // fetching data
     this.getDataPegawai();
+  },
+  watch: {
+    $route(to) {
+      // Update the current page when the route changes
+      const page = parseInt(to.query.page) || 1;
+      this.currentPage = page;
+      this.getDataPegawai();
+    }
   },
   methods: {
     getDataPegawai() {
@@ -72,10 +99,14 @@ export default {
       axios.get('http://127.0.0.1:8000/api/pegawai', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
+          },
+          params: {
+            page: this.currentPage
           }
       }).then(res => {
         console.log(res.data.data);
         this.data_pegawai = res.data.data;
+        this.totalPages = res.data.pagination.last_page;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
@@ -139,6 +170,53 @@ export default {
         );
       }
     },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: this.currentPage + 1 } })
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: this.currentPage - 1 } })
+      }
+    },
+    goToPage(num) {
+      if (this.currentPage !== num) {
+        this.$router.push({ path: this.$route.path, query: { ...this.$route.query, page: num } })
+      }
+    },
+    calculateRowNumber(index) {
+      // Calculate the row number based on the current page and index
+      return (this.currentPage - 1) * this.itemsPerPage + index + 1;
+    }
   }
 }
 </script>
+
+<style>
+.card {
+  height: auto !important;
+}
+.pagination .btn-wrapper {
+  border: 1px solid #DEE2E6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.pagination .btn {
+  min-width: 40px;
+  border-radius: 0;
+  color: #B1141D;
+}
+.pagination .btn:not(:last-child) {
+  border-right: 1px solid #DEE2E6;
+}
+.pagination .btn.active {
+  background-color: #B1141D;
+  color: #fff;
+}
+.pagination .btn[disabled=true] {
+  background-color: #E9ECEF;
+  color: gray;
+  cursor: auto;
+}
+</style>

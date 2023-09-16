@@ -6,6 +6,9 @@
         </li>
         <li class="nav-item nav-category">Data Dan Form</li>
         <li class="nav-item">
+          <slot name="dataPegawai"></slot>
+        </li>
+        <li class="nav-item">
           <slot name="dataForm"></slot>
         </li>
         <li class="nav-item">

@@ -67,7 +67,7 @@ export default {
   methods: {
     getDataPegawai() {
       const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pegawai', {
+      axios.get('http://127.0.0.1:8000/api/pegawai_all', {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }

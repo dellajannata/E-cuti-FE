@@ -48,8 +48,8 @@ const appConfig = useAppConfig()
 const error = ref('') // Changed to a single error message
 
 const form = ref({
-	email: 'agustina.yuliana@example.com',
-	password: 'pass123:)'
+	email: '',
+	password: ''
 })
 
 const REDIRECT_ROUTES = {

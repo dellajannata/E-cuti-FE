@@ -6,11 +6,13 @@
         <span class="menu-title">Dashboard</span>
       </NuxtLink>
     </template>
-    <template #dataForm>
+    <template #dataPegawai>
       <NuxtLink class="nav-link" data-bs-toggle="collapse" href="/data_pegawai" aria-expanded="false" aria-controls="tables">
         <i class="menu-icon mdi mdi-table"></i>
         <span class="menu-title">Data Pegawai</span>
-      </NuxtLink>
+      </NuxtLink> 
+    </template>
+    <template #dataForm>
       <NuxtLink class="nav-link" to="/data_pengajuan_cuti">
         <i class="menu-icon mdi mdi-card-text-outline"></i>
         <span class="menu-title">Data Pengajuan Cuti</span>
