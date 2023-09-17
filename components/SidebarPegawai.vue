@@ -9,7 +9,7 @@
     <template #dataForm>
       <NuxtLink class="nav-link" to="/data_pengajuan_cuti_pegawai">
         <i class="menu-icon mdi mdi-card-text-outline"></i>
-        <span class="menu-title">Data Pengajuan Cuti</span>
+        <span class="menu-title">Pengajuan Cuti Pegawai</span>
       </NuxtLink>
     </template>
     <template #dataRekap>

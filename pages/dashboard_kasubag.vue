@@ -7,7 +7,7 @@ import ContentKasubag from '../components/ContentKasubag.vue';
 
 definePageMeta({
     middleware: ['redirect-login', 'protect-route'],
-    layout: ['sidebar-role']
+    layout: ['sidebar-kasubag']
 })
 
 </script>

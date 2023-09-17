@@ -33,7 +33,7 @@
 <script setup>
 definePageMeta({
   middleware: ['redirect-login'],
-  layout: 'sidebar-role'
+  layout: ['sidebar-kabid']
 })
 </script>
 

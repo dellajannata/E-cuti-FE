@@ -7,6 +7,6 @@ import RekapCutiSekretaris from '../components/DataRekapCutiSelesai.vue';
 
 definePageMeta({
     middleware: ['redirect-login'],
-    layout: 'sidebar-role'
+    layout: ['sidebar-sekretaris']
 })
 </script>

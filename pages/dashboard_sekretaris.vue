@@ -7,7 +7,7 @@ import ContentSekretaris from '../components/ContentSekretaris.vue';
 
 definePageMeta({
     middleware: ['redirect-login', 'protect-route'],
-    layout: ['sidebar-role']
+    layout: ['sidebar-sekretaris']
 })
 
 </script>

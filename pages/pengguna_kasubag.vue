@@ -7,6 +7,6 @@ import Pengguna from '../components/PenggunaKasubag.vue';
 
 definePageMeta({
     middleware: ['redirect-login'],
-    layout: ['sidebar-role']
+    layout: ['sidebar-kasubag']
 })
 </script>

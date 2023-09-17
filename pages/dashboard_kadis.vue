@@ -7,7 +7,7 @@ import ContentKadis from '../components/ContentKadis.vue';
 
 definePageMeta({
     middleware: ['redirect-login', 'protect-route'],
-    layout: ['sidebar-role']
+    layout: ['sidebar-kadis']
 })
 
 </script>

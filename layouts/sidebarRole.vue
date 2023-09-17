@@ -12,7 +12,7 @@
   </template>
   
   <script setup>
-  import MobileSidebar from '../components/MobileSidebar.vue';
+  import MobileSidebar from '../components/MobileSidebarPegawai.vue';
   import SidebarAccKabid from '../components/SidebarAccKabid.vue';
   import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
   import SidebarKadis from '../components/SidebarKadis.vue';

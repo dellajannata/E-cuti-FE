@@ -7,6 +7,7 @@
   
   definePageMeta({
     middleware: ['redirect-login'],
-    layout: 'sidebar-role'
+    layout: ['sidebar-kasubag']
+
   })
   </script>

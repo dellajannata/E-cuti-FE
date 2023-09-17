@@ -7,6 +7,6 @@ import RekapCutiKasubag from '../components/DataRekapCutiSelesai.vue';
 
 definePageMeta({
     middleware: ['redirect-login'],
-    layout: 'sidebar-role'
+    layout: ['sidebar-kasubag']
 })
 </script>

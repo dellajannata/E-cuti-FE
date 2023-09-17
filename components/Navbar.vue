@@ -7,7 +7,7 @@
         </button>
       </div>
       <div>
-        <NuxtLink class="navbar-brand brand-logo" to="/dashboard">
+        <NuxtLink class="navbar-brand brand-logo" to="#">
           <img src="../assets/css/vertical-layout-light/logo1.png" alt="" />
         </NuxtLink>
         <!-- <a class="navbar-brand brand-logo-mini" href="index.html">

@@ -7,6 +7,6 @@ import Pengguna from '../components/PenggunaSekretaris.vue';
 
 definePageMeta({
     middleware: ['redirect-login'],
-    layout: ['sidebar-role']
+    layout: ['sidebar-sekretaris']
 })
 </script>
