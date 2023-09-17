@@ -64,7 +64,7 @@ export default {
         },
         getDataPegawai() {
             const accessToken = localStorage.getItem('token');
-            axios.get('http://127.0.0.1:8000/api/pegawai', {
+            axios.get('http://127.0.0.1:8000/api/pegawai_all', {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }
@@ -79,36 +79,6 @@ export default {
         getPegawaiId() {
             const userData = JSON.parse(localStorage.getItem('user'));
             return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna 
-        },
-        getNamaPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
-        },
-        getJabatanPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.jabatan : 'Jabatan Pegawai Tidak Tersedia';
-        },
-        getPangkatPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.pangkat : 'Pangkat Pegawai Tidak Tersedia';
-        },
-        getNipPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.nip : 'NIP Pegawai Tidak Tersedia';
-        },
-        getAlamatPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.alamat : 'Alamat Pegawai Tidak Tersedia';
-        },
-        getUnitKerjaPegawai() {
-            const user = this.getPegawaiId();
-            const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
         },
     }
 };

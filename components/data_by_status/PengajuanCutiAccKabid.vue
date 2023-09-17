@@ -101,7 +101,7 @@ export default {
           })
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Belum" || cuti.status === "ACC Kabid" || cuti.status === "Ditolak Kabid");
+            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai" || cuti.status === "Belum" || cuti.status === "ACC Kabid" || cuti.status === "Ditolak Kabid");
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -125,7 +125,7 @@ export default {
     },
     getDataPegawai() {
       const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pegawai', {
+      axios.get('http://127.0.0.1:8000/api/pegawai_all', {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }

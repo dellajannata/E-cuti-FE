@@ -6,7 +6,7 @@
           <div class="card-body">
             <h4 class="card-title">Pengajuan Cuti</h4>
             <div class="d-inline-block">
-              <h2>{{ data_cuti.length }}</h2>
+              <h2>{{ cuti_kadis.length }}</h2>
               <p class="text-white">Ayeee ayee</p>
               <a href="/pengajuan_cuti_acc_kadis" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
@@ -38,24 +38,37 @@
   export default {
     data() {
       return {
-        data_cuti: [],
+        cuti_kadis: [],
         rekap_cuti: [],
       }
     },
     mounted() {
-      this.getDataPengajuanCuti();
+      this.getDataCutiKadis();
+      this.getDataRekapCuti();
     },
     methods: {
-      getDataPengajuanCuti() {
+      getDataCutiKadis() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kadis', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status === "ACC Sekretaris" & data_cuti.status !== "Ditolak");
-          this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
+          this.cuti_kadis = res.data.data.filter(data_cuti => data_cuti.status === "ACC Sekretaris" & data_cuti.status !== "Ditolak");
+        }).catch(error => {
+          console.error('Error fetching data:', error);
+        });
+      },
+      getDataRekapCuti() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });

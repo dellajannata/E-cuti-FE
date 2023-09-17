@@ -6,7 +6,7 @@
           <div class="card-body">
             <h4 class="card-title">Pengajuan Cuti</h4>
             <div class="d-inline-block">
-              <h2>{{ data_cuti.length }}</h2>
+              <h2>{{ cuti_sekretaris.length }}</h2>
               <p class="text-white">Ayeee ayee</p>
               <a href="/pengajuan_cuti_acc_sekretaris" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
@@ -38,24 +38,37 @@
   export default {
     data() {
       return {
-        data_cuti: [],
+        cuti_sekretaris: [],
         rekap_cuti: [],
       }
     },
     mounted() {
-      this.getDataPengajuanCuti();
+      this.getDataCutiSekretaris();
+      this.getDataRekapCuti();
     },
     methods: {
-      getDataPengajuanCuti() {
+      getDataCutiSekretaris() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status === "ACC Kasubag Umum" & data_cuti.status !== "Ditolak");
-          this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "ACC Sekretaris");
+          this.cuti_sekretaris = res.data.data.filter(data_cuti => data_cuti.status === "ACC Kasubag Umum" & data_cuti.status !== "Ditolak");
+        }).catch(error => {
+          console.error('Error fetching data:', error);
+        });
+      },
+      getDataRekapCuti() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
