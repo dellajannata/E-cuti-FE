@@ -29,10 +29,66 @@
             <span class="menu-title">Pengguna</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" @click="logout()" aria-expanded="false" aria-controls="auth">
+            <i class="menu-icon mdi mdi-logout"></i>
+            <span class="menu-title">Logout</span>
+          </a>
+        </li>
       </ul>
     </div>
   </template>
-  
+<script>
+import Swal from 'sweetalert2';
+export default {
+  data() {
+    return {
+      isMobileExpand: false,
+      isSidebarOpen: true
+    }
+  },
+  methods: {
+    async logout() {
+      try {
+        const result = await Swal.fire({
+          title: 'Apakah Anda yakin akan keluar?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Keluar'
+        });
+
+        if (result.isConfirmed) {
+          if (!this.rememberMe) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            this.backLogin()
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: 'warning',
+          title: 'Gagal Logout',
+          text: 'Coba ulangi.',
+        });
+      };
+    },
+    backLogin() {
+      this.$router.push('/login');
+    },
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen
+      this.$emit('toggleSidebar')
+    },
+    toggleMobile() {
+      this.isMobileExpand = !this.isMobileExpand
+      this.$emit('toggleMobile')
+    }
+  }
+}
+</script>
   <style scoped>
   .sidebar {
     width: 100%;
