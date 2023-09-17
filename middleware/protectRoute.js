@@ -1,43 +1,39 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   // based on roles
   const FALLBACK_ROUTES = {
-    ADMIN: '/dashboard',
-    KABID: '/dashboard_kabid',
-    KASUBAG: '/dashboard_kasubag',
-    KADIS: '/dashboard_kadis',
-    SEKRETARIS: '/dashboard_sekretaris',
-    PEGAWAI: '/dashboard_pegawai'
+    admin: '/dashboard', 
+    kabid: '/dashboard_kabid',
+    kasubag: '/dashboard_kasubag',
+    kadis: '/dashboard_kadis',
+    sekretaris: '/dashboard_sekretaris',
+    pegawai: '/dashboard_pegawai'
+  }
+
+  // hak akses url tiap role
+  const ROLE_URLS = {
+    admin: ['/dashboard', '/data_pegawai', '/data_pengajuan_cuti', '/data_rekap_cuti', '/pengguna'],
+    pegawai: ['/dashboard_pegawai', '/data_pengajuan_cuti_pegawai', '/data_rekap_cuti_pegawai', '/pengguna_pegawai'],
+    kabid: ['/dashboard_kabid', '/pengajuan_cuti_acc_kabid', '/rekap_cuti_acc_kabid', '/pengguna_kabid'],
+    kasubag: ['/dashboard_kasubag', '/pengajuan_cuti_acc_kasubag', '/rekap_cuti_acc_kasubag', '/pengguna_kasubag'],
+    sekretaris: ['/dashboard_sekretaris', '/pengajuan_cuti_acc_sekretaris', '/rekap_cuti_acc_sekretaris', '/pengguna_sekretaris'],
+    kadis: ['/dashboard_kadis', '/pengajuan_cuti_acc_kadis', '/data_rekap_cuti_kadis', '/pengguna_kadis']
   }
 
   const getUserRole = JSON.parse(localStorage.getItem('user'))
   const userRole = getUserRole ? getUserRole.role : null;
   // console.log(`user role = ${userRole}`)
 
-  const checkRole = redirectRoute => {
-    if (to.path !== redirectRoute && from.path !== redirectRoute) {
-      // console.log(redirectRoute)
-      return navigateTo(redirectRoute)
-    }
+  const isUrlAllowedForRole = (role, url) => {
+    return ROLE_URLS[role].includes(url);
   }
 
   if (userRole) {
     console.log(`user role = ${userRole}`)
-    switch (userRole) {
-      case 'admin':
-        // return checkRole(FALLBACK_ROUTES.ADMIN)
-        return
-      case 'kabid':
-        return checkRole(FALLBACK_ROUTES.KABID)
-      case 'kasubag umum':
-        return checkRole(FALLBACK_ROUTES.KASUBAG)
-      case 'kadis':
-        return checkRole(FALLBACK_ROUTES.KADIS)
-      case 'sekretaris':
-        return checkRole(FALLBACK_ROUTES.SEKRETARIS)
-      case 'pegawai':
-        return checkRole(FALLBACK_ROUTES.PEGAWAI)
-      default:
-        return navigateTo('/login')
+    // redirect setelah login
+    if (isUrlAllowedForRole(userRole, to.path)) {
+      return
+    } else {
+      return navigateTo(FALLBACK_ROUTES[userRole]);
     }
   } else {
     return navigateTo('/login')

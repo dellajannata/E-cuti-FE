@@ -6,6 +6,6 @@
 import DataPegawai from '../components/DataPegawai.vue';
 
 definePageMeta({
-    middleware: ['redirect-login']
+    middleware: ['redirect-login', 'protect-route']
 })
 </script>
