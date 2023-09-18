@@ -6,7 +6,7 @@
 import RekapCutiKabid from '../components/DataRekapCutiSelesai.vue';
 
 definePageMeta({
-    middleware: ['redirect-login'],
+    middleware: ['redirect-login', 'protect-route'],
     layout: ['sidebar-kabid']
 })
 </script>
