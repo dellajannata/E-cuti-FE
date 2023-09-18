@@ -6,7 +6,7 @@
 import Pengguna from '../components/PenggunaKadis.vue';
 
 definePageMeta({
-    middleware: ['redirect-login'],
+    middleware: ['redirect-login', 'protect-route'],
     layout: ['sidebar-kadis']
 })
 </script>
