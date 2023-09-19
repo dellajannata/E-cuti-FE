@@ -21,16 +21,8 @@
             <tbody>
               <tr v-if="filteredCuti.length > 0">
                 <td>1</td>
-                <td>{{ getNamaPegawai(filteredCuti[0].user_id) }}</td>
-                <td>
-                  <template v-if="getUnitKerja(filteredCuti[0].user_id).split(' ').length > 3">
-                    {{ getUnitKerja(filteredCuti[0].user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                    {{ getUnitKerja(filteredCuti[0].user_id).split(' ').slice(3).join(' ') }}
-                  </template>
-                  <template v-else>
-                    {{ getUnitKerja(filteredCuti[0].user_id) }}
-                  </template>
-                </td>
+                <td>{{ filteredCuti[0].pegawai.nama }}</td>
+                <td>{{ filteredCuti[0].pegawai.unit_kerja }}</td>
                 <td>{{ getTotalCuti(filteredCuti[0].user_id) }}</td>
               </tr>
               <tr v-else>
@@ -50,7 +42,6 @@
     data() {
       return {
         data_cuti: [],
-        data_pegawai: [],
         searchQuery: ""
       }
     },
@@ -64,7 +55,6 @@
     },
     mounted() {
       this.getDataPengajuanCuti();
-      this.getDataPegawai();
     },
     methods: {
       search() {
@@ -102,36 +92,6 @@
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
-      },
-      getDataPegawai() {
-        const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
-          console.log(res.data.data);
-          this.data_pegawai = res.data.data;
-        }).catch(error => {
-          console.error('Error fetching pegawai data:', error);
-        });
-      },
-      getIdPegawai(pegawaiId) {
-        const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-        return pegawai ? pegawai.id : 'Id Pegawai Tidak Tersedia';
-      },
-      getPegawaiId() {
-        const userData = JSON.parse(localStorage.getItem('user'));
-        return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna 
-      },
-      getNamaPegawai(userId) { //2
-        const user = this.getPegawaiId(); 
-        const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-        return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
-      },
-      getUnitKerja(pegawaiId) {
-        const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-        return pegawai ? pegawai.unit_kerja : 'Unit Kerja Tidak Tersedia';
       },
       getTotalCuti(pegawaiId) {
         const totalCutiSelesai = this.filteredCuti.length;

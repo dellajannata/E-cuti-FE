@@ -25,15 +25,8 @@
           <tbody>
             <tr v-for="(cuti, index) in data_cuti" :key="index">
               <td>{{ calculateRowNumber(index) }}</td>
-              <td>{{ getNamaPegawai(cuti.user_id) }}</td>
-              <td><template v-if="getUnitKerja(cuti.user_id).split(' ').length > 3">
-                  {{ getUnitKerja(cuti.user_id).split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja(cuti.user_id).split(' ').slice(3).join(' ') }}
-                </template>
-                <template v-else>
-                  {{ getUnitKerja(cuti.user_id) }}
-                </template>
-              </td>
+              <td>{{ cuti.pegawai.nama }}</td>
+              <td>{{ cuti.pegawai.unit_kerja }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -66,8 +59,6 @@ export default {
   data() {
     return {
       data_cuti: [],
-      data_pegawai: [],
-      data_pengguna: [],
       searchQuery: "",
       currentPage: 1,
       totalPages: 1,
@@ -80,8 +71,6 @@ export default {
     this.currentPage = page;
     // fetching data
     this.getDataPengajuanCuti();
-    this.getDataPegawai();
-    this.getDataPengguna();
   },
   watch: {
     $route(to) {
@@ -89,8 +78,6 @@ export default {
       const page = parseInt(to.query.page) || 1;
       this.currentPage = page;
       this.getDataPengajuanCuti();
-      this.getDataPegawai();
-      this.getDataPengguna();
     }
   },
   methods: {
@@ -131,50 +118,6 @@ export default {
         .catch(error => {
           console.error('Error fetching data:', error);
         });
-    },
-    getDataPegawai() {
-      const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-                            headers: {
-                            'Authorization': `Bearer ${accessToken}`
-                            }
-                        })
-        .then(res => {
-          console.log(res.data.data);
-          this.data_pegawai = res.data.data;
-        })
-        .catch(error => {
-          console.error('Error fetching pegawai data:', error);
-        });
-    },
-    getDataPengguna() {
-      const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/users', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
-        .then(res => {
-          console.log(res.data.data);
-          this.data_pengguna = res.data.data;
-        })
-        .catch(error => {
-          console.error('Error fetching pegawai data:', error);
-        });
-    },
-    getIdPegawai(userId) {
-      const user = this.data_pengguna.find(pengguna => pengguna.id === userId);
-      return user ? user.pegawai_id : 'Id Pegawai Tidak Tersedia';
-    },
-    getNamaPegawai(userId) {
-      const idPengguna = this.getIdPegawai(userId);
-      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPengguna);
-      return namaPegawai ? namaPegawai.nama : 'Nama Pegawai Tidak Tersedia';
-    },
-    getUnitKerja(userId) {
-      const idPegawai = this.getIdPegawai(userId);
-      const namaPegawai = this.data_pegawai.find(pegawai => pegawai.id === idPegawai);
-      return namaPegawai ? namaPegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
     },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';

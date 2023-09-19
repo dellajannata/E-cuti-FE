@@ -28,15 +28,8 @@
           <tbody>
             <tr v-for="(cuti, index) in filteredCuti" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ getNamaPegawai() }}</td>
-              <td><template v-if="getUnitKerja().split(' ').length > 3">
-                  {{ getUnitKerja().split(' ').slice(0, 3).join(' ') }}<br><br>
-                  {{ getUnitKerja().split(' ').slice(3).join(' ') }}
-                </template>
-                <template v-else>
-                  {{ getUnitKerja() }}
-                </template>
-              </td>
+              <td>{{ cuti.pegawai.nama }}</td>
+              <td>{{ cuti.pegawai.unit_kerja }}</td>
               <td>{{ cuti.tgl_awal }}</td>
               <td>{{ cuti.tgl_akhir }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -75,21 +68,19 @@ export default {
   data() {
     return {
       data_cuti: [],
-      data_pegawai: [],
       searchQuery: ""
     }
   },
   computed: {
     filteredCuti() {
-      const idUser = this.getIdUserYangLogin(); // Mengambil nama pengguna dari localStorage 1
+      const idUser = this.getIdUserYangLogin(); // Mengambil id pengguna dari localStorage 
 
-      // Filter data cuti berdasarkan nama pengguna yang login
+      // Filter data cuti berdasarkan id pengguna yang login
       return this.data_cuti.filter(cuti => cuti.user_id === idUser);
     },
   },
   mounted() {
     this.getDataPengajuanCuti();
-    this.getDataPegawai();
   },
   methods: {
     search() {
@@ -113,7 +104,7 @@ export default {
     },
     getIdUserYangLogin() {
       const userData = JSON.parse(localStorage.getItem('user'));
-      return userData ? userData.id : ''; // Mengambil nama pengguna dari objek pengguna 
+      return userData ? userData.id : ''; // Mengambil id pengguna dari objek pengguna 
     },
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
@@ -129,37 +120,6 @@ export default {
         .catch(error => {
           console.error('Error fetching data:', error);
         });
-    },
-    getDataPegawai() {
-      const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      }).then(res => {
-        console.log(res.data.data);
-        this.data_pegawai = res.data.data;
-      }).catch(error => {
-        console.error('Error fetching pegawai data:', error);
-      });
-    },
-    getIdPegawai(pegawaiId) {
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);
-      return pegawai ? pegawai.id : 'Id Pegawai Tidak Tersedia';
-    },
-    getPegawaiId() {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna 
-    },
-    getNamaPegawai() {
-      const user = this.getPegawaiId(); 
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-      return pegawai ? pegawai.nama : 'Nama Pegawai Tidak Tersedia';
-    },
-    getUnitKerja() {
-      const user = this.getPegawaiId(); 
-      const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-      return pegawai ? pegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
     },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';

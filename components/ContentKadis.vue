@@ -67,7 +67,7 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kadis = res.data.data.filter(data_cuti => data_cuti.pegawai.unit_kerja === this.getUserUnit);
+          this.cuti_kadis = res.data.data.filter(data_cuti => data_cuti.pegawai.unit_kerja === this.getUserUnit & data_cuti.status === "ACC Sekretaris");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });

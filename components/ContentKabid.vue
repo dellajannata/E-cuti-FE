@@ -65,7 +65,8 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.pegawai.unit_kerja === this.getUserUnit);
+          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.pegawai.unit_kerja === this.getUserUnit & cuti_kabid.status === "Belum");
+          console.log(this.getUserUnit);
         }).catch(error => {
           console.error('Error fetching data:', error);
         });

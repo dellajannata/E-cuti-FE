@@ -65,7 +65,7 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kasubag = res.data.data.filter(cuti_kasubag => cuti_kasubag.pegawai.unit_kerja === this.getUserUnit);
+          this.cuti_kasubag = res.data.data.filter(cuti_kasubag => cuti_kasubag.pegawai.unit_kerja === this.getUserUnit  & cuti_kasubag.status === "ACC Kabid");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
