@@ -7,30 +7,28 @@
           <h4 class="card-title">Pengajuan Cuti</h4>
           <div class="d-inline-block">
             <h2>{{ cuti_kasubag.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kasubag_umum" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
+            <NuxtLink to="/pengajuan_cuti_acc_kasubag" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
           <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>
       </div>
     </div>
-
-    <!-- Rekap Cuti -->
-    <div class="col-lg-3 col-sm-6">
-      <div class="card1">
-        <div class="card-body">
-          <h4 class="card-title">Rekap Cuti</h4>
-          <div class="d-inline-block">
-            <h2>{{ rekap_cuti.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kasubag_umum" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
+  
+      <!-- Rekap Cuti -->
+      <div class="col-lg-3 col-sm-6">
+        <div class="card1">
+          <div class="card-body">
+            <h4 class="card-title">Rekap Cuti</h4>
+            <div class="d-inline-block">
+              <h2>{{ rekap_cuti.length }}</h2>
+              <NuxtLink to="/rekap_cuti_acc_kasubag" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
+            </div>
+            <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
-          <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>
       </div>
-    </div>
-    <!-- User -->
-    <!-- Halo, {{ userLoggedin?.name }} -->
+      <!-- User -->
+      <!-- Halo, {{ userLoggedin?.name }} -->
   </div>
 </template>
 <script>
@@ -40,22 +38,34 @@
       return {
         cuti_kasubag: [],
         rekap_cuti: [],
+        data_pegawai: []
       }
     },
     mounted() {
-      this.getDataCutiKasubag();
       this.getDataRekapCuti();
+      this.getDataCutiKasubag();
+      this.getDataPegawai();
+    },
+    computed: {
+      getUserUnit() {
+        const kasubagId = JSON.parse(localStorage.getItem('user')).pegawai_id
+        if (this.data_pegawai.length) {
+          const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kasubagId)))
+          console.log(filtering.unit_kerja)
+          return filtering.unit_kerja
+        }
+      },
     },
     methods: {
       getDataCutiKasubag() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kasubag_umum', {
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kasubag', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kasubag = res.data.data.filter(cuti_kasubag => cuti_kasubag.status === "ACC Kabid" & cuti_kasubag.status !== "Ditolak");
+          this.cuti_kasubag = res.data.data.filter(cuti_kasubag => cuti_kasubag.pegawai.unit_kerja === this.getUserUnit);
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
@@ -68,9 +78,22 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.status === "Selesai");
+          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.pegawai.unit_kerja === this.getUserUnit & rekap_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
+        });
+      },
+      getDataPegawai() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.data_pegawai = res.data.data;
+        }).catch(error => {
+          console.error('Error fetching pegawai data:', error);
         });
       },
     }

@@ -31,34 +31,6 @@ const getSidebarPage = computed(() => {
   const id = useRoute().params.id 
   console.log(path, id)
   switch (path) {
-    // Pegawai
-    case '/dashboard_pegawai':
-      return resolveComponent('SidebarPegawai')
-    case '/data_pengajuan_cuti_pegawai':
-      return resolveComponent('SidebarPegawai')
-    case '/create_pengajuan_cuti_pegawai':
-      return resolveComponent('SidebarPegawai')
-    case '/editCuti_:id': // belum solve
-      return resolveComponent('SidebarPegawai')
-    case '/data_rekap_cuti_pegawai':
-      return resolveComponent('SidebarPegawai')
-    case '/pengguna_pegawai':
-      return resolveComponent('SidebarPegawai')
-    case '/editPengguna_:id': // belum solve
-      return resolveComponent('SidebarPegawai')
-
-    // Kabid
-    case '/dashboard_kabid':
-      return resolveComponent('SidebarAccKabid')
-    case '/pengajuan_cuti_acc_kabid':
-      return resolveComponent('SidebarAccKabid')
-    case '/rekap_cuti_acc_kabid':
-      return resolveComponent('SidebarAccKabid')
-    case '/pengguna_kabid':
-      return resolveComponent('SidebarAccKabid')
-    case '/editPenggunaKabid_:id': // belum solve
-      return resolveComponent('SidebarAccKabid')
-
     // Kasubag Umum
     case '/dashboard_kasubag':
       return resolveComponent('SidebarAccKasubag')
@@ -70,31 +42,6 @@ const getSidebarPage = computed(() => {
       return resolveComponent('SidebarAccKasubag')
     case '/editPenggunaKasubag_:id': // belum solve
       return resolveComponent('SidebarAccKasubag')
-    
-    // Sekretaris
-    case '/dashboard_sekretaris':
-      return resolveComponent('SidebarSekretaris')
-    case '/pengajuan_cuti_acc_sekretaris':
-      return resolveComponent('SidebarSekretaris')
-    case '/rekap_cuti_acc_sekretaris':
-      return resolveComponent('SidebarSekretaris')
-    case '/pengguna_sekretaris':
-      return resolveComponent('SidebarSekretaris')
-    case '/editPenggunaSekretaris_:id': // belum solve
-      return resolveComponent('SidebarSekretaris')
-
-    // Kadis
-    case '/dashboard_kadis':
-      return resolveComponent('SidebarKadis')
-    case '/pengajuan_cuti_acc_kadis':
-      return resolveComponent('SidebarKadis')
-    case '/rekap_cuti_acc_kadis':
-      return resolveComponent('SidebarKadis')
-    case '/pengguna_kadis':
-      return resolveComponent('SidebarKadis')
-    case '/editPenggunaKadis_:id': // belum solve
-      return resolveComponent('SidebarKadis')
-
     default:
       return resolveComponent('Sidebar')
   }

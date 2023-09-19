@@ -40,11 +40,23 @@
       return {
         cuti_sekretaris: [],
         rekap_cuti: [],
+        data_pegawai: []
       }
     },
     mounted() {
       this.getDataCutiSekretaris();
       this.getDataRekapCuti();
+      this.getDataPegawai();
+    },
+    computed: {
+      getUserUnit() {
+        const SekretarisId = JSON.parse(localStorage.getItem('user')).pegawai_id
+        if (this.data_pegawai.length) {
+          const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === SekretarisId)))
+          console.log(filtering.unit_kerja)
+          return filtering.unit_kerja
+        }
+      },
     },
     methods: {
       getDataCutiSekretaris() {
@@ -55,7 +67,7 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_sekretaris = res.data.data.filter(data_cuti => data_cuti.status === "ACC Kasubag Umum" & data_cuti.status !== "Ditolak");
+          this.cuti_sekretaris = res.data.data.filter(data_cuti => data_cuti.pegawai.unit_kerja === this.getUserUnit );
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
@@ -68,9 +80,22 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.status === "Selesai");
+          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.pegawai.unit_kerja === this.getUserUnit & rekap_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
+        });
+      },
+      getDataPegawai() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.data_pegawai = res.data.data;
+        }).catch(error => {
+          console.error('Error fetching pegawai data:', error);
         });
       },
     }

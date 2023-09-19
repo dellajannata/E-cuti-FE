@@ -7,12 +7,12 @@
           <h4 class="card-title">Pengajuan Cuti</h4>
           <div class="d-inline-block">
             <h2>{{ cuti_kabid.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
+            <NuxtLink href="/pengajuan_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
           <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>
       </div>
+    </div>
   
       <!-- Rekap Cuti -->
       <div class="col-lg-3 col-sm-6">
@@ -21,8 +21,7 @@
             <h4 class="card-title">Rekap Cuti</h4>
             <div class="d-inline-block">
               <h2>{{ rekap_cuti.length }}</h2>
-              <p class="text-white">Uhuyeeyee</p>
-              <NuxtLink to="/rekap_cuti_acc_kabid" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></NuxtLink>
+              <NuxtLink to="/rekap_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
             </div>
             <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
@@ -30,24 +29,6 @@
       </div>
       <!-- User -->
       <!-- Halo, {{ userLoggedin?.name }} -->
-    </div>
-
-    <!-- Rekap Cuti -->
-    <div class="col-lg-3 col-sm-6">
-      <div class="card1">
-        <div class="card-body">
-          <h4 class="card-title">Rekap Cuti</h4>
-          <div class="d-inline-block">
-            <h2>{{ rekap_cuti.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
-          </div>
-          <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
-        </div>
-      </div>
-    </div>
-    <!-- User -->
-    <!-- Halo, {{ userLoggedin?.name }} -->
   </div>
 </template>
 <script>
@@ -84,7 +65,7 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.pegawai.unit_kerja === this.getUserUnit & cuti_kabid.status === "Belum" & cuti_kabid.status !== "Ditolak");
+          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.pegawai.unit_kerja === this.getUserUnit);
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
