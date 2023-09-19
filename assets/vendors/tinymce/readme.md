@@ -72,6 +72,6 @@ As TinyMCE transitioned to a modern codebase through 2017 and 2018, many externa
 
 For information on compiling and contributing, see: [contribution guidelines](https://github.com/tinymce/tinymce/blob/master/CONTRIBUTING.md).
 
-## Want more information?
+## Want Selengkapnyarmation?
 
 Visit the [TinyMCE home page](https://tiny.cloud/) and check out the [TinyMCE documentation](https://www.tiny.cloud/docs/).

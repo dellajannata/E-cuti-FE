@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     admin: ['/dashboard', '/data_pegawai', '/data_pengajuan_cuti', '/data_rekap_cuti', '/pengguna'],
     pegawai: ['/dashboard_pegawai', '/data_pengajuan_cuti_pegawai', '/data_rekap_cuti_pegawai', '/pengguna_pegawai'],
     kabid: ['/dashboard_kabid', '/pengajuan_cuti_acc_kabid', '/rekap_cuti_acc_kabid', '/pengguna_kabid'],
-    kasubag: ['/dashboard_kasubag', '/pengajuan_cuti_acc_kasubag', '/rekap_cuti_acc_kasubag', '/pengguna_kasubag'],
+    kasubag: ['/dashboard_kasubag', '/pengajuan_cuti_acc_kasubag_umum', '/rekap_cuti_acc_kasubag', '/pengguna_kasubag'],
     sekretaris: ['/dashboard_sekretaris', '/pengajuan_cuti_acc_sekretaris', '/rekap_cuti_acc_sekretaris', '/pengguna_sekretaris'],
     kadis: ['/dashboard_kadis', '/pengajuan_cuti_acc_kadis', '/data_rekap_cuti_kadis', '/pengguna_kadis']
   }
