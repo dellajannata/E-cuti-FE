@@ -7,7 +7,7 @@
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <a class="btn btn-primary" href="/create_pengajuan_cuti_pegawai"><i class="fa fa-plus"></i></a>
+        <NuxtLink class="btn btn-primary" to="/create_pengajuan_cuti_pegawai"><i class="fa fa-plus"></i></NuxtLink>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -96,10 +96,10 @@ export default {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            }
-          })
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
           .then(res => {
             console.log(res.data.data);
             this.data_cuti = res.data.data;
@@ -118,10 +118,10 @@ export default {
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        })
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
         .then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data;
@@ -133,16 +133,15 @@ export default {
     getDataPegawai() {
       const accessToken = localStorage.getItem('token');
       axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
-          console.log(res.data.data);
-          this.data_pegawai = res.data.data;
-        })
-        .catch(error => {
-          console.error('Error fetching pegawai data:', error);
-        });
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }).then(res => {
+        console.log(res.data.data);
+        this.data_pegawai = res.data.data;
+      }).catch(error => {
+        console.error('Error fetching pegawai data:', error);
+      });
     },
     getIdPegawai(pegawaiId) {
       const pegawai = this.data_pegawai.find(pegawai => pegawai.id === pegawaiId);

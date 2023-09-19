@@ -8,7 +8,7 @@
             <div class="d-inline-block">
               <h2>{{ cuti_kabid.length }}</h2>
               <p class="text-white">Ayeee ayee</p>
-              <a href="/pengajuan_cuti_acc_kabid" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+              <NuxtLink to="/pengajuan_cuti_acc_kabid" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></NuxtLink>
             </div>
             <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
@@ -23,7 +23,7 @@
             <div class="d-inline-block">
               <h2>{{ rekap_cuti.length }}</h2>
               <p class="text-white">Uhuyeeyee</p>
-              <a href="/pengajuan_cuti_acc_kabid" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+              <NuxtLink to="/rekap_cuti_acc_kabid" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></NuxtLink>
             </div>
             <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
           </div>
@@ -39,12 +39,24 @@
     data() {
       return {
         cuti_kabid: [],
-        rekap_cuti: []
+        rekap_cuti: [],
+        data_pegawai: []
       }
     },
     mounted() {
       this.getDataRekapCuti();
       this.getDataCutiKabid();
+      this.getDataPegawai();
+    },
+    computed: {
+      getUserUnit() {
+        const kabidId = JSON.parse(localStorage.getItem('user')).pegawai_id
+        if (this.data_pegawai.length) {
+          const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kabidId)))
+          console.log(filtering.unit_kerja)
+          return filtering.unit_kerja
+        }
+      },
     },
     methods: {
       getDataCutiKabid() {
@@ -55,7 +67,7 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.status === "Belum" & cuti_kabid.status !== "Ditolak");
+          this.cuti_kabid = res.data.data.filter(cuti_kabid => cuti_kabid.pegawai.unit_kerja === this.getUserUnit & cuti_kabid.status === "Belum" & cuti_kabid.status !== "Ditolak");
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
@@ -68,9 +80,22 @@
           }
         }).then(res => {
           console.log(res.data.data);
-          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.status === "Selesai");
+          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.pegawai.unit_kerja === this.getUserUnit & rekap_cuti.status === "Selesai");
         }).catch(error => {
           console.error('Error fetching data:', error);
+        });
+      },
+      getDataPegawai() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(res => {
+          console.log(res.data.data);
+          this.data_pegawai = res.data.data;
+        }).catch(error => {
+          console.error('Error fetching pegawai data:', error);
         });
       },
     }
