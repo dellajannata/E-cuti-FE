@@ -79,7 +79,7 @@ export default {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, save it!'
+                    confirmButtonText: 'Yes'
                 });
 
                 if (result.isConfirmed) {
@@ -89,7 +89,7 @@ export default {
                         let hasError = false;
                         for (const field of requiredFields) {
                             if (!this.data_pegawai[field]) {
-                                this.errorList[field] = 'Field is required.';
+                                this.errorList[field] = 'Harus diisi.';
                                 hasError = true;
                             } else {
                                 this.errorList[field] = null;

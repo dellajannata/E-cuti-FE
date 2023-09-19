@@ -11,15 +11,18 @@
                         <div class="form-group">
                             <label for="tgl_awal">Tanggal Awal</label>
                             <input type="date" v-model="data_pengajuan_cuti.tgl_awal" class="form-control" id="tgl_awal">
+                            <span class="text-danger">{{ this.errorList.tgl_awal }}</span>
                         </div>
                         <div class="form-group">
                             <label for="tgl_akhir">Tanggal Akhir</label>
                             <input type="date" v-model="data_pengajuan_cuti.tgl_akhir" class="form-control" id="tgl_akhir">
+                            <span class="text-danger">{{ this.errorList.tgl_akhir }}</span>
                         </div>
                         <div class="form-group">
                             <label for="alasan">Alasan</label>
                             <input type="text" v-model="data_pengajuan_cuti.alasan" class="form-control" id="alasan"
                                 placeholder="Masukkan Alasan Anda">
+                            <span class="text-danger">{{ this.errorList.alasan }}</span>
                         </div>
                         <div class="form-check form-check-flat form-check-primary">
                         </div>
@@ -41,11 +44,11 @@ export default {
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
-                // Isi user_id dengan id pengguna yang login dari localStorage
                 user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
-            isLoadingTitle: "Loading"
+            isLoadingTitle: "Loading",
+            errorList: {},
         }
     },
     methods: {
@@ -57,7 +60,7 @@ export default {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, save it!'
+                    confirmButtonText: 'Yes'
                 });
 
                 if (result.isConfirmed) {
@@ -67,7 +70,7 @@ export default {
                         let hasError = false;
                         for (const field of requiredFields) {
                             if (!this.data_pengajuan_cuti[field]) {
-                                this.errorList[field] = 'Field is required.';
+                                this.errorList[field] = 'Harus diisi.';
                                 hasError = true;
                             } else {
                                 this.errorList[field] = null;
@@ -78,10 +81,10 @@ export default {
                         }
 
                         const requestData = this.data_pengajuan_cuti;
-                        const accessToken = localStorage.getItem('token'); 
+                        const accessToken = localStorage.getItem('token');
                         const response = await axios.post('http://127.0.0.1:8000/api/pengajuan_cuti', requestData, {
                             headers: {
-                            'Authorization': `Bearer ${accessToken}`
+                                'Authorization': `Bearer ${accessToken}`
                             }
                         });
 
