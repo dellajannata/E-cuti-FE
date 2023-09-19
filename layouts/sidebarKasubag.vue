@@ -43,7 +43,7 @@ const getSidebarPage = computed(() => {
     case '/editPenggunaKasubag_:id': // belum solve
       return resolveComponent('SidebarAccKasubag')
     default:
-      return resolveComponent('Sidebar')
+      return resolveComponent('SidebarAccKasubag')
   }
 })
 </script>
