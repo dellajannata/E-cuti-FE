@@ -103,20 +103,20 @@ export default {
                             }
                         });
                         console.log(response.data);
+                        Swal.fire(
+                            'Berhasil!',
+                            'Data Anda berhasil diubah.',
+                            'success'
+                        );
                         this.backDataPengguna();
 
                     } catch (error) {
-                        console.error(error);
-                        alert("An error occurred while updating data.");
-                        this.isLoading = false;
-                        this.isLoadingTitle = "Loading";
+                        Swal.fire(
+                            'Gagal!',
+                            'Tidak boleh ada yang kosong.',
+                            'warning'
+                        );
                     }
-                    Swal.fire(
-                        'Berhasil!',
-                        'Data Anda berhasil diubah.',
-                        'success'
-                    );
-                    this.backDataPengajuanCuti();
                 }
             } catch (error) {
                 console.error(error);

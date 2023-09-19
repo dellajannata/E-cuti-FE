@@ -33,8 +33,8 @@
 
 <script setup>
 definePageMeta({
-  middleware: ['redirect-login'],
-  layout: 'sidebar-role'
+    middleware: ['redirect-login'],
+    layout: 'sidebar-role'
 })
 </script>
 
@@ -60,7 +60,7 @@ export default {
                 user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
-            isLoadingTitle: "Loading"
+            isLoadingTitle: "Loading",
         }
     },
     mounted() {
@@ -108,25 +108,26 @@ export default {
                             const accessToken = localStorage.getItem('token');
                             const response = await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, requestData, {
                                 headers: {
-                                'Authorization': `Bearer ${accessToken}`
+                                    'Authorization': `Bearer ${accessToken}`
                                 }
                             });
                             console.log(response.data);
                             // alert(response.data.message);
+                            Swal.fire(
+                                'Berhasil!',
+                                'Data Anda berhasil diubah.',
+                                'success'
+                            );
                             this.backDataPengajuanCuti();
 
                         } catch (error) {
                             console.error(error);
-                            alert("An error occurred while updating data.");
-                            this.isLoading = false;
-                            this.isLoadingTitle = "Loading";
+                            Swal.fire(
+                                'Gagal!',
+                                'Tidak boleh ada yang kosong.',
+                                'warning'
+                            );
                         }
-                        Swal.fire(
-                            'Berhasil!',
-                            'Data Anda berhasil diubah.',
-                            'success'
-                        );
-                        this.backDataPengajuanCuti();
                     }
                 }
             } catch (error) {
