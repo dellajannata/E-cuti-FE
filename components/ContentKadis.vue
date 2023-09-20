@@ -7,8 +7,7 @@
           <h4 class="card-title">Pengajuan Cuti</h4>
           <div class="d-inline-block">
             <h2>{{ cuti_kadis.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kadis" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
+            <NuxtLink href="/pengajuan_cuti_acc_kadis" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
           <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>
@@ -22,8 +21,7 @@
           <h4 class="card-title">Rekap Cuti</h4>
           <div class="d-inline-block">
             <h2>{{ rekap_cuti.length }}</h2>
-            <a href="/pengajuan_cuti_acc_kadis" class="small-box-footer">Selengkapnya <i
-                class="fa fa-arrow-right"></i></a>
+            <NuxtLink to="/rekap_cuti_acc_kadis" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
           <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>
@@ -33,71 +31,102 @@
     <!-- Halo, {{ userLoggedin?.name }} -->
   </div>
 </template>
+
 <script>
-  import axios from 'axios';
-  export default {
-    data() {
-      return {
-        cuti_kadis: [],
-        rekap_cuti: [],
-        data_pegawai: []
-      }
-    },
-    mounted() {
-      this.getDataCutiKadis();
-      this.getDataRekapCuti();
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      cuti_kadis: [],
+      rekap_cuti: [],
+      data_pegawai: [],
+      userLoggedin: null,
+    };
+  },
+  created() {
+    this.getUserData();
+  },
+  methods: {
+    getUserData() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.userLoggedin = user;
       this.getDataPegawai();
     },
-    computed: {
-      getUserUnit() {
-        const kadisId = JSON.parse(localStorage.getItem('user')).pegawai_id
-        if (this.data_pegawai.length) {
-          const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kadisId)))
-          console.log(filtering.unit_kerja)
-          return filtering.unit_kerja
-        }
-      },
+    getDataCutiKadis() {
+      const accessToken = localStorage.getItem('token');
+      const unitKerja = this.getUnitKerjaPegawai();
+
+      axios
+        .get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kadis', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+          this.cuti_kadis = res.data.data.filter(
+            (cuti_kadis) => cuti_kadis.pegawai.unit_kerja === unitKerja && cuti_kadis.status === 'ACC Sekretaris'
+          );
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
     },
-    methods: {
-      getDataCutiKadis() {
-        const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kadis', {
+    getDataRekapCuti() {
+      const accessToken = localStorage.getItem('token');
+      const unitKerja = this.getUnitKerjaPegawai();
+
+      axios
+        .get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
           console.log(res.data.data);
-          this.cuti_kadis = res.data.data.filter(data_cuti => data_cuti.pegawai.unit_kerja === this.getUserUnit & data_cuti.status === "ACC Sekretaris");
-        }).catch(error => {
+          this.rekap_cuti = res.data.data.filter(
+            (rekap_cuti) => rekap_cuti.pegawai.unit_kerja === unitKerja && rekap_cuti.status === 'Selesai'
+          );
+        })
+        .catch((error) => {
           console.error('Error fetching data:', error);
         });
-      },
-      getDataRekapCuti() {
-        const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
+    },
+    getDataPegawai() {
+      const accessToken = localStorage.getItem('token');
+      axios
+        .get('http://127.0.0.1:8000/api/pegawai_all', {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
-          console.log(res.data.data);
-          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.pegawai.unit_kerja === this.getUserUnit & rekap_cuti.status === "Selesai");
-        }).catch(error => {
-          console.error('Error fetching data:', error);
-        });
-      },
-      getDataPegawai() {
-        const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
           console.log(res.data.data);
           this.data_pegawai = res.data.data;
-        }).catch(error => {
+          this.getDataCutiKadis(); 
+          this.getDataRekapCuti(); 
+        })
+        .catch((error) => {
           console.error('Error fetching pegawai data:', error);
         });
-      },
-    }
-  };
-  </script>
+    },
+    getPegawaiId() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData ? userData.pegawai_id : ''; 
+    },
+    getUnitKerjaPegawai() {
+      const user = this.getPegawaiId();
+      const pegawai = this.data_pegawai.find((pegawai) => pegawai.id === user);
+
+      if (pegawai) {
+        console.log('Unit Kerja Pegawai:', pegawai.unit_kerja);
+        return pegawai.unit_kerja;
+      } else {
+        console.log('Unit Kerja Pegawai Tidak Tersedia');
+        return 'Unit Kerja Pegawai Tidak Tersedia';
+      }
+    },
+  },
+};
+</script>
