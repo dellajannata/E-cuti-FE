@@ -11,16 +11,19 @@
                             <label for="name">Username</label>
                             <input type="name" v-model="pengguna.name" class="form-control" id="name"
                                 placeholder="Masukkan Username Anda">
+                            <span class="text-danger">{{ errorList.name }}</span>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" v-model="pengguna.email" class="form-control" id="email"
                                 placeholder="Masukkan Email Anda">
+                            <span class="text-danger">{{ errorList.email }}</span>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" v-model="pengguna.password" class="form-control" id="password"
                                 placeholder="Masukkan Password Anda">
+                            <span class="text-danger">{{ errorList.password }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -58,7 +61,12 @@ export default {
                 password: '',
             },
             isLoading: false,
-            isLoadingTitle: "Loading"
+            isLoadingTitle: "Loading",
+            errorList: {
+                name: '',
+                email: '',
+                password: '',
+            }
         }
     },
     mounted() {
@@ -77,6 +85,11 @@ export default {
             })
         },
         async edit_data(penggunaId) {
+            this.errorList = {
+                name: '',
+                email: '',
+                password: '',
+            };
             try {
                 const result = await Swal.fire({
                     title: 'Apakah Anda yakin akan mengubah data pengguna?',
@@ -113,11 +126,15 @@ export default {
                         this.backDataPengguna();
 
                     } catch (error) {
-                        Swal.fire(
-                            'Gagal!',
-                            'Tidak boleh ada yang kosong.',
-                            'warning'
-                        );
+                        if (!requestData.name) {
+                            this.errorList.name = 'Harus diisi.';
+                        }
+                        if (!requestData.email) {
+                            this.errorList.email = 'Harus diisi.';
+                        }
+                        if (!requestData.password) {
+                            this.errorList.password = 'Harus diisi.';
+                        }
                     }
                 }
             } catch (error) {

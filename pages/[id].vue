@@ -11,30 +11,32 @@
             <div class="form-group">
               <label for="nama">Nama</label>
               <input type="text" v-model="pegawai.nama" class="form-control" id="nama" placeholder="Masukkan Nama Anda">
+              <span class="text-danger">{{ errorList.nama }}</span> 
             </div>
             <div class="form-group">
               <label for="jabatan">Jabatan</label>
-              <input type="text" v-model="pegawai.jabatan" class="form-control" id="jabatan"
-                placeholder="Masukkan Jabatan Anda">
+              <input type="text" v-model="pegawai.jabatan" class="form-control" id="jabatan" placeholder="Masukkan Jabatan Anda">
+              <span class="text-danger">{{ errorList.jabatan }}</span> 
             </div>
             <div class="form-group">
               <label for="pangkat">Pangkat</label>
-              <input type="text" v-model="pegawai.pangkat" class="form-control" id="pangkat"
-                placeholder="Masukkan Pangkat Anda">
+              <input type="text" v-model="pegawai.pangkat" class="form-control" id="pangkat" placeholder="Masukkan Pangkat Anda">
+              <span class="text-danger">{{ errorList.pangkat }}</span> 
             </div>
             <div class="form-group">
               <label for="nip">NIP</label>
               <input type="text" v-model="pegawai.nip" class="form-control" id="nip" placeholder="Masukkan NIP Anda">
+              <span class="text-danger">{{ errorList.nip }}</span>
             </div>
             <div class="form-group">
               <label for="alamat">Alamat</label>
-              <input type="text" v-model="pegawai.alamat" class="form-control" id="alamat"
-                placeholder="Masukkan Alamat Anda">
+              <input type="text" v-model="pegawai.alamat" class="form-control" id="alamat" placeholder="Masukkan Alamat Anda">
+              <span class="text-danger">{{ errorList.alamat }}</span> 
             </div>
             <div class="form-group">
-              <label for="unit_kerja">Unit Kreja</label>
-              <input type="text" v-model="pegawai.unit_kerja" class="form-control" id="unit_kerja"
-                placeholder="Masukkan Unit Kerja Anda">
+              <label for="unit_kerja">Unit Kerja</label>
+              <input type="text" v-model="pegawai.unit_kerja" class="form-control" id="unit_kerja" placeholder="Masukkan Unit Kerja Anda">
+              <span class="text-danger">{{ errorList.unit_kerja }}</span>
             </div>
             <button type="submit" class="btn btn-primary me-2">Submit</button>
           </form>
@@ -43,6 +45,7 @@
     </div>
   </div>
 </template>
+
   
 <script setup>
 definePageMeta({
@@ -76,18 +79,21 @@ export default {
         dinas: '',
       },
       isLoading: false,
-      isLoadingTitle: "Loading"
+      isLoadingTitle: "Loading",
+      errorList: {
+        nama: '',      
+        jabatan: '',  
+        pangkat: '',   
+        nip: '',       
+        alamat: '',    
+        unit_kerja: '', 
+      }
     }
   },
   mounted() {
     this.pegawaiId = this.$route.params.id
     // alert(this.pegawaiId);
     this.getPegawai(this.pegawaiId);
-    // const token = localStorage.getItem('access_token');
-    // if (!token) {
-    //     //MAKA REDIRECT KE HALAMAN LOGIN
-    //     this.$router.push('/login')
-    // }
   },
   methods: {
     getPegawai(pegawaiId) {
@@ -102,6 +108,14 @@ export default {
       })
     },
     async edit_data(pegawaiId) {
+      this.errorList = {
+        nama: '',
+        jabatan: '',
+        pangkat: '',
+        nip: '',
+        alamat: '',
+        unit_kerja: '',
+      };
       try {
         const result = await Swal.fire({
           title: 'Apakah Anda yakin akan mengubah data?',
@@ -137,6 +151,7 @@ export default {
               });
               console.log(response.data);
               // alert(response.data.message);
+
               Swal.fire(
                 'Berhasil!',
                 'Data Anda berhasil diubah.',
@@ -146,11 +161,24 @@ export default {
 
             } catch (error) {
               console.error(error);
-              Swal.fire(
-                'Gagal!',
-                'Tidak boleh ada yang kosong.',
-                'warning'
-              );
+             if (!requestData.nama) {
+                this.errorList.nama = 'Harus diisi.';
+              }
+              if (!requestData.jabatan) {
+                this.errorList.jabatan = 'Harus diisi.';
+              }
+              if (!requestData.pangkat) {
+                this.errorList.pangkat = 'Harus diisi.';
+              }
+              if (!requestData.nip) {
+                this.errorList.nip = 'Harus diisi.';
+              }
+              if (!requestData.alamat) {
+                this.errorList.alamat = 'Harus diisi.';
+              }
+              if (!requestData.unit_kerja) {
+                this.errorList.unit_kerja = 'Harus diisi.';
+              }
             }
           }
         }

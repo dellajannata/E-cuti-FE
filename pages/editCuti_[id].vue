@@ -12,16 +12,19 @@
                             <label for="tgl_awal">Tanggal Awal</label>
                             <input type="date" v-model="cuti.tgl_awal" class="form-control" id="tgl_awal"
                                 placeholder="Masukkan Tanggal Awal Anda">
+                            <span class="text-danger">{{ errorList.tgl_awal }}</span>
                         </div>
                         <div class="form-group">
                             <label for="tgl_akhir">Tanggal Akhir</label>
                             <input type="date" v-model="cuti.tgl_akhir" class="form-control" id="tgl_akhir"
                                 placeholder="Masukkan Tanggal Akhir Anda">
+                            <span class="text-danger">{{ errorList.tgl_akhir }}</span>
                         </div>
                         <div class="form-group">
                             <label for="alasan">Alasan</label>
                             <input type="text" v-model="cuti.alasan" class="form-control" id="alasan"
                                 placeholder="Masukkan Alasan Anda">
+                            <span class="text-danger">{{ errorList.alasan }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -61,6 +64,11 @@ export default {
             },
             isLoading: false,
             isLoadingTitle: "Loading",
+            errorList: {
+                tgl_awal: '',
+                tgl_akhir: '',
+                alasan: '',
+            }
         }
     },
     mounted() {
@@ -81,6 +89,11 @@ export default {
             })
         },
         async edit_data(cutiId) {
+            this.errorList = {
+                tgl_awal: '',
+                tgl_akhir: '',
+                alasan: '',
+            };
             try {
                 const result = await Swal.fire({
                     title: 'Apakah Anda yakin akan mengubah data pengajuan cuti?',
@@ -122,11 +135,15 @@ export default {
 
                         } catch (error) {
                             console.error(error);
-                            Swal.fire(
-                                'Gagal!',
-                                'Tidak boleh ada yang kosong.',
-                                'warning'
-                            );
+                            if (!requestData.tgl_awal) {
+                                this.errorList.tgl_awal = 'Harus diisi.';
+                            }
+                            if (!requestData.tgl_akhir) {
+                                this.errorList.tgl_akhir = 'Harus diisi.';
+                            }
+                            if (!requestData.alasan) {
+                                this.errorList.alasan = 'Harus diisi.';
+                            }
                         }
                     }
                 }
