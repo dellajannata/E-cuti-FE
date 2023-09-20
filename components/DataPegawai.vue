@@ -123,8 +123,20 @@ export default {
         })
         .then(res => {
           console.log(res.data.data);
-          this.data_pegawai = res.data.data;
-          this.totalPages = res.data.pagination.last_page;
+
+          if (res.data.data !== null) {
+            // Cek apakah ada hasil pencarian
+            if (res.data.data.length === 0) {
+              // Jika tidak ada hasil yang cocok, set data_pegawai sebagai array kosong
+              this.data_pegawai = [];
+            } else {
+              this.data_pegawai = res.data.data;
+            }
+            this.totalPages = res.data.pagination.last_page;
+          } else {
+            // Respons data null, set data_pegawai sebagai array kosong
+            this.data_pegawai = [];
+          }
         })
         .catch(error => {
           console.error('Error fetching data:', error);
