@@ -75,7 +75,7 @@ export default {
     search() {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti_all/search/${this.searchQuery}`, {
             headers: {
               'Authorization': `Bearer ${accessToken}`
             }
