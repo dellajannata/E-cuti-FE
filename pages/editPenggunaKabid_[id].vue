@@ -1,39 +1,42 @@
 <template>
-            <div class="col-md-9 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-edit-pegawai">
-                            <h4 class="card-title">Edit Pengguna</h4>
+    <div class="col-md-9 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-edit-pegawai">
+                    <h4 class="card-title">Edit Pengguna</h4>
+                </div>
+                <div>
+                    <form class="forms-sample" @submit.prevent="edit_data(pengguna.id)">
+                        <div class="form-group">
+                            <label for="name">Username</label>
+                            <input type="name" v-model="pengguna.name" class="form-control" id="name"
+                                placeholder="Masukkan Username Anda">
+                            <span class="text-danger">{{ errorList.name }}</span>
                         </div>
-                        <div>
-                            <form class="forms-sample" @submit.prevent="edit_data(pengguna.id)">
-                                <div class="form-group">
-                                    <label for="name">Username</label>
-                                    <input type="name" v-model="pengguna.name" class="form-control" id="name"
-                                        placeholder="Masukkan Username Anda">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" v-model="pengguna.email" class="form-control" id="email"
-                                        placeholder="Masukkan Email Anda">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" v-model="pengguna.password" class="form-control" id="password"
-                                        placeholder="Masukkan Password Anda">
-                                </div>
-                                <button type="submit" class="btn btn-primary me-2">Submit</button>
-                            </form>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" v-model="pengguna.email" class="form-control" id="email"
+                                placeholder="Masukkan Email Anda">
+                            <span class="text-danger">{{ errorList.email }}</span>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" v-model="pengguna.password" class="form-control" id="password"
+                                placeholder="Masukkan Password Anda">
+                            <span class="text-danger">{{ errorList.password }}</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 definePageMeta({
-  middleware: ['redirect-login'],
-  layout: ['sidebar-kabid']
+    middleware: ['redirect-login'],
+    layout: ['sidebar-kabid']
 })
 </script>
 
@@ -56,7 +59,12 @@ export default {
                 password: '',
             },
             isLoading: false,
-            isLoadingTitle: "Loading"
+            isLoadingTitle: "Loading",
+            errorList: {
+                name: '',
+                email: '',
+                password: '',
+            }
         }
     },
     mounted() {
@@ -75,6 +83,11 @@ export default {
             })
         },
         async edit_data(penggunaId) {
+            this.errorList = {
+                name: '',
+                email: '',
+                password: '',
+            };
             try {
                 const result = await Swal.fire({
                     title: 'Apakah Anda yakin akan mengubah data pengguna?',
@@ -86,7 +99,7 @@ export default {
                 });
 
                 if (result.isConfirmed) {
-                    const data = this.pengguna; 
+                    const data = this.pengguna;
                     console.log(data);
                     const requestData = {
                         name: data.name,
@@ -103,20 +116,24 @@ export default {
                             }
                         });
                         console.log(response.data);
+                        Swal.fire(
+                            'Berhasil!',
+                            'Data Anda berhasil diubah.',
+                            'success'
+                        );
                         this.backDataPengguna();
 
                     } catch (error) {
-                        console.error(error);
-                        alert("An error occurred while updating data.");
-                        this.isLoading = false;
-                        this.isLoadingTitle = "Loading";
+                        if (!requestData.name) {
+                            this.errorList.name = 'Harus diisi.';
+                        }
+                        if (!requestData.email) {
+                            this.errorList.email = 'Harus diisi.';
+                        }
+                        if (!requestData.password) {
+                            this.errorList.password = 'Harus diisi.';
+                        }
                     }
-                    Swal.fire(
-                        'Berhasil!',
-                        'Data Anda berhasil diubah.',
-                        'success'
-                    );
-                    this.backDataPengajuanCuti();
                 }
             } catch (error) {
                 console.error(error);

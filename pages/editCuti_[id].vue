@@ -12,16 +12,19 @@
                             <label for="tgl_awal">Tanggal Awal</label>
                             <input type="date" v-model="cuti.tgl_awal" class="form-control" id="tgl_awal"
                                 placeholder="Masukkan Tanggal Awal Anda">
+                            <span class="text-danger">{{ errorList.tgl_awal }}</span>
                         </div>
                         <div class="form-group">
                             <label for="tgl_akhir">Tanggal Akhir</label>
                             <input type="date" v-model="cuti.tgl_akhir" class="form-control" id="tgl_akhir"
                                 placeholder="Masukkan Tanggal Akhir Anda">
+                            <span class="text-danger">{{ errorList.tgl_akhir }}</span>
                         </div>
                         <div class="form-group">
                             <label for="alasan">Alasan</label>
                             <input type="text" v-model="cuti.alasan" class="form-control" id="alasan"
                                 placeholder="Masukkan Alasan Anda">
+                            <span class="text-danger">{{ errorList.alasan }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -33,8 +36,8 @@
 
 <script setup>
 definePageMeta({
-  middleware: ['redirect-login'],
-  layout: 'sidebar-role'
+    middleware: ['redirect-login'],
+    layout: 'sidebar-role'
 })
 </script>
 
@@ -60,7 +63,12 @@ export default {
                 user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
-            isLoadingTitle: "Loading"
+            isLoadingTitle: "Loading",
+            errorList: {
+                tgl_awal: '',
+                tgl_akhir: '',
+                alasan: '',
+            }
         }
     },
     mounted() {
@@ -81,6 +89,11 @@ export default {
             })
         },
         async edit_data(cutiId) {
+            this.errorList = {
+                tgl_awal: '',
+                tgl_akhir: '',
+                alasan: '',
+            };
             try {
                 const result = await Swal.fire({
                     title: 'Apakah Anda yakin akan mengubah data pengajuan cuti?',
@@ -108,25 +121,30 @@ export default {
                             const accessToken = localStorage.getItem('token');
                             const response = await axios.put(`http://127.0.0.1:8000/api/pengajuan_cuti/${cutiId}`, requestData, {
                                 headers: {
-                                'Authorization': `Bearer ${accessToken}`
+                                    'Authorization': `Bearer ${accessToken}`
                                 }
                             });
                             console.log(response.data);
                             // alert(response.data.message);
+                            Swal.fire(
+                                'Berhasil!',
+                                'Data Anda berhasil diubah.',
+                                'success'
+                            );
                             this.backDataPengajuanCuti();
 
                         } catch (error) {
                             console.error(error);
-                            alert("An error occurred while updating data.");
-                            this.isLoading = false;
-                            this.isLoadingTitle = "Loading";
+                            if (!requestData.tgl_awal) {
+                                this.errorList.tgl_awal = 'Harus diisi.';
+                            }
+                            if (!requestData.tgl_akhir) {
+                                this.errorList.tgl_akhir = 'Harus diisi.';
+                            }
+                            if (!requestData.alasan) {
+                                this.errorList.alasan = 'Harus diisi.';
+                            }
                         }
-                        Swal.fire(
-                            'Berhasil!',
-                            'Data Anda berhasil diubah.',
-                            'success'
-                        );
-                        this.backDataPengajuanCuti();
                     }
                 }
             } catch (error) {
