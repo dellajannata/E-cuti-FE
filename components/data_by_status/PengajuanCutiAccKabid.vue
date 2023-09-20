@@ -117,7 +117,21 @@ export default {
           })
           .then(res => {
             console.log(res.data.data);
-            this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai" || cuti.status === "Belum" || cuti.status === "ACC Kabid" || cuti.status === "Ditolak Kabid");
+            
+            if (res.data.data !== null) {
+              // Cek apakah ada hasil pencarian
+              if (res.data.data.length === 0) {
+                // Jika tidak ada hasil yang cocok, set data_cuti sebagai array kosong
+                this.data_cuti = [];
+              } else {
+                // Jika ada hasil pencarian
+                this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai" || cuti.status === "Belum" || cuti.status === "ACC Kabid" || cuti.status === "Ditolak Kabid");
+              }
+              this.totalPages = res.data.pagination.last_page;
+            } else {
+              // Respons data null, set data_cuti sebagai array kosong
+              this.data_cuti = [];
+            }
           })
           .catch(error => {
             console.error('Error fetching data:', error);
