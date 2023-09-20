@@ -177,11 +177,12 @@ iframe {
   flex-wrap: wrap;
   justify-content: left;
   align-items: center;
-  padding: 150px;
+  padding: 50px;
+  padding-left: 180px;
   background-image: url(./back-bg.png);
   background-size: cover;
-  border-top-width: 200px;
-  padding-top: 220px;
+  /* border-top-width: 200px; */
+  padding-top: 200px;
 }
 
 
@@ -191,8 +192,8 @@ iframe {
   position: right;
   background-color:rgba(255, 255, 255, 0.053);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.775);
-  width: 50%;
-  height: 400px;
+  width: 40%;
+  height: 380px;
   padding-top: 20px;
 }
 
