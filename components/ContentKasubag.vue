@@ -38,63 +38,86 @@
       return {
         cuti_kasubag: [],
         rekap_cuti: [],
-        data_pegawai: []
+        data_pegawai: [],
+        userLoggedin: null,
       }
     },
-    mounted() {
-      this.getDataRekapCuti();
-      this.getDataCutiKasubag();
-      this.getDataPegawai();
-    },
-    computed: {
-      getUserUnit() {
-        const kasubagId = JSON.parse(localStorage.getItem('user')).pegawai_id
-        if (this.data_pegawai.length) {
-          const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kasubagId)))
-          console.log(filtering.unit_kerja)
-          return filtering.unit_kerja
-        }
-      },
+    created() {
+      this.getUserData();
     },
     methods: {
+      getUserData() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        this.userLoggedin = user;
+        this.getDataPegawai();
+      },
       getDataCutiKasubag() {
         const accessToken = localStorage.getItem('token');
+        const unitKerja = this.getUnitKerjaPegawai();
+
         axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_kasubag', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.cuti_kasubag = res.data.data.filter(cuti_kasubag => cuti_kasubag.pegawai.unit_kerja === this.getUserUnit  & cuti_kasubag.status === "ACC Kabid");
+          this.cuti_kasubag = res.data.data.filter(
+            (cuti_kasubag) => cuti_kasubag.pegawai.unit_kerja === unitKerja && cuti_kasubag.status === 'ACC Kabid'
+          );
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
       },
       getDataRekapCuti() {
         const accessToken = localStorage.getItem('token');
+        const unitKerja = this.getUnitKerjaPegawai();
+
         axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.rekap_cuti = res.data.data.filter(rekap_cuti => rekap_cuti.pegawai.unit_kerja === this.getUserUnit & rekap_cuti.status === "Selesai");
+          this.rekap_cuti = res.data.data.filter(
+            (rekap_cuti) => rekap_cuti.pegawai.unit_kerja === unitKerja && rekap_cuti.status === 'Selesai'
+          );
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
       },
       getDataPegawai() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        }).then(res => {
-          console.log(res.data.data);
-          this.data_pegawai = res.data.data;
-        }).catch(error => {
-          console.error('Error fetching pegawai data:', error);
-        });
+        axios
+          .get('http://127.0.0.1:8000/api/pegawai_all', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            this.data_pegawai = res.data.data;
+            this.getDataCutiKasubag(); 
+            this.getDataRekapCuti(); 
+          })
+          .catch((error) => {
+            console.error('Error fetching pegawai data:', error);
+          });
+      },
+      getPegawaiId() {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna
+      },
+      getUnitKerjaPegawai() {
+        const user = this.getPegawaiId();
+        const pegawai = this.data_pegawai.find((pegawai) => pegawai.id === user);
+
+        if (pegawai) {
+          console.log('Unit Kerja Pegawai:', pegawai.unit_kerja);
+          return pegawai.unit_kerja;
+        } else {
+          console.log('Unit Kerja Pegawai Tidak Tersedia');
+          return 'Unit Kerja Pegawai Tidak Tersedia';
+        }
       },
     }
   };
