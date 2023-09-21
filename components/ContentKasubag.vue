@@ -7,7 +7,7 @@
           <h4 class="card-title">Pengajuan Cuti</h4>
           <div class="d-inline-block">
             <h2>{{ cuti_kasubag.length }}</h2>
-            <NuxtLink to="/pengajuan_cuti_acc_kasubag" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
+            <NuxtLink to="/pengajuan_cuti_acc_kasubag_umum" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
           <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
         </div>

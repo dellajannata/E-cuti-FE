@@ -102,7 +102,7 @@ export default {
                 this.data_cuti = [];
               } else {
                 // Jika ada hasil pencarian, filter data berdasarkan status yang bukan "Selesai"
-                this.data_cuti = res.data.data.filter(cuti => cuti.status !== 'Selesai');
+                this.data_cuti = res.data.data.filter(cuti => cuti.status === 'Selesai');
               }
               this.totalPages = res.data.pagination.last_page;
             } else {
