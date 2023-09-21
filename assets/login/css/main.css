@@ -655,4 +655,19 @@ input.input100 {
   }
 }
 
+.input-icon {
+  position: relative;
+  color: #251C12;
+}
 
+.input-icon input[type="password"] {
+  padding-right: 40px; /* Ruang ekstra di kanan input untuk ikon mata */
+}
+
+.input-icon .password-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Jarak dari sisi kanan input */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
