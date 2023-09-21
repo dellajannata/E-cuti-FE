@@ -27,17 +27,17 @@
             <tr v-for="(pegawai, index) in data_pegawai" :key="index">
               <td>{{ calculateRowNumber(index) }}</td>
               <td>{{ pegawai.nama }}</td>
-              <td>{{ pegawai.jabatan }}</td>
+              <td>{{ pegawai.jabatan.nama }}</td>
               <td>{{ pegawai.pangkat }}</td>
               <td>{{ pegawai.nip }}</td>
               <td>{{ pegawai.alamat }}</td>
-              <td><template v-if="pegawai.unit_kerja.length > 3">
-                  {{ pegawai.unit_kerja.split(' ').slice(0, 3).join('  ') }}
+              <td><template v-if="pegawai.unit_kerja.nama.length > 3">
+                  {{ pegawai.unit_kerja.nama.split(' ').slice(0, 3).join('  ') }}
                   <br><br>
-                  {{ pegawai.unit_kerja.split(' ').slice(3).join('  ') }}
+                  {{ pegawai.unit_kerja.nama.split(' ').slice(3).join('  ') }}
                 </template>
                 <template v-else>
-                  {{ pegawai.unit_kerja }}
+                  {{ pegawai.unit_kerja.nama }}
                 </template>
               </td>
               <td class="btn-action">
