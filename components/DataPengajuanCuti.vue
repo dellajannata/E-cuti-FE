@@ -30,8 +30,8 @@
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
               <td>{{ cuti.pegawai.unit_kerja }}</td>
-              <td>{{ cuti.tgl_awal }}</td>
-              <td>{{ cuti.tgl_akhir }}</td>
+              <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
+              <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
               <td>{{ cuti.alasan }}</td>
               <td>{{ waktu_pengajuan(cuti.created_at) }}</td>
               <td>{{ cuti.status }}</td>
@@ -135,6 +135,26 @@ export default {
           console.error('Error fetching data:', error);
         });
     },
+    tgl_pengajuan(timestamp) {
+      const jakartaTimeZone = 'Asia/Jakarta';
+      const created_at = new Date(timestamp);
+      const jakartaTime = new Date(created_at.toLocaleString("en-US", { timeZone: jakartaTimeZone }));
+
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+
+      const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
+
+      const [month, day, year] = formattedTime.split('/');
+
+      // Menggabungkan kembali dalam format yang diinginkan
+      const newFormattedTime = `${day}-${month}-${year}`;
+
+      return newFormattedTime;
+    },
     waktu_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
       const created_at = new Date(timestamp);
@@ -142,16 +162,22 @@ export default {
 
       // Opsi untuk menghilangkan zona waktu (GMT +7)
       const options = {
-        year: "numeric",
-        month: "2-digit",
         day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: false // Menggunakan format 24 jam
       };
       const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
-      return formattedTime.replace(/\//g, '-');
+
+      const [month, day, year] = formattedTime.split('/');
+
+      // Menggabungkan kembali dalam format yang diinginkan
+      const newFormattedTime = `${day}-${month}-${year}`;
+
+      return newFormattedTime;
     },
     async deleteCuti(cutiId) {
       try {
