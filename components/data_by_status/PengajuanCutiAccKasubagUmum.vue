@@ -27,8 +27,8 @@
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
               <td>{{ cuti.pegawai.unit_kerja }}</td>
-              <td>{{ cuti.tgl_awal }}</td>
-              <td>{{ cuti.tgl_akhir }}</td>
+              <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
+              <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
               <td>{{ cuti.alasan }}</td>
               <td v-if="cuti.status == 'ACC Kasubag Umum'">
                 Sudah disetujui
@@ -102,6 +102,26 @@ export default {
     },
   },
   methods: {
+    tgl_pengajuan(timestamp) {
+      const jakartaTimeZone = 'Asia/Jakarta';
+      const created_at = new Date(timestamp);
+      const jakartaTime = new Date(created_at.toLocaleString("en-US", { timeZone: jakartaTimeZone }));
+
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+
+      const formattedTime = jakartaTime.toLocaleString("en-US", options).replace(/,/, '');
+
+      const [month, day, year] = formattedTime.split('/');
+
+      // Menggabungkan kembali dalam format yang diinginkan
+      const newFormattedTime = `${day}-${month}-${year}`;
+
+      return newFormattedTime;
+    },
     search() {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');

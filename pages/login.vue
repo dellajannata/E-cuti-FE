@@ -11,7 +11,12 @@
 
 					<div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" v-model="form.password" name="password" placeholder="Enter password">
+						<div class="input-icon">
+							<input class="input100" :type="showPassword ? 'text' : 'password'" v-model="form.password"
+								name="password" placeholder="Enter password">
+							<i class="password-icon" :class="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"
+								@click="togglePasswordVisibility"></i>
+						</div>
 						<span class="focus-input100"></span>
 					</div>
 					<div class="container-login100-form-btn">
@@ -25,6 +30,12 @@
   
 <script setup>
 import Swal from 'sweetalert2';
+
+const showPassword = ref(false);
+
+const togglePasswordVisibility = () => {
+    showPassword.value = !showPassword.value;
+};
 
 definePageMeta({
 	layout: 'blank'
@@ -43,11 +54,11 @@ const form = ref({
 
 const REDIRECT_ROUTES = {
 	ADMIN: '/dashboard',
-    KABID: '/dashboard_kabid',
-    KASUBAG: '/dashboard_kasubag',
-    KADIS: '/dashboard_kadis',
-    SEKRETARIS: '/dashboard_sekretaris',
-    PEGAWAI: '/dashboard_pegawai'
+	KABID: '/dashboard_kabid',
+	KASUBAG: '/dashboard_kasubag',
+	KADIS: '/dashboard_kadis',
+	SEKRETARIS: '/dashboard_sekretaris',
+	PEGAWAI: '/dashboard_pegawai'
 }
 
 const onLogin = async () => {
