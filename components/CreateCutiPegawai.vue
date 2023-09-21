@@ -24,6 +24,16 @@
                                 placeholder="Masukkan Alasan Anda">
                             <span class="text-danger">{{ this.errorList.alasan }}</span>
                         </div>
+                        <div class="form-group">
+                            <label for="user_penyetuju">Pilih Kabid</label>
+                            <select v-model="data_pengajuan_cuti.user_penyetuju" class="form-control" id="user_penyetuju">
+                                <option value="" disabled>Pilih Kabid</option>
+                                <option v-for="kabidUser in kabidUsers" :key="kabidUser.id" :value="kabidUser.id">{{
+                                    kabidUser.name }}</option>
+                            </select>
+                            <span class="text-danger">{{ this.errorList.user_penyetuju }}</span>
+                        </div>
+
                         <div class="form-check form-check-flat form-check-primary">
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -44,12 +54,17 @@ export default {
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
+                user_penyetuju: '',
                 user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
             isLoadingTitle: "Loading",
             errorList: {},
+            kabidUsers: [],
         }
+    },
+    created() {
+        this.getKabidUsers();
     },
     methods: {
         async save_data() {
@@ -66,7 +81,7 @@ export default {
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
                         this.errorList = {};
-                        const requiredFields = ['tgl_awal', 'tgl_akhir', 'alasan'];
+                        const requiredFields = ['tgl_awal', 'tgl_akhir', 'alasan','user_penyetuju'];
                         let hasError = false;
                         for (const field of requiredFields) {
                             if (!this.data_pengajuan_cuti[field]) {
@@ -91,6 +106,7 @@ export default {
                         this.data_pengajuan_cuti.tgl_awal = '';
                         this.data_pengajuan_cuti.tgl_akhir = '';
                         this.data_pengajuan_cuti.alasan = '';
+                        this.data_pengajuan_cuti.user_penyetuju = '';
                         Swal.fire(
                             'Berhasil!',
                             'Data Anda berhasil tersimpan.',
@@ -106,7 +122,20 @@ export default {
 
         backDataPengajuanCuti() {
             this.$router.push('/data_pengajuan_cuti_pegawai');
-        }
+        },
+        async getKabidUsers() {
+            try {
+                const accessToken = localStorage.getItem('token');
+                const response = await axios.get('http://127.0.0.1:8000/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                });
+                this.kabidUsers = response.data.data.filter(user => user.role === "kabid" );
+            } catch (error) {
+                console.error(error);
+            }
+        },
     }
 }
 </script>
