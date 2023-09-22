@@ -25,7 +25,7 @@
                             <span class="text-danger">{{ this.errorList.alasan }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="user_penyetuju">Pilih Kabid</label>
+                            <label for="user_penyetuju">Kabid</label>
                             <select v-model="data_pengajuan_cuti.user_penyetuju" class="form-control" id="user_penyetuju">
                                 <option value="" disabled>Pilih Kabid</option>
                                 <option v-for="kabidUser in kabidUsers" :key="kabidUser.id" :value="kabidUser.id">{{

@@ -13,10 +13,6 @@
 
 <script setup>
 import MobileSidebar from '../components/MobileSidebarSekretaris.vue';
-import SidebarAccKabid from '../components/SidebarAccKabid.vue';
-import SidebarAccKasubag from '../components/SidebarAccKasubag.vue';
-import SidebarKadis from '../components/SidebarKadis.vue';
-import SidebarPegawai from '../components/SidebarPegawai.vue';
 import SidebarSekretaris from '../components/SidebarSekretaris.vue';
 const isSidebarActive = ref(true)
 const isMobileExpand = ref(false)

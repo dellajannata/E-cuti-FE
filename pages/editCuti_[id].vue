@@ -26,6 +26,15 @@
                                 placeholder="Masukkan Alasan Anda">
                             <span class="text-danger">{{ errorList.alasan }}</span>
                         </div>
+                        <div class="form-group">
+                            <label for="user_penyetuju">Kabid</label>
+                            <select v-model="cuti.user_penyetuju" class="form-control" id="user_penyetuju">
+                                <option value="" disabled>Pilih Kabid</option>
+                                <option v-for="kabidUser in kabidUsers" :key="kabidUser.id" :value="kabidUser.id">{{
+                                    kabidUser.name }}</option>
+                            </select>
+                            <span class="text-danger">{{ this.errorList.user_penyetuju }}</span>
+                        </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
                 </div>
@@ -60,6 +69,7 @@ export default {
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
+                user_penyetuju: '',
                 user_id: JSON.parse(localStorage.getItem('user')).id,
             },
             isLoading: false,
@@ -68,8 +78,13 @@ export default {
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
-            }
+                user_penyetuju: '',
+            },
+            kabidUsers: [],
         }
+    },
+    created() {
+        this.getKabidUsers();
     },
     mounted() {
         this.cutiId = this.$route.params.id
@@ -93,6 +108,7 @@ export default {
                 tgl_awal: '',
                 tgl_akhir: '',
                 alasan: '',
+                user_penyetuju: '',
             };
             try {
                 const result = await Swal.fire({
@@ -113,6 +129,7 @@ export default {
                             tgl_awal: data.tgl_awal,
                             tgl_akhir: data.tgl_akhir,
                             alasan: data.alasan,
+                            user_penyetuju: data.user_penyetuju,
                         }
                         console.log(requestData);
 
@@ -144,6 +161,9 @@ export default {
                             if (!requestData.alasan) {
                                 this.errorList.alasan = 'Harus diisi.';
                             }
+                            if (!requestData.user_penyetuju) {
+                                this.errorList.user_penyetuju = 'Harus diisi.';
+                            }
                         }
                     }
                 }
@@ -153,7 +173,20 @@ export default {
         },
         backDataPengajuanCuti() {
             this.$router.push('/data_pengajuan_cuti_pegawai');
-        }
+        },
+        async getKabidUsers() {
+            try {
+                const accessToken = localStorage.getItem('token');
+                const response = await axios.get('http://127.0.0.1:8000/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                });
+                this.kabidUsers = response.data.data.filter(user => user.role === "kabid" );
+            } catch (error) {
+                console.error(error);
+            }
+        },
     }
 }
 </script>

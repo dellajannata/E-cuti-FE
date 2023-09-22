@@ -33,7 +33,7 @@
               <td>{{ cuti.alasan }}</td>
               <td>{{ waktu_pengajuan(cuti.created_at) }}</td>
               <td>{{ cuti.status }}</td>
-              <td>{{ cuti.pegawai.nama }}</td>
+              <td>xx</td>
             </tr>
           </tbody>
         </table>
