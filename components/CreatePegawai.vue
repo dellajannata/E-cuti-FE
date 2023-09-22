@@ -12,15 +12,20 @@
                             <span class="text-danger">{{ this.errorList.nama }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input type="text" v-model="data_pegawai.jabatan" class="form-control" id="jabatan"
-                                placeholder="Masukkan Jabatan Anda">
-                            <span class="text-danger">{{ this.errorList.jabatan }}</span>
+                            <label for="jabatan_id">Pilih Jabatan</label>
+                            <select v-model="data_pegawai.jabatan_id" class="form-control" id="jabatan_id">
+                                <option value="" disabled>Pilih Jabatan</option>
+                                <option v-for="jabatan in jabatanId" :key="jabatan.id" :value="jabatan.id">{{
+                                    jabatan.nama }}</option>
+                            </select>
+                            <span class="text-danger">{{ this.errorList.jabatan_id }}</span>
                         </div>
                         <div class="form-group">
                             <label for="pangkat">Pangkat</label>
-                            <input type="text" v-model="data_pegawai.pangkat" class="form-control" id="pangkat"
-                                placeholder="Masukkan Pangkat Anda">
+                            <select v-model="data_pegawai.pangkat" class="form-control" id="pangkat">
+                                <option value="" disabled>Pilih Unit Kerja</option>
+                                <option v-for="pangkat in pangkatOptions" :value="pangkat">{{ pangkat }}</option>
+                            </select>
                             <span class="text-danger">{{ this.errorList.pangkat }}</span>
                         </div>
                         <div class="form-group">
@@ -36,10 +41,13 @@
                             <span class="text-danger">{{ this.errorList.alamat }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="unit_kerja">Unit Kreja</label>
-                            <input type="text" v-model="data_pegawai.unit_kerja" class="form-control" id="unit_kerja"
-                                placeholder="Masukkan Unit Kerja Anda">
-                            <span class="text-danger">{{ this.errorList.unit_kerja }}</span>
+                            <label for="unitKerja_id">Pilih Unit Kerja</label>
+                            <select v-model="data_pegawai.unitKerja_id" class="form-control" id="unitKerja_id">
+                                <option value="" disabled>Pilih Unit Kerja</option>
+                                <option v-for="unit in UnitKerjaId" :key="unit.id" :value="unit.id">{{
+                                    unit.nama }}</option>
+                            </select>
+                            <span class="text-danger">{{ this.errorList.unitKerja_id }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -58,17 +66,27 @@ export default {
         return {
             data_pegawai: {
                 nama: '',
-                jabatan: '',
+                jabatan_id: '',
                 pangkat: '',
                 nip: '',
                 alamat: '',
-                unit_kerja: '',
+                unitKerja_id: '',
             },
             isLoading: false,
             isLoadingTitle: "Loading",
             rememberMe: false,
             errorList: {},
+            jabatanId: [],
+            UnitKerjaId: [],
+            pangkatOptions: ['Juru Muda (I/a)','Juru Muda Tingkat 1 (I/b)', 'Juru (I/c)', 'Juru Tingkat 1 (I/d)', 
+                            'Pengatur Muda (II/a)', 'Pengatur Muda Tingkat 1 (II/b)', 'Pengatur (II/c)', 'Pengatur Tingkat 1 (II/d)',
+                            'Penata Muda (III/a)', 'Penata Muda Tingkat 1 (III/b)', 'Penata (III/c)', 'Penata Tingkat 1 (III/d)',
+                            'Pembina (IV/a)', 'Pembina Tingkat 1(IV/b)', 'Pembina Utama Muda (IV/c)', 'Pembina Utama Madya (IV/d)', 'Pembina Utama (IV/e)']
         };
+    },
+    created() {
+        this.getJabatan();
+        this.getUnitKerja();
     },
     methods: {
         async save_data() {
@@ -85,7 +103,7 @@ export default {
                 if (result.isConfirmed) {
                     if (!this.rememberMe) {
                         this.errorList = {};
-                        const requiredFields = ['nama', 'jabatan', 'pangkat', 'nip', 'alamat', 'unit_kerja'];
+                        const requiredFields = ['nama', 'jabatan_id', 'pangkat', 'nip', 'alamat', 'unitKerja_id'];
                         let hasError = false;
                         for (const field of requiredFields) {
                             if (!this.data_pegawai[field]) {
@@ -108,11 +126,11 @@ export default {
                         });
 
                         this.data_pegawai.nama = '';
-                        this.data_pegawai.jabatan = '';
+                        this.data_pegawai.jabatan_id = '';
                         this.data_pegawai.pangkat = '';
                         this.data_pegawai.nip = '';
                         this.data_pegawai.alamat = '';
-                        this.data_pegawai.unit_kerja = '';
+                        this.data_pegawai.unitKerja_id = '';
                         Swal.fire(
                             'Berhasil!',
                             'Data Anda berhasil tersimpan.',
@@ -128,7 +146,33 @@ export default {
 
         backDataPegawai() {
             this.$router.push('/data_pegawai');
-        }
+        },
+        async getJabatan() {
+            try {
+                const accessToken = localStorage.getItem('token');
+                const response = await axios.get('http://127.0.0.1:8000/api/jabatan', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                });
+                this.jabatanId = response.data.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getUnitKerja() {
+            try {
+                const accessToken = localStorage.getItem('token');
+                const response = await axios.get('http://127.0.0.1:8000/api/unit_kerja', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                });
+                this.UnitKerjaId = response.data.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
     }
 };
 </script>
