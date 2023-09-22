@@ -6,6 +6,18 @@
         <span class="menu-title">Dashboard</span>
       </NuxtLink>
     </template>
+    <template #dataJabatan>
+      <NuxtLink class="nav-link" data-bs-toggle="collapse" href="/data_jabatan" aria-expanded="false" aria-controls="tables">
+        <i class="menu-icon mdi mdi-table"></i>
+        <span class="menu-title">Data Jabatan</span>
+      </NuxtLink> 
+    </template>
+    <template #dataUnitKerja>
+      <NuxtLink class="nav-link" data-bs-toggle="collapse" href="/data_unit_kerja" aria-expanded="false" aria-controls="tables">
+        <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <span class="menu-title">Data Unit Kerja</span>
+      </NuxtLink> 
+    </template>
     <template #dataPegawai>
       <NuxtLink class="nav-link" data-bs-toggle="collapse" href="/data_pegawai" aria-expanded="false" aria-controls="tables">
         <i class="menu-icon mdi mdi-table"></i>

@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // hak akses url tiap role
   const ROLE_URLS = {
     admin_dinas: ['/dashboard_admin_dinas', '/data_pegawai_admin_dinas', '/data_pengajuan_cuti_admin_dinas', '/data_rekap_cuti_admin_dinas', '/pengguna_admin_dinas'],
-    admin: ['/dashboard', '/data_pegawai', '/data_pengajuan_cuti', '/data_rekap_cuti', '/pengguna'],
+    admin: ['/dashboard', '/data_jabatan', '/data_unit_kerja', '/data_pegawai', '/data_pengajuan_cuti', '/data_rekap_cuti', '/pengguna'],
     pegawai: ['/dashboard_pegawai', '/data_pengajuan_cuti_pegawai', '/data_rekap_cuti_pegawai', '/pengguna_pegawai'],
     kabid: ['/dashboard_kabid', '/pengajuan_cuti_acc_kabid', '/rekap_cuti_acc_kabid', '/pengguna_kabid'],
     kasubag: ['/dashboard_kasubag', '/pengajuan_cuti_acc_kasubag_umum', '/rekap_cuti_acc_kasubag', '/pengguna_kasubag'],
