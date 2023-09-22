@@ -21,6 +21,7 @@
               <th>Alasan</th>
               <th>Waktu Pengajuan</th>
               <th>Status</th>
+              <th>Nama Penyetuju</th>
               <th>Keterangan</th>
               <th>Action</th>
             </tr>
@@ -29,12 +30,13 @@
             <tr v-for="(cuti, index) in filteredCuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
-              <td>{{ cuti.pegawai.unit_kerja }}</td>
+              <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
               <td>{{ cuti.alasan }}</td>
               <td>{{ waktu_pengajuan(cuti.created_at) }}</td>
               <td>{{ cuti.status }}</td>
+              <td>{{ cuti.user_penyetuju}}</td>
               <td>
                 <template v-if="cuti.status == 'Selesai'">
                   <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
@@ -68,6 +70,7 @@ export default {
   data() {
     return {
       data_cuti: [],
+      unit_kerja:[],
       searchQuery: ""
     }
   },
@@ -81,6 +84,7 @@ export default {
   },
   mounted() {
     this.getDataPengajuanCuti();
+    this.getUnitKerja();
   },
   methods: {
     search() {
@@ -130,6 +134,21 @@ export default {
         .then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data;
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    },
+    getUnitKerja() {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/unit_kerja', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+        .then(res => {
+          console.log(res.data.data);
+          this.unit_kerja = res.data.data;
         })
         .catch(error => {
           console.error('Error fetching data:', error);

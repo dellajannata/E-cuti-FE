@@ -92,12 +92,19 @@ export default {
         return filtering.unit_kerja
       }
     },
+    // getPengajuanCutiByKabid() {
+    //   const kabidId = JSON.parse(localStorage.getItem('user')).id
+    //   if (this.data_cuti.length) {
+    //     const filtering = JSON.parse(JSON.stringify(this.data_cuti.find(item => item.id === kabidId)))
+    //     return filtering.user_penyetuju
+    //   }
+    // },
     filterByUnitKerja() {
       if (this.data_cuti.length && this.getUserUnit) {
         const filteredData = this.data_cuti.filter(item => {
           // console.log(item.pegawai)
           // console.log(this.getUserUnit)
-          return item.pegawai.unit_kerja === this.getUserUnit
+          return item.pegawai.unit_kerja === this.getUserUnit 
         });
         console.log(filteredData)
         return filteredData
