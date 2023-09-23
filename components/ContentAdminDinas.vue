@@ -65,7 +65,7 @@
       filterByUnitKerja() {
           const unitKerja = this.getUnitKerja();
           const filteredData = this.data_pegawai.filter(item => {
-            return item.unitKerja_id === unitKerja;
+            return item.unit_kerja.nama === unitKerja;
           });
           console.log(filteredData);
           return filteredData;
@@ -74,7 +74,6 @@
     methods: {
       getDataPegawai() {
         const accessToken = localStorage.getItem('token');
-        const unitKerja = this.getUnitKerja();
 
         axios.get('http://127.0.0.1:8000/api/pegawai_all', {
           headers: {
@@ -91,6 +90,7 @@
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');
         const unitKerja = this.getUnitKerja();
+        console.log(unitKerja);
 
         axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
           headers: {
@@ -99,10 +99,10 @@
         }).then(res => {
           console.log(res.data.data);
           this.data_cuti = res.data.data.filter(
-            (data_cuti) => data_cuti.pegawai.unitKerja_id === unitKerja && data_cuti.status === "Belum" | data_cuti.status.includes('ACC')
+            (data_cuti) => data_cuti.pegawai.unit_kerja.nama === unitKerja && data_cuti.status === "Belum" | data_cuti.status.includes('ACC')
           );
           this.rekap_cuti = res.data.data.filter(
-            (rekap_cuti) => rekap_cuti.pegawai.unitKerja_id === unitKerja && rekap_cuti.status === 'Selesai'
+            (rekap_cuti) => rekap_cuti.pegawai.unit_kerja.nama === unitKerja && rekap_cuti.status === 'Selesai'
           );
         }).catch(error => {
           console.error('Error fetching data:', error);
@@ -114,11 +114,12 @@
       },
       getUnitKerja() {
         const user = this.getPegawaiId();
+        console.log(user);
         const pegawai = this.data_pegawai.find((pegawai) => pegawai.id === user);
 
         if (pegawai) {
-          console.log('Unit Kerja Pegawai:', pegawai.unitKerja_id);
-          return pegawai.unitKerja_id;
+          console.log('Unit Kerja Pegawai:', pegawai.unit_kerja.nama);
+          return pegawai.unit_kerja.nama;
         } else {
           console.log('Unit Kerja Tidak Tersedia');
           return 'Unit Kerja Tidak Tersedia';
