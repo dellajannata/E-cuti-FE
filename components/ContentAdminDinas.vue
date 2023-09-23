@@ -7,7 +7,7 @@
             <div class="card-body">
               <h4 class="card-title">Total Pegawai</h4>
               <div class="d-inline-block">
-                <h2>{{ data_pegawai.length }}</h2>
+                <h2>{{ filterByUnitKerja.length }}</h2>
                 <a href="/data_pegawai" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
               </div>
               <span class="float-right display-5 opacity-5"><i class="mdi mdi-account"></i></span>
@@ -61,33 +61,68 @@
       this.getDataPegawai();
       this.getDataPengajuanCuti();
     },
+    computed: {
+      filterByUnitKerja() {
+          const unitKerja = this.getUnitKerja();
+          const filteredData = this.data_pegawai.filter(item => {
+            return item.unitKerja_id === unitKerja;
+          });
+          console.log(filteredData);
+          return filteredData;
+      },
+    },
     methods: {
       getDataPegawai() {
         const accessToken = localStorage.getItem('token');
+        const unitKerja = this.getUnitKerja();
+
         axios.get('http://127.0.0.1:8000/api/pegawai_all', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.data_pegawai = res.data.data.filter(data_pegawai => data_pegawai.unit_kerja === "Selesai");;
+          this.data_pegawai = res.data.data;
+          this.getDataPengajuanCuti(); 
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
       },
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');
+        const unitKerja = this.getUnitKerja();
+
         axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         }).then(res => {
           console.log(res.data.data);
-          this.data_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Belum" | data_cuti.status.includes('ACC'));
-          this.rekap_cuti = res.data.data.filter(data_cuti => data_cuti.status === "Selesai");
+          this.data_cuti = res.data.data.filter(
+            (data_cuti) => data_cuti.pegawai.unitKerja_id === unitKerja && data_cuti.status === "Belum" | data_cuti.status.includes('ACC')
+          );
+          this.rekap_cuti = res.data.data.filter(
+            (rekap_cuti) => rekap_cuti.pegawai.unitKerja_id === unitKerja && rekap_cuti.status === 'Selesai'
+          );
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
+      },
+      getPegawaiId() {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        return userData ? userData.pegawai_id : ''; // Mengambil id user dari objek pengguna
+      },
+      getUnitKerja() {
+        const user = this.getPegawaiId();
+        const pegawai = this.data_pegawai.find((pegawai) => pegawai.id === user);
+
+        if (pegawai) {
+          console.log('Unit Kerja Pegawai:', pegawai.unitKerja_id);
+          return pegawai.unitKerja_id;
+        } else {
+          console.log('Unit Kerja Tidak Tersedia');
+          return 'Unit Kerja Tidak Tersedia';
+        }
       },
     }
   };

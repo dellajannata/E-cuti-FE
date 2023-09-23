@@ -1,7 +1,7 @@
 <template>
   <SidebarPerRole>
     <template #dataDashboard>
-      <NuxtLink class="nav-link" to="dashboard">
+      <NuxtLink class="nav-link" to="/dashboard_admin_dinas">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">Dashboard</span>
       </NuxtLink>

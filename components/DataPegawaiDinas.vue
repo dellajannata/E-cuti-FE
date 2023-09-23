@@ -24,7 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(pegawai, index) in data_pegawai" :key="index">
+              <tr v-for="(pegawai, index) in filterByUnitKerja" :key="index">
                 <td>{{ calculateRowNumber(index) }}</td>
                 <td>{{ pegawai.nama }}</td>
                 <td>{{ pegawai.jabatan.nama }}</td>
@@ -71,6 +71,7 @@
     data() {
       return {
         data_pegawai: [],
+        pegawai_all: [],
         searchQuery: "",
         currentPage: 1,
         totalPages: 1,
@@ -83,6 +84,7 @@
       this.currentPage = page;
       // fetching data
       this.getDataPegawai();
+      this.getPegawaiAll();
     },
     watch: {
       $route(to) {
@@ -92,6 +94,28 @@
         this.getDataPegawai();
       }
     },
+    computed: {
+      getUserUnit() {
+        const dinasId = JSON.parse(localStorage.getItem('user')).pegawai_id;
+        if (this.pegawai_all.length) {
+          const filtering = JSON.parse(JSON.stringify(this.pegawai_all.find(item => item.id === dinasId)))
+          console.log(filtering.unitKerja_id)
+          return filtering.unitKerja_id
+        }
+      },
+      filterByUnitKerja() {
+        if (this.data_pegawai.length && this.getUserUnit) {
+          const filteredData = this.data_pegawai.filter(item => {
+            return item.unitKerja_id === this.getUserUnit;
+          });
+          console.log(filteredData);
+          return filteredData;
+        } else {
+          return [];
+        }
+      },
+    },
+
     methods: {
       getDataPegawai() {
         const accessToken = localStorage.getItem('token');
@@ -144,6 +168,19 @@
         } else {
           this.getDataPegawai();
         }
+      },
+      getPegawaiAll() {
+        const accessToken = localStorage.getItem('token');
+        axios.get('http://127.0.0.1:8000/api/pegawai_all', {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+        }).then(res => {
+          console.log(res.data.data);
+          this.pegawai_all = res.data.data;
+        }).catch(error => {
+          console.error('Error fetching data:', error);
+        });
       },
   
       async deletePegawai(pegawaiId) {
