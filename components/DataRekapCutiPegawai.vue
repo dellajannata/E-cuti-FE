@@ -22,7 +22,7 @@
               <tr v-if="filteredCuti.length > 0">
                 <td>1</td>
                 <td>{{ filteredCuti[0].pegawai.nama }}</td>
-                <td>{{ filteredCuti[0].pegawai.unit_kerja }}</td>
+                <td>{{ filteredCuti[0].pegawai.unit_kerja.nama }}</td>
                 <td>{{ getTotalCuti(filteredCuti[0].user_id) }}</td>
               </tr>
               <tr v-else>
