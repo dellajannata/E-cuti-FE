@@ -7,7 +7,7 @@
           <input class="search__input" type="text" placeholder="Cari" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <NuxtLink class="btn btn-primary" href="/create_unit_kerja"><i class="fa fa-plus"></i></NuxtLink>
+        <NuxtLink class="btn btn-primary" to="/create_unit_kerja"><i class="fa fa-plus"></i></NuxtLink>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
