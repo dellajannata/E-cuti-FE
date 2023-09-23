@@ -26,7 +26,7 @@
             <tr v-for="(cuti, index) in filterByUnitKerja" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
-              <td>{{ cuti.pegawai.unit_kerja }}</td>
+              <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -79,26 +79,17 @@ export default {
   },
   computed: {
     getUserUnit() {
-      const kasubagId = JSON.parse(localStorage.getItem('user')).pegawai_id
-      // console.log(kasubagId)
+      const dinasId = JSON.parse(localStorage.getItem('user')).pegawai_id;
       if (this.data_pegawai.length) {
-        const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kasubagId)))
-        console.log(filtering.unit_kerja)
-        return filtering.unit_kerja
+        const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === dinasId)))
+        console.log(filtering.unitKerja_id)
+        return filtering.unitKerja_id
       }
     },
     filterByUnitKerja() {
-      if (this.data_cuti.length && this.getUserUnit) {
-        const filteredData = this.data_cuti.filter(item => {
-          // console.log(item.pegawai)
-          // console.log(this.getUserUnit)
-          return item.pegawai.unit_kerja === this.getUserUnit
-        });
-        console.log(filteredData)
-        return filteredData
-      } else {
-        return [];
-      }
+      return this.data_cuti.filter((item) => {
+        return item.pegawai.unit_kerja.id === this.getUserUnit;
+      });
     },
   },
   methods: {

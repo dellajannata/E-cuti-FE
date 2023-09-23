@@ -3,10 +3,10 @@
     <div class="card-body">
       <h4 class="card-title">Data Pegajuan Cuti Kabid</h4>
       <div class="card-pegawai">
-          <div class="search__container">
-            <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
-            <i class="fa fa-search search__icon"></i>
-          </div>
+        <div class="search__container">
+          <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+          <i class="fa fa-search search__icon"></i>
+        </div>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -25,7 +25,7 @@
             <tr v-for="(cuti, index) in filterByUnitKerja" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
-              <td>{{ cuti.pegawai.unit_kerja }}</td>
+              <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
               <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
               <td>{{ cuti.alasan }}</td>
@@ -84,35 +84,20 @@ export default {
   },
   computed: {
     getUserUnit() {
-      const kabidId = JSON.parse(localStorage.getItem('user')).pegawai_id
-      // console.log(kabidId)
+      const dinasId = JSON.parse(localStorage.getItem('user')).pegawai_id;
       if (this.data_pegawai.length) {
-        const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === kabidId)))
-        console.log(filtering.unit_kerja)
-        return filtering.unit_kerja
+        const filtering = JSON.parse(JSON.stringify(this.data_pegawai.find(item => item.id === dinasId)))
+        console.log(filtering.unitKerja_id)
+        return filtering.unitKerja_id
       }
     },
-    // getPengajuanCutiByKabid() {
-    //   const kabidId = JSON.parse(localStorage.getItem('user')).id
-    //   if (this.data_cuti.length) {
-    //     const filtering = JSON.parse(JSON.stringify(this.data_cuti.find(item => item.id === kabidId)))
-    //     return filtering.user_penyetuju
-    //   }
-    // },
     filterByUnitKerja() {
-      if (this.data_cuti.length && this.getUserUnit) {
-        const filteredData = this.data_cuti.filter(item => {
-          // console.log(item.pegawai)
-          // console.log(this.getUserUnit)
-          return item.pegawai.unit_kerja === this.getUserUnit 
-        });
-        console.log(filteredData)
-        return filteredData
-      } else {
-        return [];
-      }
+      return this.data_cuti.filter((item) => {
+        return item.pegawai.unit_kerja.id === this.getUserUnit;
+      });
     },
   },
+
   methods: {
     tgl_pengajuan(timestamp) {
       const jakartaTimeZone = 'Asia/Jakarta';
@@ -138,13 +123,13 @@ export default {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            }
-          })
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
           .then(res => {
             console.log(res.data.data);
-            
+
             if (res.data.data !== null) {
               // Cek apakah ada hasil pencarian
               if (res.data.data.length === 0) {
