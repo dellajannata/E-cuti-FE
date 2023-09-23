@@ -27,7 +27,7 @@
               <tr v-for="(cuti, index) in data_cuti" :key="index">
                 <td>{{ calculateRowNumber(index) }}</td>
                 <td>{{ cuti.pegawai.nama }}</td>
-                <td>{{ cuti.pegawai.unit_kerja }}</td>
+                <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
                 <td>{{ tgl_pengajuan(cuti.tgl_awal) }}</td>
                 <td>{{ tgl_pengajuan(cuti.tgl_akhir) }}</td>
                 <td>{{ cuti.alasan }}</td>

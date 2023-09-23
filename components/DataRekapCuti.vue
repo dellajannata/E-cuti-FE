@@ -22,7 +22,7 @@
             <tr v-for="(cuti, index) in filteredCuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
-              <td>{{ cuti.pegawai.unit_kerja }}</td>
+              <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
               <td>{{ cuti.totalCuti }}</td>
             </tr>
           </tbody>

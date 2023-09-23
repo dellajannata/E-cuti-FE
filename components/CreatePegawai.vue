@@ -150,7 +150,7 @@ export default {
         async getJabatan() {
             try {
                 const accessToken = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/jabatan', {
+                const response = await axios.get('http://127.0.0.1:8000/api/jabatan_all', {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     },
@@ -163,7 +163,7 @@ export default {
         async getUnitKerja() {
             try {
                 const accessToken = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/unit_kerja', {
+                const response = await axios.get('http://127.0.0.1:8000/api/unit_kerja_all', {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     },
