@@ -14,8 +14,6 @@
                         <tr>
                             <th>Username</th>
                             <td>{{ data_profile.name }}</td>
-
-
                         </tr>
                     </tbody>
                     <tbody>
@@ -119,7 +117,7 @@ export default {
         getJabatanPegawai() {
             const user = this.getPegawaiId();
             const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.jabatan : 'Jabatan Pegawai Tidak Tersedia';
+            return pegawai ? pegawai.jabatan.nama : 'Jabatan Pegawai Tidak Tersedia';
         },
         getPangkatPegawai() {
             const user = this.getPegawaiId();
