@@ -4,10 +4,10 @@
         <h4 class="card-title">Data Pegawai</h4>
         <div class="card-pegawai">
           <div class="search__container">
-            <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+            <input class="search__input" type="text" placeholder="Nama" v-model="searchQuery" @input="search">
             <i class="fa fa-search search__icon"></i>
           </div>
-          <NuxtLink class="btn btn-primary" href="/create_pegawai"><i class="fa fa-plus"></i></NuxtLink>
+          <NuxtLink class="btn btn-primary" href="/create_pegawai_dinas"><i class="fa fa-plus"></i></NuxtLink>
         </div>
         <div class="table-responsive">
           <table class="table table-hover">
@@ -24,7 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(pegawai, index) in filterByUnitKerja" :key="index">
+              <tr v-for="(pegawai, index) in data_pegawai" :key="index">
                 <td>{{ calculateRowNumber(index) }}</td>
                 <td>{{ pegawai.nama }}</td>
                 <td>{{ pegawai.jabatan.nama }}</td>
@@ -94,31 +94,12 @@
         this.getDataPegawai();
       }
     },
-    computed: {
-      getUserUnit() {
-        const dinasId = JSON.parse(localStorage.getItem('user')).pegawai_id;
-        if (this.pegawai_all.length) {
-          const filtering = JSON.parse(JSON.stringify(this.pegawai_all.find(item => item.id === dinasId)))
-          console.log(filtering.unitKerja_id)
-          return filtering.unitKerja_id
-        }
-      },
-      filterByUnitKerja() {
-        if (this.data_pegawai.length && this.getUserUnit) {
-          const filteredData = this.data_pegawai.filter(item => {
-            return item.unitKerja_id === this.getUserUnit;
-          });
-          console.log(filteredData);
-          return filteredData;
-        } else {
-          return [];
-        }
-      },
-    },
 
     methods: {
       getDataPegawai() {
         const accessToken = localStorage.getItem('token');
+        const unitId = this.getUserUnit();
+
         axios.get('http://127.0.0.1:8000/api/pegawai', {
             headers: {
               'Authorization': `Bearer ${accessToken}`
@@ -128,7 +109,7 @@
             }
         }).then(res => {
           console.log(res.data.data);
-          this.data_pegawai = res.data.data;
+          this.data_pegawai = res.data.data.filter(item => item.unitKerja_id === unitId);
           this.totalPages = res.data.pagination.last_page;
         }).catch(error => {
           console.error('Error fetching data:', error);
@@ -181,6 +162,16 @@
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
+      },
+      
+      getUserUnit() {
+        const dinasId = JSON.parse(localStorage.getItem('user')).pegawai_id;
+        console.log(dinasId);
+        if (dinasId) {
+          const filtering = this.pegawai_all.find(item => item.id === dinasId)
+          console.log(filtering.unitKerja_id)
+          return filtering.unitKerja_id
+        }
       },
   
       async deletePegawai(pegawaiId) {

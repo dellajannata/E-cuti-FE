@@ -4,7 +4,7 @@
         <h4 class="card-title">Data Pegajuan Cuti Pegawai</h4>
         <div class="card-pegawai">
           <div class="search__container">
-            <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+            <input class="search__input" type="text" placeholder="Nama" v-model="searchQuery" @input="search">
             <i class="fa fa-search search__icon"></i>
           </div>
         </div>
