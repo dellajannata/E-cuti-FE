@@ -163,7 +163,7 @@ export default {
         async getUnitKerja() {
             try {
                 const accessToken = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/unit_kerja_all', {
+                const response = await axios.get('http://127.0.0.1:8000/api/unit_kerja_dinas', {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     },
