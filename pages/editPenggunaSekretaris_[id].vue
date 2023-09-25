@@ -20,10 +20,16 @@
                             <span class="text-danger">{{ errorList.email }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" v-model="pengguna.password" class="form-control" id="password"
-                                placeholder="Masukkan Password Anda">
-                            <span class="text-danger">{{ errorList.password }}</span>
+                            <label for="oldPassword">Password Lama</label>
+                            <input type="password" v-model.trim="pengguna.oldPassword" class="form-control" id="oldPassword"
+                                placeholder="Masukkan Password Lama Anda">
+                            <span class="text-danger">{{ errorList.oldPassword }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Password Baru</label>
+                            <input type="password" v-model.trim="pengguna.newPassword" class="form-control" id="newPassword"
+                                placeholder="Masukkan Password Baru Anda">
+                            <span class="text-danger">{{ errorList.newPassword }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
@@ -56,14 +62,16 @@ export default {
             pengguna: {
                 name: '',
                 email: '',
-                password: '',
+                oldPassword: '',
+                newPassword: ''
             },
             isLoading: false,
             isLoadingTitle: "Loading",
             errorList: {
                 name: '',
                 email: '',
-                password: '',
+                oldPassword: '',
+                newPassword: ''
             }
         }
     },
@@ -86,8 +94,10 @@ export default {
             this.errorList = {
                 name: '',
                 email: '',
-                password: '',
+                oldPassword: '',
+                newPassword: ''
             };
+
             try {
                 const result = await Swal.fire({
                     title: 'Apakah Anda yakin akan mengubah data pengguna?',
@@ -100,38 +110,69 @@ export default {
 
                 if (result.isConfirmed) {
                     const data = this.pengguna;
-                    console.log(data);
                     const requestData = {
                         name: data.name,
-                        password: data.password,
                         email: data.email,
+                        oldPassword: data.oldPassword,
+                        newPassword: data.newPassword
                     }
-                    console.log(requestData);
 
-                    try {
-                        const accessToken = localStorage.getItem('token');
-                        const response = await axios.put(`http://127.0.0.1:8000/api/profile/${penggunaId}`, requestData, {
-                            headers: {
-                                'Authorization': `Bearer ${accessToken}`
+                    // Periksa apakah password lama sesuai
+                    if (!requestData.oldPassword) {
+                        this.errorList.oldPassword = 'Harus diisi.';
+                    } else {
+                        try {
+                            const accessToken = localStorage.getItem('token');
+                            const response = await axios.put(`http://127.0.0.1:8000/api/profile/${penggunaId}`, requestData, {
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`
+                                }
+                            });
+                            // Jika password lama sesuai, lanjutkan dengan pembaruan
+                            if (response.data.success) {
+                                const requestData = {
+                                    name: data.name,
+                                    email: data.email,
+                                    old_password: data.oldPassword,
+                                    new_password: data.newPassword,
+                                };
+                                console.log(requestData);
+
+                                try {
+                                    const accessToken = localStorage.getItem('token');
+                                    const response = await axios.put(`http://127.0.0.1:8000/api/profile/${penggunaId}`, requestData, {
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`
+                                        }
+                                    });
+                                    console.log(response.data);
+                                    Swal.fire(
+                                        'Berhasil!',
+                                        'Data Anda berhasil diubah.',
+                                        'success'
+                                    );
+                                    this.backDataPengguna();
+
+                                } catch (error) {
+                                    if (!requestData.name) {
+                                        this.errorList.name = 'Harus diisi.';
+                                    }
+                                    if (!requestData.email) {
+                                        this.errorList.email = 'Harus diisi.';
+                                    }
+                                    if (!requestData.old_password) {
+                                        this.errorList.oldPassword = 'Harus diisi.';
+                                    }
+                                    if (!requestData.new_password) {
+                                        this.errorList.newPassword = 'Harus diisi.';
+                                    } else {
+                                        this.errorList.oldPassword = 'Password lama salah';
+                                        console.log("error")
+                                    }
+                                }
                             }
-                        });
-                        console.log(response.data);
-                        Swal.fire(
-                            'Berhasil!',
-                            'Data Anda berhasil diubah.',
-                            'success'
-                        );
-                        this.backDataPengguna();
-
-                    } catch (error) {
-                        if (!requestData.name) {
-                            this.errorList.name = 'Harus diisi.';
-                        }
-                        if (!requestData.email) {
-                            this.errorList.email = 'Harus diisi.';
-                        }
-                        if (!requestData.password) {
-                            this.errorList.password = 'Harus diisi.';
+                        } catch (error) {
+                            console.error(error);
                         }
                     }
                 }
