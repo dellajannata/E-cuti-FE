@@ -19,18 +19,36 @@
                                 placeholder="Masukkan Email Anda">
                             <span class="text-danger">{{ errorList.email }}</span>
                         </div>
+
                         <div class="form-group">
                             <label for="oldPassword">Password Lama</label>
-                            <input type="password" v-model.trim="pengguna.oldPassword" class="form-control" id="oldPassword"
-                                placeholder="Masukkan Password Lama Anda">
+                            <div class="input-group">
+                                <input :type="showPassword.oldPassword ? 'text' : 'password'" v-model="pengguna.oldPassword"
+                                    class="form-control" id="oldPassword" placeholder="Masukkan Password Lama Anda">
+                                <div class="input-group-append">
+                                    <span class="input-group-text password-icon"
+                                        @click="togglePasswordVisibility('oldPassword')">
+                                        <i :class="showPassword.oldPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
                             <span class="text-danger">{{ errorList.oldPassword }}</span>
                         </div>
                         <div class="form-group">
                             <label for="newPassword">Password Baru</label>
-                            <input type="password" v-model.trim="pengguna.newPassword" class="form-control" id="newPassword"
-                                placeholder="Masukkan Password Baru Anda">
+                            <div class="input-group">
+                                <input :type="showPassword.newPassword ? 'text' : 'password'" v-model="pengguna.newPassword"
+                                    class="form-control" id="newPassword" placeholder="Masukkan Password Baru Anda">
+                                <div class="input-group-append">
+                                    <span class="input-group-text password-icon"
+                                        @click="togglePasswordVisibility('newPassword')">
+                                        <i :class="showPassword.newPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
                             <span class="text-danger">{{ errorList.newPassword }}</span>
                         </div>
+
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                     </form>
                 </div>
@@ -65,6 +83,12 @@ export default {
                 oldPassword: '',
                 newPassword: ''
             },
+
+            showPassword: {
+                oldPassword: false,
+                newPassword: false,
+            },
+
             isLoading: false,
             isLoadingTitle: "Loading",
             errorList: {
@@ -90,6 +114,13 @@ export default {
                 this.pengguna = res.data.data;
             })
         },
+
+
+
+        togglePasswordVisibility(inputName) {
+            this.showPassword[inputName] = !this.showPassword[inputName];
+        },
+
         async edit_data(penggunaId) {
             this.errorList = {
                 name: '',
