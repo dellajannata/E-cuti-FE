@@ -86,7 +86,7 @@
       search() {
         if (this.searchQuery !== "") {
           const accessToken = localStorage.getItem('token');
-          axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
+          axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti_dinas/search/${this.searchQuery}`, {
             headers: {
               'Authorization': `Bearer ${accessToken}`
             },
@@ -104,7 +104,7 @@
                   this.data_cuti = [];
                 } else {
                   // Jika ada hasil pencarian, filter data berdasarkan status yang bukan "Selesai"
-                  this.data_cuti = res.data.data.filter(cuti => cuti.status === 'Selesai');
+                  this.data_cuti = res.data.data.filter(cuti => cuti.status !== 'Selesai');
                 }
                 this.totalPages = res.data.pagination.last_page;
               } else {
@@ -121,7 +121,7 @@
       },
       getDataPengajuanCuti() {
         const accessToken = localStorage.getItem('token');
-        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti', {
+        axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_dinas', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           },

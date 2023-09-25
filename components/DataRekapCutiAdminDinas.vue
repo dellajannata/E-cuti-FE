@@ -4,7 +4,7 @@
       <h4 class="card-title">Rekapan Cuti Pegawai</h4>
       <div class="card-pegawai">
         <div class="search__container">
-          <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
+          <input class="search__input" type="text" placeholder="Nama" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default {
     search() {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');
-        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti_all/search/${this.searchQuery}`, {
+        axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti_dinas/search/${this.searchQuery}`, {
             headers: {
               'Authorization': `Bearer ${accessToken}`
             }
@@ -100,7 +100,7 @@ export default {
     },
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
-      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_dinas', {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
