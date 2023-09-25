@@ -41,7 +41,7 @@
                   </template>
                 </td>
                 <td class="btn-action">
-                  <NuxtLink :to="`../${pegawai.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
+                  <NuxtLink :to="`../editPegawaiDinas_${pegawai.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
                   <button @click="deletePegawai(pegawai.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                 </td>
               </tr>
