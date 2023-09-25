@@ -28,6 +28,8 @@
           </tbody>
         </table>
       </div>
+      <a @click="exportToExcel" class="btn btn-success">Export to Excel</a>
+
     </div>
   </div>
 </template>
@@ -124,6 +126,57 @@ export default {
         console.error('Error fetching pegawai data:', error);
       });
     },
+    exportToExcel() {
+      // Ganti dengan URL yang benar untuk ekspor Excel di backend Anda
+      const exportUrl = 'http://127.0.0.1:8000/api/cuti/export';
+
+      // Mengambil token dari localStorage jika diperlukan
+      const accessToken = localStorage.getItem('token');
+
+      // Konfigurasi header untuk permintaan HTTP GET
+      const config = {
+        responseType: 'blob', // Respons berupa blob (file)
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      };
+
+      // Buat permintaan HTTP GET untuk mengunduh file Excel
+      axios.get(exportUrl, config)
+        .then(response => {
+          // Membuat objek URL dari data blob
+          const blobUrl = window.URL.createObjectURL(new Blob([response.data]));
+
+          // Membuat elemen <a> untuk mengeksekusi unduhan
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = 'rekap_cuti.xlsx';
+
+          // Mengeksekusi unduhan
+          link.click();
+
+          // Membersihkan objek URL
+          window.URL.revokeObjectURL(blobUrl);
+
+          // Menampilkan SweetAlert2 sebagai umpan balik
+          Swal.fire({
+            title: 'Export Successful',
+            text: 'The Excel file has been downloaded successfully.',
+            icon: 'success',
+          });
+        })
+        .catch(error => {
+          console.error('Error exporting to Excel:', error);
+          
+          // Menampilkan SweetAlert2 sebagai umpan balik dalam kasus error
+          Swal.fire({
+            title: 'Export Failed',
+            text: 'An error occurred while exporting to Excel.',
+            icon: 'error',
+          });
+        });
+    }
+
   }
 }
 </script>
