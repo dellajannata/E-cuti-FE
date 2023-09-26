@@ -1,5 +1,5 @@
 <template>
-  <div class="card-dashboard">
+  <div class="dashboard-content">
     <!-- Pengajuan Cuti -->
     <div class="col-lg-3 col-sm-6">
       <div class="card1">

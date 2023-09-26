@@ -28,8 +28,7 @@
           </tbody>
         </table>
       </div>
-      <a @click="exportToExcel" class="btn btn-success">Export to Excel</a>
-
+      <button  @click="exportToExcel" class="btn btn-success btn-sm">Export to Excel</button>
     </div>
   </div>
 </template>
