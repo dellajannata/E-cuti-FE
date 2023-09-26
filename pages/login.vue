@@ -116,30 +116,3 @@
 	}
   };
   </script>
-  
-  <style scoped>
-  /* Gaya spinner yang sesuai dengan preferensi Anda */
-  .loader {
-	border: 5px solid #f3f3f3;
-	border-top: 5px solid #3498db;
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	animation: spin 2s linear infinite;
-	margin-right: 10px;
-	/* Mengatur jarak dari tombol login */
-  }
-  
-  .container-login100-form-btn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-  }
-  
-  .spinner {
-	width: 48px;
-	height: 48px;
-	border-width: 4px;
-  }
-  </style>
-  

@@ -35987,3 +35987,9 @@ div.tagsinput span.tag a {
   display: flex;
   flex-direction: column ;
 }
+  
+.container-login100-form-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
