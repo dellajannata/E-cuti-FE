@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-dashboard">
+    <div class="dashboard-content">
       <!-- Pegawai -->
       <div class="col-lg-3 col-sm-6">
         <div class="card1">

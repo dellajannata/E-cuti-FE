@@ -35951,28 +35951,28 @@ div.tagsinput span.tag a {
 }
 
 @media screen and (max-width: 820px) {
-  .card-dashboard {
+  .dashboard-content {
     display: grid;
     grid-template-columns: auto auto;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .card-dashboard {
+  .dashboard-content  {
     display: grid;
     grid-template-columns: auto;
   }
 }
 
 @media screen and (min-width: 820px) {
-  .card-dashboard {
+  .dashboard-content {
     display: grid;
     grid-template-columns: auto auto;
   }
 }
 
 @media screen and (min-width: 1120px) {
-  .card-dashboard {
+  .dashboard-content {
     display: grid;
     grid-template-columns: auto auto auto;
   }
@@ -35982,4 +35982,8 @@ div.tagsinput span.tag a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.card-dashboard{
+  display: flex;
+  flex-direction: column ;
 }

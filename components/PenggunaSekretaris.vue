@@ -39,6 +39,12 @@
                     </tbody>
                     <tbody>
                         <tr>
+                            <th>Unit Kerja</th>
+                            <td>{{ getUnitKerjaPegawai() }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
                             <th>Jabatan</th>
                             <td>{{ getJabatanPegawai() }}</td>
                         </tr>
@@ -139,7 +145,7 @@ export default {
         getUnitKerjaPegawai() {
             const user = this.getPegawaiId();
             const pegawai = this.data_pegawai.find(pegawai => pegawai.id === user);
-            return pegawai ? pegawai.unit_kerja : 'Unit Kerja Pegawai Tidak Tersedia';
+            return pegawai ? pegawai.unit_kerja.nama : 'Unit Kerja Pegawai Tidak Tersedia';
         },
     }
 };

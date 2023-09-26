@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(cuti, index) in filteredCuti" :key="index">
+            <tr v-for="(cuti, index) in  filteredCuti " :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
               <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
@@ -36,7 +36,7 @@
               <td>{{ cuti.alasan }}</td>
               <td>{{ waktu_pengajuan(cuti.created_at) }}</td>
               <td>{{ cuti.status }}</td>
-              <td>{{ cuti.penyetuju.nama}}</td>
+              <td>{{ cuti.penyetuju.nama }}</td>
               <td>
                 <template v-if="cuti.status == 'Selesai'">
                   <button @click="$event => cetakPDF($event, cuti.id)" class="btn btn-success btn-sm">Cetak PDF</button>
@@ -49,10 +49,19 @@
                 </template>
               </td>
               <td class="btn-action">
-                <template v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak Kabid' && cuti.status != 'Ditolak Kasubag Umum' && cuti.status != 'Ditolak Sekretaris' && cuti.status != 'Ditolak Kadis'">
-                  <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></NuxtLink>
+                <template
+                  v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak Kabid' && cuti.status != 'Ditolak Kasubag Umum' && cuti.status != 'Ditolak Sekretaris' && cuti.status != 'Ditolak Kadis'">
+                  <NuxtLink :to="`../editCuti_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
+                  </NuxtLink>
                 </template>
-                <button @click="deleteCuti(cuti.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                <template v-if="cuti.status != 'Selesai'">
+                  <button @click ="deleteCuti(cuti.id)" class="btn btn-danger btn-sm"><i
+                    class="fa fa-trash"></i></button>
+                </template>
+                <template v-else>
+                  
+                </template>
+
               </td>
             </tr>
           </tbody>
@@ -70,7 +79,7 @@ export default {
   data() {
     return {
       data_cuti: [],
-      unit_kerja:[],
+      unit_kerja: [],
       searchQuery: ""
     }
   },
@@ -247,7 +256,7 @@ export default {
         const link = document.createElement('a');
         link.href = url;
         link.target = '_blank';
-        link.download = 'surat-permohonan-cuti.pdf'; 
+        link.download = 'surat-permohonan-cuti.pdf';
         link.click();
 
         window.URL.revokeObjectURL(url);
