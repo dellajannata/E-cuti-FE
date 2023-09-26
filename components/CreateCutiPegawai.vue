@@ -126,12 +126,12 @@ export default {
         async getKabidUsers() {
             try {
                 const accessToken = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/users', {
+                const response = await axios.get('http://127.0.0.1:8000/api/users_kabid', {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     },
                 });
-                this.kabidUsers = response.data.data.filter(user => user.role === "kabid" );
+                this.kabidUsers = response.data.data;
             } catch (error) {
                 console.error(error);
             }

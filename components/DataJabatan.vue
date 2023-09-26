@@ -142,7 +142,7 @@ export default {
         if (result.isConfirmed) {
           if (!this.rememberMe) {
             const accessToken = localStorage.getItem('token');
-            await axios.delete(`http://127.0.0.1:8000/api/jabatan/${jabataniId}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/jabatan/${jabatanId}`, {
               headers: {
                 'Authorization': `Bearer ${accessToken}`
               }

@@ -1,6 +1,7 @@
 <template>
     <div class="card">
       <div class="card-dashboard">
+        <h3>{{ unitNama }}</h3>
         <!-- Pegawai -->
         <div class="col-lg-3 col-sm-6">
           <div class="card1">
@@ -55,6 +56,7 @@
         data_pegawai: [],
         data_cuti: [],
         rekap_cuti: [],
+        unitNama: ''
       }
     },
     mounted() {
@@ -119,6 +121,7 @@
 
         if (pegawai) {
           console.log('Unit Kerja Pegawai:', pegawai.unit_kerja.nama);
+          this.unitNama = pegawai.unit_kerja.nama;
           return pegawai.unit_kerja.nama;
         } else {
           console.log('Unit Kerja Tidak Tersedia');
