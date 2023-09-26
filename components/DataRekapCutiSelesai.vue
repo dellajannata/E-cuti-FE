@@ -22,7 +22,7 @@
             <tr v-for="(cuti, index) in uniqueCuti" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ cuti.pegawai.nama }}</td>
-              <td>{{ cuti.pegawai.unit_kerja }}</td>
+              <td>{{ cuti.pegawai.unit_kerja.nama }}</td>
               <td>{{ cuti.totalCuti }}</td>
             </tr>
           </tbody>
@@ -53,14 +53,14 @@ export default {
       const kabidId = JSON.parse(localStorage.getItem('user')).pegawai_id;
       if (this.data_pegawai.length) {
         const filtering = this.data_pegawai.find(item => item.id === kabidId);
-        return filtering.unit_kerja;
+        return filtering.unit_kerja.nama;
       }
     },
     uniqueCuti() {
       const uniqueCuti = {};
       if (this.data_cuti.length && this.getUserUnit) {
         this.data_cuti.forEach(item => {
-          if (item.pegawai.unit_kerja === this.getUserUnit && item.status === 'Selesai') {
+          if (item.pegawai.unit_kerja.nama === this.getUserUnit && item.status === 'Selesai') {
             uniqueCuti[item.user_id] = uniqueCuti[item.user_id] || { totalCuti: 0, pegawai: item.pegawai };
             uniqueCuti[item.user_id].totalCuti++;
           }
