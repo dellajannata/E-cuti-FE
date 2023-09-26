@@ -66,7 +66,7 @@ export default {
         .then((res) => {
           console.log(res.data.data);
           this.cuti_kadis = res.data.data.filter(
-            (cuti_kadis) => cuti_kadis.pegawai.unit_kerja === unitKerja && cuti_kadis.status === 'ACC Sekretaris'
+            (cuti_kadis) => cuti_kadis.pegawai.unit_kerja.nama === unitKerja && cuti_kadis.status === 'ACC Sekretaris'
           );
         })
         .catch((error) => {
@@ -86,7 +86,7 @@ export default {
         .then((res) => {
           console.log(res.data.data);
           this.rekap_cuti = res.data.data.filter(
-            (rekap_cuti) => rekap_cuti.pegawai.unit_kerja === unitKerja && rekap_cuti.status === 'Selesai'
+            (rekap_cuti) => rekap_cuti.pegawai.unit_kerja.nama === unitKerja && rekap_cuti.status === 'Selesai'
           );
         })
         .catch((error) => {
@@ -120,8 +120,8 @@ export default {
       const pegawai = this.data_pegawai.find((pegawai) => pegawai.id === user);
 
       if (pegawai) {
-        console.log('Unit Kerja Pegawai:', pegawai.unit_kerja);
-        return pegawai.unit_kerja;
+        console.log('Unit Kerja Pegawai:', pegawai.unit_kerja.nama);
+        return pegawai.unit_kerja.nama;
       } else {
         console.log('Unit Kerja Pegawai Tidak Tersedia');
         return 'Unit Kerja Pegawai Tidak Tersedia';
