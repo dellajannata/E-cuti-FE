@@ -260,8 +260,18 @@ export default {
         link.click();
 
         window.URL.revokeObjectURL(url);
+        Swal.fire({
+            title: 'Export Successful',
+            text: 'The PDF file has been downloaded successfully.',
+            icon: 'success',
+          });
       }).catch(error => {
         console.error('Error fetching PDF:', error);
+        Swal.fire({
+            title: 'Export Failed',
+            text: 'An error occurred while exporting to PDF.',
+            icon: 'error',
+          });
       });
 
     }
