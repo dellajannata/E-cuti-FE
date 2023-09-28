@@ -240,7 +240,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 80px 88px 93px 190px;
+  padding: 50px 88px 93px 190px;
   /* padding-top: 5px; */
   
 }
@@ -670,4 +670,7 @@ input.input100 {
   right: 10px; /* Jarak dari sisi kanan input */
   transform: translateY(-50%);
   cursor: pointer;
+}
+.lupa-password{
+  padding-bottom: 20px;
 }

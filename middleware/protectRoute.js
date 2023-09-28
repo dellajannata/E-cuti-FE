@@ -38,6 +38,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
       return navigateTo(FALLBACK_ROUTES[userRole]);
     }
   } else {
-    return navigateTo('/login')
+    // return navigateTo('/login')
   }
 })
