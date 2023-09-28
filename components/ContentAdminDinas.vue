@@ -10,7 +10,7 @@
               <h4 class="card-title">Total Pegawai</h4>
               <div class="d-inline-block">
                 <h2>{{ filterByUnitKerja.length }}</h2>
-                <a href="/data_pegawai" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                <a href="/data_pegawai_admin_dinas" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
               </div>
               <span class="float-right display-5 opacity-5"><i class="mdi mdi-account"></i></span>
             </div>
@@ -24,7 +24,7 @@
               <h4 class="card-title">Pengajuan Cuti</h4>
               <div class="d-inline-block">
                 <h2>{{ data_cuti.length }}</h2>
-                <a href="/data_pengajuan_cuti" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                <a href="/data_pengajuan_cuti_admin_dinas" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
               </div>
               <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
             </div>
@@ -38,7 +38,7 @@
               <h4 class="card-title">Rekap Cuti</h4>
               <div class="d-inline-block">
                 <h2>{{ getUniqueUserIds(rekap_cuti).length }}</h2>
-                <a href="/data_rekap_cuti" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                <a href="/data_rekap_cuti_admin_dinas" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
               </div>
               <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
             </div>
