@@ -12,7 +12,7 @@
           <NuxtLink class="nav-link" data-bs-toggle="collapse" to="/pengajuan_cuti_acc_kadis" aria-expanded="false"
             aria-controls="form-elements">
             <i class="menu-icon mdi mdi-card-text-outline"></i>
-            <span class="menu-title">Pengajuan Cuti Kadis</span>
+            <span class="menu-title">Persetujuan Cuti Kadis</span>
             <!-- <i class="menu-arrow"></i> -->
           </NuxtLink>
         </li>

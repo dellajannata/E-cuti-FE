@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-    <h4 class="card-title">Data Pegajuan Cuti Sekretaris</h4>
+    <h4 class="card-title">Data Persetujuan Cuti Sekretaris</h4>
 
       <div class="card-pegawai">
         <div class="search__container">
