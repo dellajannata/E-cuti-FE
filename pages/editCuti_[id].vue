@@ -31,7 +31,7 @@
                             <select v-model="cuti.user_penyetuju" class="form-control" id="user_penyetuju">
                                 <option value="" disabled>Pilih Kabid</option>
                                 <option v-for="kabidUser in kabidUsers" :key="kabidUser.id" :value="kabidUser.id">{{
-                                    kabidUser.name }}</option>
+                                    kabidUser.pegawai.nama }}</option>
                             </select>
                             <span class="text-danger">{{ this.errorList.user_penyetuju }}</span>
                         </div>
