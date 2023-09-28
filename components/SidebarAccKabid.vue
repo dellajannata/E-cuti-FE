@@ -9,7 +9,7 @@
     <template #dataForm>
       <NuxtLink class="nav-link" to="/pengajuan_cuti_acc_kabid">
         <i class="menu-icon mdi mdi-file-document"></i>
-        <span class="menu-title">Pengajuan Cuti Kabid</span>
+        <span class="menu-title">Persetujuan Cuti Kabid</span>
       </NuxtLink>
     </template>
     <template #dataRekap>

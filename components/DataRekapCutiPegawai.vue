@@ -15,7 +15,7 @@
                 <th>No.</th>
                 <th>Nama</th>
                 <th>Unit Kerja</th>
-                <th>Total Pegajuan Cuti</th>
+                <th>Total Cuti (Hari)</th>
               </tr>
             </thead>
             <tbody>
@@ -108,7 +108,16 @@
         });
       },
       getTotalCuti(pegawaiId) {
-        const totalCutiSelesai = this.filteredCuti.length;
+        const totalCutiSelesai = this.filteredCuti
+        .filter(cuti => cuti.user_id === pegawaiId)
+        .reduce((total, cuti) => {
+          const tglAwal = new Date(cuti.tgl_awal);
+          const tglAkhir = new Date(cuti.tgl_akhir);
+          const timeDiff = Math.abs(tglAkhir - tglAwal);
+          const jumlahHariCuti = Math.ceil(timeDiff / (24 * 60 * 60 * 1000)) + 1;
+          return total + jumlahHariCuti;
+        }, 0);
+
         return totalCutiSelesai;
       }
     }

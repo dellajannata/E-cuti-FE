@@ -15,7 +15,7 @@
               <th>No.</th>
               <th>Nama</th>
               <th>Unit Kerja</th>
-              <th>Total Pengajuan Cuti</th>
+              <th>Total Cuti (Hari)</th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +55,12 @@ export default {
         this.data_cuti.forEach(item => {
           if (item.status === 'Selesai') {
             uniqueCuti[item.user_id] = uniqueCuti[item.user_id] || { totalCuti: 0, pegawai: item.pegawai };
-            uniqueCuti[item.user_id].totalCuti++;
+            // Menghitung selisih hari antara tanggal awal dan tanggal akhir
+            const tglAwal = new Date(item.tgl_awal);
+            const tglAkhir = new Date(item.tgl_akhir);
+            const timeDiff = Math.abs(tglAkhir.getTime() - tglAwal.getTime());
+            const jumlahHariCuti = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // +1 karena menghitung juga hari awal
+            uniqueCuti[item.user_id].totalCuti += jumlahHariCuti;
           }
         });
         return Object.values(uniqueCuti);

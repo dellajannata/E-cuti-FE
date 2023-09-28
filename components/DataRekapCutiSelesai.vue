@@ -15,7 +15,7 @@
               <th>No.</th>
               <th>Nama</th>
               <th>Unit Kerja</th>
-              <th>Total Pengajuan Cuti</th>
+              <th>Total Cuti (Hari)</th>
             </tr>
           </thead>
           <tbody>
@@ -61,8 +61,13 @@ export default {
       if (this.data_cuti.length && this.getUserUnit) {
         this.data_cuti.forEach(item => {
           if (item.pegawai.unit_kerja.nama === this.getUserUnit && item.status === 'Selesai') {
+            const tglAwal = new Date(item.tgl_awal);
+            const tglAkhir = new Date(item.tgl_akhir);
+            const timeDiff = Math.abs(tglAkhir - tglAwal);
+            const jumlahHariCuti = Math.ceil(timeDiff / (24 * 60 * 60 * 1000)) + 1;
+
             uniqueCuti[item.user_id] = uniqueCuti[item.user_id] || { totalCuti: 0, pegawai: item.pegawai };
-            uniqueCuti[item.user_id].totalCuti++;
+            uniqueCuti[item.user_id].totalCuti += jumlahHariCuti;
           }
         });
         return Object.values(uniqueCuti);

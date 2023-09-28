@@ -37,7 +37,7 @@
             <div class="card-body">
               <h4 class="card-title">Rekap Cuti</h4>
               <div class="d-inline-block">
-                <h2>{{ rekap_cuti.length }}</h2>
+                <h2>{{ getUniqueUserIds(rekap_cuti).length }}</h2>
                 <a href="/data_rekap_cuti" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></a>
               </div>
               <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
@@ -130,6 +130,11 @@ export default {
         return 'Unit Kerja Tidak Tersedia';
       }
     },
+    getUniqueUserIds(cutiData) {
+      // Menggunakan Set untuk mendapatkan nilai unik dari user_id
+      const uniqueUserIds = new Set(cutiData.map(cuti => cuti.user_id));
+      return [...uniqueUserIds];
+    }
   }
 };
 </script>
