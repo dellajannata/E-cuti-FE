@@ -39,7 +39,11 @@ const onPushEmail = async () => {
       );
     })
     .catch((error) => {
-      console.log(error.response);
+      Swal.fire(
+        'Periksa Email Anda!',
+        'Email Anda tidak terdaftar.',
+        'warning'
+      );
     });
 };
 </script>
