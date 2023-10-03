@@ -18,6 +18,9 @@
           <slot name="dataForm"></slot>
         </li>
         <li class="nav-item">
+          <slot name="persetujuan"></slot>
+        </li>
+        <li class="nav-item">
           <slot name="dataRekap"></slot>
         </li>
         <li class="nav-item nav-category">Data Pengguna</li>

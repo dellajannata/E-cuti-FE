@@ -6,6 +6,34 @@
         <div class="card-body">
           <h4 class="card-title">Pengajuan Cuti</h4>
           <div class="d-inline-block">
+            <h2>{{ data_cuti.length }}</h2>
+            <NuxtLink href="/data_pengajuan_cuti_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
+          </div>
+          <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rekap Cuti Kabid-->
+    <div class="col-lg-3 col-sm-6">
+      <div class="card1">
+        <div class="card-body">
+          <h4 class="card-title">Rekap Cuti Saya</h4>
+          <div class="d-inline-block">
+            <h2>{{ rekap_cuti_kabid.length }}</h2>
+            <NuxtLink to="/rekap_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
+          </div>
+          <span class="float-right display-5 opacity-5"><i class="mdi mdi-animation"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Persetujuan Cuti -->
+    <div class="col-lg-3 col-sm-6">
+      <div class="card1">
+        <div class="card-body">
+          <h4 class="card-title">Persetujuan Cuti</h4>
+          <div class="d-inline-block">
             <h2>{{ cuti_kabid.length }}</h2>
             <NuxtLink href="/pengajuan_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
           </div>
@@ -14,11 +42,11 @@
       </div>
     </div>
 
-    <!-- Rekap Cuti -->
+    <!-- Rekap Cuti Seluruh Pegawai Per Dinas-->
     <div class="col-lg-3 col-sm-6">
       <div class="card1">
         <div class="card-body">
-          <h4 class="card-title">Rekap Cuti</h4>
+          <h4 class="card-title">Rekap Cuti Pegawai</h4>
           <div class="d-inline-block">
             <h2>{{ getUniqueUserIds(rekap_cuti).length }}</h2>
             <NuxtLink to="/rekap_cuti_acc_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>
@@ -38,8 +66,10 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      data_cuti: [],
       cuti_kabid: [],
       rekap_cuti: [],
+      rekap_cuti_kabid: [],
       data_pegawai: [],
       userLoggedin: null,
     };
@@ -48,10 +78,37 @@ export default {
     this.getUserData();
   },
   methods: {
+    getIdUserYangLogin() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData ? userData.id : ''; // Mengambil id pengguna dari objek pengguna 
+    },
     getUserData() {
       const user = JSON.parse(localStorage.getItem('user'));
       this.userLoggedin = user;
       this.getDataPegawai();
+    },
+    getDataPengajuanCuti() {
+      const accessToken = localStorage.getItem('token');
+      axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_all', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+      }).then(res => {
+        console.log(res.data.data);
+        const idUser = this.getIdUserYangLogin();
+        // Filter data cuti sesuai dengan nama pengguna yang login
+        this.data_cuti = res.data.data.filter(data_cuti => {
+          return data_cuti.user_id === idUser &
+          data_cuti.status !== "Selesai" ;
+      });
+        // Filter data rekap cuti sesuai dengan nama pengguna yang login
+        this.rekap_cuti_kabid = res.data.data.filter(data_cuti => {
+          return data_cuti.user_id === idUser &
+          data_cuti.status === "Selesai";
+        });
+      }).catch(error => {
+        console.error('Error fetching data:', error);
+      });
     },
     getDataCutiKabid() {
       const accessToken = localStorage.getItem('token');
@@ -106,6 +163,7 @@ export default {
           this.data_pegawai = res.data.data;
           this.getDataCutiKabid(); 
           this.getDataRekapCuti(); 
+          this.getDataPengajuanCuti(); 
         })
         .catch((error) => {
           console.error('Error fetching pegawai data:', error);

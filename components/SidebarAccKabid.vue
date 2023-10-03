@@ -7,6 +7,12 @@
     </NuxtLink>
     </template>
     <template #dataForm>
+      <NuxtLink class="nav-link" to="/data_pengajuan_cuti_kabid">
+        <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <span class="menu-title">Pengajuan Cuti</span>
+      </NuxtLink>
+    </template>
+    <template #persetujuan>
       <NuxtLink class="nav-link" to="/pengajuan_cuti_acc_kabid">
         <i class="menu-icon mdi mdi-file-document"></i>
         <span class="menu-title">Persetujuan Cuti Kabid</span>
