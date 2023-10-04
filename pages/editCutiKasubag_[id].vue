@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="card-edit-pegawai">
                     <h4 class="card-title">Edit Pengajuan Cuti</h4>
-                    <NuxtLink class="btn btn-primary" to="/data_pengajuan_cuti_kabid">Kembali</NuxtLink>
+                    <NuxtLink class="btn btn-primary" to="/data_pengajuan_cuti_kasubag">Kembali</NuxtLink>
                 </div>
                 <div v-for="(cuti, index) in pengajuan_cuti" :key="index">
                     <form class="forms-sample" @submit.prevent="edit_data(cuti.id)">
@@ -37,20 +37,20 @@
 <script setup>
 definePageMeta({
     middleware: ['redirect-login'],
-    layout: 'sidebar-kabid'
+    layout: 'sidebar-kasubag'
 })
 </script>
 
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import SidebarKabid from '../components/SidebarAccKabid.vue';
+import SidebarKasubag from '../components/SidebarAccKasubag.vue';
 import Navbar from '../components/Navbar.vue';
 
 export default {
     name: "EditCuti",
     components: {
-        SidebarKabid,
+        SidebarKasubag,
         Navbar,
     },
     data() {
@@ -152,7 +152,7 @@ export default {
             }
         },
         backDataPengajuanCuti() {
-            this.$router.push('/data_pengajuan_cuti_kabid');
+            this.$router.push('/data_pengajuan_cuti_kasubag');
         },
     }
 }

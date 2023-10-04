@@ -30,6 +30,8 @@ const getSidebarPage = computed(() => {
     // Sekretaris
     case '/dashboard_sekretaris':
       return resolveComponent('SidebarSekretaris')
+    case '/data_pengajuan_cuti_sekretaris':
+      return resolveComponent('SidebarSekretaris')
     case '/pengajuan_cuti_acc_sekretaris':
       return resolveComponent('SidebarSekretaris')
     case '/rekap_cuti_acc_sekretaris':

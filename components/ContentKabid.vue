@@ -4,7 +4,7 @@
     <div class="col-lg-3 col-sm-6">
       <div class="card1">
         <div class="card-body">
-          <h4 class="card-title">Pengajuan Cuti</h4>
+          <h4 class="card-title">Pengajuan Cuti Saya</h4>
           <div class="d-inline-block">
             <h2>{{ data_cuti.length }}</h2>
             <NuxtLink href="/data_pengajuan_cuti_kabid" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-right"></i></NuxtLink>

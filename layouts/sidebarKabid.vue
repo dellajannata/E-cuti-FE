@@ -31,6 +31,8 @@ const getSidebarPage = computed(() => {
     // Kabid
     case '/dashboard_kabid':
       return resolveComponent('SidebarAccKabid')
+    case '/data_pengajuan_cuti_kabid':
+      return resolveComponent('SidebarAccKabid')
     case '/pengajuan_cuti_acc_kabid':
       return resolveComponent('SidebarAccKabid')
     case '/rekap_cuti_acc_kabid':

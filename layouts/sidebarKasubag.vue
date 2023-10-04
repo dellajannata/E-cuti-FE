@@ -30,6 +30,8 @@ const getSidebarPage = computed(() => {
     // Kasubag Umum
     case '/dashboard_kasubag':
       return resolveComponent('SidebarAccKasubag')
+    case '/data_pengajuan_cuti_kasubag':
+      return resolveComponent('SidebarAccKasubag')
     case '/pengajuan_cuti_acc_kasubag_umum':
       return resolveComponent('SidebarAccKasubag')
     case '/rekap_cuti_acc_kasubag':

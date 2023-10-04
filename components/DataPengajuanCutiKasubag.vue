@@ -1,13 +1,13 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Data Pegajuan Cuti Kabid</h4>
+      <h4 class="card-title">Data Pegajuan Cuti Kasubag</h4>
       <div class="card-pegawai">
         <div class="search__container">
           <input class="search__input" type="text" placeholder="Nama/unit kerja" v-model="searchQuery" @input="search">
           <i class="fa fa-search search__icon"></i>
         </div>
-        <NuxtLink class="btn btn-primary" to="/create_pengajuan_cuti_kabid"><i class="fa fa-plus"></i></NuxtLink>
+        <NuxtLink class="btn btn-primary" to="/create_pengajuan_cuti_kasubag"><i class="fa fa-plus"></i></NuxtLink>
       </div>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -50,8 +50,8 @@
               </td>
               <td class="btn-action">
                 <template
-                  v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak Kasubag Umum' && cuti.status != 'Ditolak Sekretaris' && cuti.status != 'Ditolak Kadis'">
-                  <NuxtLink :to="`../editCutiKabid_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
+                  v-if="cuti.status != 'Selesai' && cuti.status != 'Ditolak Sekretaris' && cuti.status != 'Ditolak Kadis'">
+                  <NuxtLink :to="`../editCutiKasubag_${cuti.id}`" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
                   </NuxtLink>
                 </template>
                 <template v-if="cuti.status != 'Selesai'">

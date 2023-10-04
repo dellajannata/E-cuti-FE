@@ -116,6 +116,7 @@ export default {
     search() {
       if (this.searchQuery !== "") {
         const accessToken = localStorage.getItem('token');
+        const idUser = this.getIdUserYangLogin();
         axios.get(`http://127.0.0.1:8000/api/pengajuan_cuti/search/${this.searchQuery}`, {
             headers: {
               'Authorization': `Bearer ${accessToken}`
@@ -131,7 +132,7 @@ export default {
                 this.data_cuti = [];
               } else {
                 // Jika ada hasil pencarian
-                this.data_cuti = res.data.data.filter(cuti => cuti.status === "Selesai" || cuti.status === "ACC Kasubag Umum" || cuti.status === "ACC Sekretaris" || cuti.status === "Ditolak Sekretaris");
+                this.data_cuti = res.data.data.filter(cuti => cuti.user_id !== idUser && (cuti.status === "Selesai" || cuti.status === "ACC Kasubag Umum" || cuti.status === "ACC Sekretaris" || cuti.status === "Ditolak Sekretaris"));
               }
               this.totalPages = res.data.pagination.last_page;
             } else {
@@ -148,13 +149,14 @@ export default {
     },
     getDataPengajuanCuti() {
       const accessToken = localStorage.getItem('token');
+      const idUser = this.getIdUserYangLogin();
       axios.get('http://127.0.0.1:8000/api/pengajuan_cuti_acc_sekretaris', {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       }).then(res => {
         console.log(res.data.data);
-        this.data_cuti = res.data.data;
+        this.data_cuti = res.data.data.filter(cuti => cuti.user_id !== idUser && (cuti.user.role !== 'sekretaris' && cuti.user.role !== 'kadis'));
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
@@ -172,6 +174,10 @@ export default {
       }).catch(error => {
         console.error('Error fetching pegawai data:', error);
       });
+    },
+    getIdUserYangLogin() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData ? userData.id : ''; // Mengambil id pengguna dari objek pengguna 
     },
     async validasi(cutiId) {
       try {

@@ -7,9 +7,15 @@
     </NuxtLink>
     </template>
     <template #dataForm>
+      <NuxtLink class="nav-link" to="/data_pengajuan_cuti_sekretaris">
+        <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <span class="menu-title">Pengajuan Cuti</span>
+      </NuxtLink>
+    </template>
+    <template #persetujuan>
       <NuxtLink class="nav-link" to="/pengajuan_cuti_acc_sekretaris">
         <i class="menu-icon mdi mdi-file-document"></i>
-        <span class="menu-title">Pengajuan Cuti Sekretaris</span>
+        <span class="menu-title">Persetujuan Cuti Sekretaris</span>
       </NuxtLink>
     </template>
     <template #dataRekap>
