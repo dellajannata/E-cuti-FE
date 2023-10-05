@@ -9,6 +9,14 @@
         </li>
         <li class="nav-item nav-category ml-2">Data Dan Form</li>
         <li class="nav-item">
+          <NuxtLink class="nav-link" data-bs-toggle="collapse" to="/data_pengajuan_cuti_kabid" aria-expanded="false"
+            aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Pengajuan Cuti</span>
+            <!-- <i class="menu-arrow"></i> -->
+          </NuxtLink>
+        </li>
+        <li class="nav-item">
           <NuxtLink class="nav-link" data-bs-toggle="collapse" to="/pengajuan_cuti_acc_kabid" aria-expanded="false"
             aria-controls="form-elements">
             <i class="menu-icon mdi mdi-card-text-outline"></i>
