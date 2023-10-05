@@ -2,7 +2,7 @@
   <div class="dashboard-content">
     <!-- Pengajuan Cuti -->
     <div class="col-lg-3 col-sm-6">
-      <div class="card1">
+      <div class="card-2">
         <div class="card-body">
           <h4 class="card-title">Pengajuan Cuti Saya</h4>
           <div class="d-inline-block">
@@ -16,7 +16,7 @@
 
     <!-- Rekap Cuti Sekretaris-->
     <div class="col-lg-3 col-sm-6">
-      <div class="card1">
+      <div class="card-2">
         <div class="card-body">
           <h4 class="card-title">Rekap Cuti Saya</h4>
           <div class="d-inline-block">
@@ -30,7 +30,7 @@
 
     <!-- Persetujuan Cuti -->
     <div class="col-lg-3 col-sm-6">
-      <div class="card1">
+      <div class="card-2">
         <div class="card-body">
           <h4 class="card-title">Persetujuan Cuti</h4>
           <div class="d-inline-block">
@@ -44,7 +44,7 @@
 
     <!-- Rekap Cuti Seluruh Pegawai Sesuai Dinas -->
     <div class="col-lg-3 col-sm-6">
-      <div class="card1">
+      <div class="card-2">
         <div class="card-body">
           <h4 class="card-title">Rekap Cuti</h4>
           <div class="d-inline-block">

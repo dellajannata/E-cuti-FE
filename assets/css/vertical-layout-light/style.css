@@ -35842,7 +35842,22 @@ div.tagsinput span.tag a {
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.80rem;
 }
-
+.card-2{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 160px;
+  margin-top: 30px;
+  margin-left: 30px;
+  word-wrap: break-word;
+  /* background-color: #fff; */
+  background-clip: border-box;
+  background: rgb(253, 177, 45);
+  background: linear-gradient(315deg, rgba(253, 177, 45, 1) 0%, rgba(253, 45, 45, 1) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.80rem;
+}
 .card>hr {
   margin-right: 0;
   margin-left: 0;
@@ -35974,7 +35989,7 @@ div.tagsinput span.tag a {
 @media screen and (min-width: 1120px) {
   .dashboard-content {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
   }
 }
 
