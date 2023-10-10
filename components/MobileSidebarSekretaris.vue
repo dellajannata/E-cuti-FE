@@ -37,10 +37,43 @@
             <span class="menu-title">Pengguna</span>
           </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" @click="logout()" aria-expanded="false" aria-controls="auth">
+          <i class="menu-icon mdi mdi-logout"></i>
+          <span class="menu-title">Logout</span>
+        </a>
+      </li>
       </ul>
     </div>
   </template>
-  
+  <script>
+  export default {
+    data() {
+      return {
+        isMobileExpand: false,
+        isSidebarOpen: true
+      }
+    },
+    methods: {
+      async logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.backLogin()
+      },
+      backLogin() {
+        this.$router.push('/login');
+      },
+      toggleSidebar() {
+        this.isSidebarOpen = !this.isSidebarOpen
+        this.$emit('toggleSidebar')
+      },
+      toggleMobile() {
+        this.isMobileExpand = !this.isMobileExpand
+        this.$emit('toggleMobile')
+      }
+    }
+  }
+  </script>
   <style scoped>
   .sidebar {
     width: 100%;
@@ -49,13 +82,15 @@
     display: block;
     padding: 12px 0;
   }
+  
   .nav-link {
     padding-left: 12px !important;
   }
+  
   a.router-link-active {
     background: #B1141D;
   }
+  
   a.router-link-active * {
     color: #fff !important;
-  }
-  </style>
+  }</style>
