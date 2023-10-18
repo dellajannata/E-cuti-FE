@@ -164,6 +164,7 @@ export default {
           this.data_pegawai = res.data.data;
           this.getDataCutiSekretaris(); 
           this.getDataRekapCuti(); 
+          this.getDataPengajuanCuti(); 
         })
         .catch((error) => {
           console.error('Error fetching pegawai data:', error);
